@@ -126,3 +126,4 @@ class plot_that:
     y = growth(bact_name, start_time, end_time, temp, ph)
     plt.plot(x, y)
     plt.show()
+
