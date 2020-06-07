@@ -1,10 +1,13 @@
 """This is a modelation for the growth for Staphylococcus aureus bactrie """
 import json
-import numpy as np
+
 import matplotlib.pyplot as plt
+import numpy as np
+
 
 #    s-aureus
 
+#TODO : add more complex situations to the code
 
 def inputs():
     bact_input = str(input("Welke bactrie?"))
@@ -15,8 +18,7 @@ def inputs():
 
     x= np.linspace(tijd1_input, tijd2_input, 11)
     y = growth_endresult(bact_input, tijd1_input, tijd2_input, tem_input, ph_input)
-    plt.plot(x,y)
-    plt.show()
+    plot_dingen(x, y)
 
 
 def growth_endresult(bact, t1, t2, temp_input, ph_input):
@@ -55,6 +57,11 @@ def json_lezen(b, item):
             return [optimum_item, max_item, min_item]
     except:
         return [optimum_item]
+
+
+def plot_dingen(x, y )-> np.array:
+    plt.plot(x, y)
+    plt.show()
 
 
 def main():
