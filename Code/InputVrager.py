@@ -65,7 +65,7 @@ class Inputs:
 
 bacteriaNameInput = str(input("Welke bactrie?"))
 temperatureInput = int(input("Wat is het tempratuur?"))
-PHInput = int(input("wat is de ph?"))
+pHInput = int(input("wat is de ph?"))
 startTime = int(input("Wat is de begintijd in uren?"))
 endTime = int(input("Wat is de eindtijd in uren?"))
 
