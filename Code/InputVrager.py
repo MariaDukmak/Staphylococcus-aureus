@@ -31,11 +31,11 @@ class Inputs:
          """
 
     #constructor
-    def __init__(self, bacteriaName: str, temperature: float, PH: float, startTime: int, endTime: int):
+    def __init__(self, bacteriaName: str, temperature: float, pH: float, startTime: int, endTime: int):
         try:
             self.bact_name = bacteriaName
             self.temp = temperature
-            self.ph = PH
+            self.ph = pH
             self.start_time = startTime
             self.end_time = endTime
         except ValueError as e:
