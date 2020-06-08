@@ -14,7 +14,8 @@ class Inputs:
          De begint tijd in uren
     endTime: int
         De eind tijd in uren voor het model
-
+    typeG: int
+        De type grafiek kiezen
 
     Attributs:
     _________
@@ -28,16 +29,20 @@ class Inputs:
         Slaat de begin tijd voor de model op
     get_endTime
         Slaat de eind tijd voor het model op
+    get_typeG
+        Slaat de type grafiek voor het model op
          """
 
     #constructor
-    def __init__(self, bacteriaName: str, temperature: float, pH: float, startTime: int, endTime: int):
+    def __init__(self, bacteriaName: str, temperature: float, pH: float, startTime: int, endTime: int, typeG: int):
         try:
             self.bact_name = bacteriaName
             self.temp = temperature
             self.ph = pH
             self.start_time = startTime
             self.end_time = endTime
+            self.type_grafiek = typeG
+
         except ValueError as e:
             print("incorrect type of value was entered", e)
 
@@ -62,10 +67,13 @@ class Inputs:
     def get_endTime(self):
         return self.end_time
 
+    @property
+    def get_typeG(self):
+        return self.type_grafiek
 
 bacteriaNameInput = str(input("Welke bactrie?"))
 temperatureInput = int(input("Wat is het tempratuur?"))
 pHInput = int(input("wat is de ph?"))
 startTime = int(input("Wat is de begintijd in uren?"))
 endTime = int(input("Wat is de eindtijd in uren?"))
-
+typeG = int(input("Kies de soort berekneing \n 1.logstic \n 2.Gomptz"))

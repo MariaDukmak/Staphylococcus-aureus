@@ -1,6 +1,5 @@
-
-# a Python object (dict):
 import json
+#This is for Staphylococcus aureus bactrie
 #gr is de growth rate
 #br is de beperkingsfactor
 
@@ -19,12 +18,6 @@ aureus = {
 
   }
 }
-
-# convert into JSON:
-#y =
-# the result is a JSON string:
-#print(y)
-
 with open("s-aureus.json", "w") as f:
      json.dump(aureus, f)
      f.close()
