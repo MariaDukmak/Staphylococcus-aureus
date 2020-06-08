@@ -1,0 +1,55 @@
+import json
+
+import numpy as np
+
+from Code.inputs import inputs
+
+
+#    s-aureus
+
+
+class endresult(inputs):
+    def __init__(self, bact_input, tem_input, ph_input, start_time, end_time):
+        super().__init__(bact_input, tem_input, ph_input, start_time, end_time)
+
+    def json_lezen(self, b, item):
+        try:
+            with open(b + ".json", "r") as f:
+                info = json.load(f)
+                optimum_item = info["env-info"][item][item]
+                max_item = info["env-info"][item]["max"]
+                min_item = info["env-info"][item]["min"]
+                return [optimum_item, max_item, min_item]
+        except KeyError as e:
+            return [optimum_item]
+
+    def waardes_check(self, b, t, w):
+        values = self.json_lezen(self, b, w)
+        if (values[2] <= t <= values[1]) or (t == values[0]):
+            return [t, values[1]]
+        else:
+            print("Deze t is ongeldig in de json bestand van de bactrie")
+
+    def my_logstic(self, bact_input, t, a, b, c):
+        """c is the max : 1000
+        initial value: we start at 1 so, c/(a+1)= 1 , 1000/(1+a)=1 , a = 999
+        the growth rate: b = 2
+        time: we start at 0 end at 10 hours"""
+        b = self.json_lezen(self, bact_input, b)
+        lijst = []
+        print(t[0], t[1])
+        for time in range(t[0], t[1]+1):
+            lijst.append(c / (1+a * np.exp(-b[0]*time)))
+        return np.array(lijst)
+
+    @classmethod
+    def growth_endresult(self, bact_input, start_time, end_time, tem_input, ph_input):
+        temp = self.waardes_check(self, bact_input, tem_input, "temp")
+        phh = self.waardes_check(self, bact_input, ph_input, "ph")
+        x= self.my_logstic(self, bact_input, [start_time, end_time], 9_999_999_999_999_999_999_999_999_999, "gr",
+                           10_000_000_000_000_000_000_000_000_000)
+        print(x)
+        print("we got this its waarde check ", temp)
+        print("we got this its waarde check ", phh)
+        return x
+

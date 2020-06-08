@@ -1,7 +1,8 @@
 
 # a Python object (dict):
 import json
-
+#gr is de growth rate
+#br is de beperkingsfactor
 
 aureus = {
   "name": "s-aureus",
@@ -11,7 +12,11 @@ aureus = {
   "env-info": {
                 "temp": { "temp": 37, "min": 7 , "max": 48},
                 "aw":{"aw": "bestaat ffetje niet"},
-               "ph": {"ph": [6,7], "min": 4.0, "max":10.0}
+                "ph": {"ph": [6,7], "min": 4.0, "max":10.0},
+                "gr":{"gr":2},
+                "br":{"br":10000000000000000000000000000},
+
+
   }
 }
 
