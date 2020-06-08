@@ -2,13 +2,13 @@ import json
 
 import numpy as np
 
-from Code.inputs import inputs
+from Code.inputs import Inputs
 
 
 #    s-aureus
 
 
-class endresult(inputs):
+class Endresult(Inputs):
     def __init__(self, bact_input, tem_input, ph_input, start_time, end_time):
         super().__init__(bact_input, tem_input, ph_input, start_time, end_time)
 

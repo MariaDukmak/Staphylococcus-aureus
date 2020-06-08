@@ -1,6 +1,7 @@
 """This is a modelation for the growth for Staphylococcus aureus bactrie """
 
-class inputs:
+
+class Inputs:
     def __init__(self, bact_input, tem_input, ph_input, start_time, end_time):
         try:
             self.bact_name = bact_input
@@ -37,18 +38,4 @@ tem_input = int(input("Wat is het tempratuur?"))
 ph_input = int(input("wat is de ph?"))
 start_time = int(input("Wat is de begintijd in uren?"))
 end_time = int(input("Wat is de eindtijd in uren?"))
-
-
-
-
-
-
-
-#def main():
-    #if __name__ == "__main__":
-        #inputs()
-
-
-#main()
-
 

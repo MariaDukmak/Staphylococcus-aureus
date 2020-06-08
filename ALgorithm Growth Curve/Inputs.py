@@ -28,7 +28,7 @@ class Logstic:
         self.a = a
         self.b = b
         self.c = c
-
+    @classmethod
     def bereken(self):
         lijst = []
         print(self.t[0], self.t[1])
@@ -60,11 +60,11 @@ class growth(Logstic, Values_check):
             self.start_time = start_time
             self.end_time = end_time
         except ValueError as e:
-            print("uncorrected")
+            print("uncorrected", e)
 
         #tempp = Values_check(bact_name, temp, "temp")
         #phh = Values_check( bact_name, ph, "ph")
-
+    @classmethod
     def result(self):
         x = Logstic([start_time, end_time], 9999999999999999999999999999, 2, 10000000000000000000000000000)
         return x
@@ -79,7 +79,7 @@ class Inputs(growth):
             self.start_time = start_time
             self.end_time = end_time
         except ValueError as e:
-            print("uncorrected")
+            print("uncorrected", e)
 
     @property
     def get_name(self):
@@ -118,12 +118,14 @@ print(er.get_end_time)
 print(er.tostring())
 
 
-class plot_that:
+class plot_that(growth):
     def __init__(self, bact_name,start_time, end_time, temp, ph):
         super().__init__(bact_name, start_time, end_time, temp, ph)
 
     x= np.linspace(start_time, end_time, 11)
-    y = growth(bact_name, start_time, end_time, temp, ph)
+    print(x)
+    y = growth.result()
+    print(y)
     plt.plot(x, y)
     plt.show()
 
