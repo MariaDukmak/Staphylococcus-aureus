@@ -71,9 +71,10 @@ class Inputs:
     def get_typeG(self):
         return self.type_grafiek
 
-bacteriaNameInput = str(input("Welke bactrie?"))
+
+bacteriaNameInput = str(input("Welke bactrie?")).lower()
 temperatureInput = int(input("Wat is het tempratuur?"))
-pHInput = int(input("wat is de ph?"))
+pHInput = int(input("wat is de PH?"))
 startTime = int(input("Wat is de begintijd in uren?"))
 endTime = int(input("Wat is de eindtijd in uren?"))
 typeG = int(input("Kies de soort berekneing \n 1.logstic \n 2.Gomptz"))
