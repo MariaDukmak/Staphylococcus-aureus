@@ -11,7 +11,7 @@ class Endresult(Inputs, JsonChecker):
     def __init__(self, bacteriaName: str, temperature: float, pH: float, startTime: int, endTime: int, typeG: int):
         super().__init__(bacteriaName, temperature, pH, startTime, endTime, typeG)
 
-    def my_logstic(self, bact_input: str, t: list, b: str, c: str):
+    def logistic(self, bact_input: str, t: list, b: str, c: str):
         """c is the max : 1000000
         initial value: we start at 1 so, c/(a+1)= 1 , 1000/(1+a)=1 , a = 999
         the growth rate: b = 2
@@ -26,7 +26,7 @@ class Endresult(Inputs, JsonChecker):
             # lijst.append(float(a)/(1.0+ np.exp(float(b[0])-(c[0]*time)))) komt van de bron vandaan
         return np.array(lijst)
 
-    def Gomptz(self, bact_input, t, b,  c ): # TODO: maak in versie 2 de Gompertz af
+    def Gompertz(self, bact_input, t, b,  c): # TODO: maak in versie 2 de Gompertz af
         """the zwietering modification w(t) = A exp (-exp (e.kz/A). (Tlog - t)+1))"""
         pass
 
@@ -36,12 +36,12 @@ class Endresult(Inputs, JsonChecker):
         phh = self.waardes_check(self, bact_input, ph_input, "ph")
         if (temp and phh) is not None:
             if typeG == 1:
-                x = self.my_logstic(self, bact_input, [start_time, end_time], "gr", "br")
+                x = self.logistic(self, bact_input, [start_time, end_time], "gr", "br")
             #if typeG == 2:
                 #x = self.Gomptz()
             print("we got this its waarde check ", temp)
             print("we got this its waarde check ", phh)
             return x
         else:
-            raise ValueError("incorrect type of value was entered {}".format(7))
+            raise ValueError(f"incorrect type of value was entered {temp + phh}")
 
