@@ -1,24 +1,32 @@
-import matplotlib.pyplot as plt
+from tkinter import *
+
 import numpy as np
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
 
 from Code.EndResult import Endresult
-from Code.InputVrager import Inputs, startTime, endTime, temperatureInput, pHInput, bacteriaNameInput, typeG
+from Code.InputVrager import startTime, endTime, temperatureInput, pHInput, bacteriaNameInput, typeG
 
 
-class Plots(Inputs):  # s-aureus
-    def __init__(self, bacteriaNameInput: str, temperatureInput: float, pHInput: float, startTime: int, endTime: int,
-                 typeG: int):
-        super().__init__(bacteriaNameInput, temperatureInput, pHInput, startTime, endTime, typeG)
-        self.plot_dingen()
-
-    def plot_dingen(self):
+class Root(Tk):
+    def __init__(self):
+        super(Root, self).__init__()
+        self.title("Growth model")
+        self.minsize(640,400)
+        self.configure(background ='gray')
+        self.mat()
+    def mat(self):
+        f = Figure(figsize= (5,5), dpi= 100 )
+        a =f.add_subplot(111)
         x = np.linspace(startTime, endTime, (endTime - startTime + 1))
         y = Endresult.growth_endresult(bacteriaNameInput, startTime, endTime, temperatureInput, pHInput, typeG)
-        plt.plot(x, y)
-        plt.xlabel("tijd in uur")
-        plt.ylabel("groei per uur ")
-        plt.show()
+        a.plot(x,y)
+        canvas = FigureCanvasTkAgg(f,self)
+        canvas.draw()
+        canvas.get_tk_widget().pack(side = BOTTOM, fill= BOTH, expand= True)
 
 
-if __name__ == "__main__":
-    test = Plots(bacteriaNameInput, temperatureInput, pHInput, startTime, endTime, typeG)
+if __name__ == '__main__':
+    root = Root()
+    root.mainloop()
+

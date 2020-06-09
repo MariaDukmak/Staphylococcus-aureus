@@ -42,6 +42,6 @@ class Endresult(Inputs, JsonChecker):
             print("we got this its waarde check ", temp)
             print("we got this its waarde check ", phh)
             return x
-        else:
-            raise ValueError(f"incorrect type of value was entered {temp + phh}")
+        #else:
+            #raise ValueError(f"incorrect type of value was entered {temp + phh}")
 
