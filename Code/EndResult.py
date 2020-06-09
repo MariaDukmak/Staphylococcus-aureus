@@ -1,34 +1,15 @@
-import json
-
 import numpy as np
 
 from Code.InputVrager import Inputs
+from Code.JsonChecker import JsonChecker
 
 
 #    s-aureus
 
 
-class Endresult(Inputs):
+class Endresult(Inputs, JsonChecker):
     def __init__(self, bacteriaName: str, temperature: float, pH: float, startTime: int, endTime: int, typeG: int):
         super().__init__(bacteriaName, temperature, pH, startTime, endTime, typeG)
-
-    def json_lezen(self, b: str, item: str):
-        try:
-            with open(b + ".json", "r") as f:
-                info = json.load(f)
-                optimum_item = info["env-info"][item][item]
-                max_item = info["env-info"][item]["max"]
-                min_item = info["env-info"][item]["min"]
-                return [optimum_item, max_item, min_item]
-        except KeyError as e:
-            return [optimum_item]
-
-    def waardes_check(self, bestand: str, inputWaarde: float, item: str):
-        values = self.json_lezen(self, bestand, item)
-        if (values[2] <= inputWaarde <= values[1]) or (inputWaarde == values[0]):
-            return[inputWaarde, values[1]]
-        else: # TODO: laat de error op een andere manier en niet alles kapot maken
-            raise ValueError("incorrect type of value was entered {}".format(inputWaarde))
 
     def my_logstic(self, bact_input: str, t: list, b: str, c: str):
         """c is the max : 1000000
@@ -44,7 +25,6 @@ class Endresult(Inputs):
             lijst.append(c[0] / (1+a * np.exp(-b[0]*time)))
             # lijst.append(float(a)/(1.0+ np.exp(float(b[0])-(c[0]*time)))) komt van de bron vandaan
         return np.array(lijst)
-        # return lambda t :[(c / (1+a * np.exp(-b[0]*time)) for time in range(t[0], t[1]+1))]
 
     def Gomptz(self, bact_input, t, b,  c ): # TODO: maak in versie 2 de Gompertz af
         """the zwietering modification w(t) = A exp (-exp (e.kz/A). (Tlog - t)+1))"""
@@ -62,4 +42,6 @@ class Endresult(Inputs):
             print("we got this its waarde check ", temp)
             print("we got this its waarde check ", phh)
             return x
+        else:
+            raise ValueError("incorrect type of value was entered {}".format(7))
 

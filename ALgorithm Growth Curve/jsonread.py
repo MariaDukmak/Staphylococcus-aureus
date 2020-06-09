@@ -1,8 +1,8 @@
 import json
 
-from Code import inputs as ip
+from Code import InputVrager as ip
 
-b= ip.bact_input
+b= ip.bacteriaNameInput
 
 def waardes_check(b, t, w):
     values = json_lezen(b, w)
