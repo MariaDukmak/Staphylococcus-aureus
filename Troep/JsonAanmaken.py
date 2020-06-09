@@ -18,7 +18,7 @@ aureus = {
 
   }
 }
-with open("s-aureus.json", "w") as f:
+with open("../Code/s-aureus.json", "w") as f:
      json.dump(aureus, f)
      f.close()
 
