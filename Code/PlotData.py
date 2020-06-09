@@ -4,7 +4,7 @@ import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
-from Code.EndResult import Endresult
+from Code.EndResult import EndResult
 from Code.InputVrager import startTime, endTime, temperatureInput, pHInput, bacteriaNameInput, typeG
 
 
@@ -19,7 +19,7 @@ class Root(Tk):
         f = Figure(figsize= (5,5), dpi= 100 )
         a =f.add_subplot(111)
         x = np.linspace(startTime, endTime, (endTime - startTime + 1))
-        y = Endresult.growth_endresult(bacteriaNameInput, startTime, endTime, temperatureInput, pHInput, typeG)
+        y = EndResult.growth_endresult(bacteriaNameInput, startTime, endTime, temperatureInput, pHInput, typeG)
         a.plot(x,y)
         canvas = FigureCanvasTkAgg(f,self)
         canvas.draw()
