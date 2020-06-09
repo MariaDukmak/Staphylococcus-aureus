@@ -26,9 +26,11 @@ class Endresult(Inputs, JsonChecker):
             # lijst.append(float(a)/(1.0+ np.exp(float(b[0])-(c[0]*time)))) komt van de bron vandaan
         return np.array(lijst)
 
+
     def Gompertz(self, bact_input, t, b,  c): # TODO: maak in versie 2 de Gompertz af
         """the zwietering modification w(t) = A exp (-exp (e.kz/A). (Tlog - t)+1))"""
         pass
+
 
     @classmethod
     def growth_endresult(self, bact_input, start_time, end_time, tem_input, ph_input,  typeG):
@@ -42,6 +44,6 @@ class Endresult(Inputs, JsonChecker):
             print("we got this its waarde check ", temp)
             print("we got this its waarde check ", phh)
             return x
-        #else:
-            #raise ValueError(f"incorrect type of value was entered {temp + phh}")
+        else:
+            raise ValueError(f"incorrect type of value was entered {temp + phh}")
 

@@ -74,20 +74,22 @@ class Inputs:
 
 
 class Checkit:
-    def __init__(self, prompt, type_=None, min_=None, max_=None, range_=None):
-        self.prompt = prompt
+    """"
+        In dit class wordt de input van de user gecontroleerd of het een geldige input is voor de gevraagde waarde
+        om de error messages duidelijker voor de gebruiker te maken
+        Bron:
+        https://stackoverflow.com/questions/23294658/asking-the-user-for-input-until-they-give-a-valid-response """
+
+    def __init__(self,  type_=None, min_=None, max_=None):
         self.type_ = type_
         self.min_ = min_
         self.max_ = max_
-        self.rang_ = range_
 
-
-    def sanitised_input(prompt, type_=None, min_=None, max_=None):
-        """" https://stackoverflow.com/questions/23294658/asking-the-user-for-input-until-they-give-a-valid-response """
+    def sanitised_input(self, type_=None, min_=None, max_=None):
         if min_ is not None and max_ is not None and max_ < min_:
                 raise ValueError("min_ must be less than or equal to max_.")
         while True:
-                ui = input(prompt)
+                ui = input(self)
                 if type_ is not None:
                     try:
                         ui = type_(ui)
@@ -102,7 +104,7 @@ class Checkit:
                     return ui
 
 
-bacteriaNameInput = Checkit.sanitised_input("Welke bactrie?", str.lower)
+bacteriaNameInput = Checkit.sanitised_input("Welke bactria?", str.lower)
 temperatureInput = Checkit.sanitised_input("Wat is het tempratuur?", int)
 pHInput = Checkit.sanitised_input("wat is de PH?", int)
 startTime = Checkit.sanitised_input("Wat is de begintijd in uren?", int)
