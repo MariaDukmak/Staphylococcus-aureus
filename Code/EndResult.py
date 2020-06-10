@@ -40,7 +40,7 @@ class EndResult( JsonChecker):
 
 
     @classmethod
-    def growth_endresult(self, bact_input, start_time, end_time, tem_input, ph_input,  typeG):
+    def growth_endresult(self, bact_input, tem_input,ph_input,  start_time, end_time,   typeG):
         temp = self.waardes_check(self, bact_input, tem_input, "temp")
         phh = self.waardes_check(self, bact_input, ph_input, "ph")
         if (temp and phh) is not None:
@@ -52,5 +52,6 @@ class EndResult( JsonChecker):
             print("we got this its waarde check ", phh)
             return x
         else:
-            raise ValueError(f"incorrect type of value was entered {temp + phh}")
+            print("mathafaucker5s")
+            #raise ValueError(f"incorrect type of value was entered {temp + phh}")
 

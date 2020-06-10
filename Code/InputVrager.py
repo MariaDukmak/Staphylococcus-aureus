@@ -104,9 +104,9 @@ class Checkit:
                     return ui
 
 
-bacteriaNameInput = Checkit.sanitised_input("Welke bactria?", str.lower)
-temperatureInput = Checkit.sanitised_input("Wat is het tempratuur?", int)
-pHInput = Checkit.sanitised_input("wat is de PH?", int)
-startTime = Checkit.sanitised_input("Wat is de begintijd in uren?", int)
-endTime = Checkit.sanitised_input("Wat is de eindtijd in uren?", int)
-typeG = Checkit.sanitised_input("Kies de soort berekneing \n 1.logstic \n 2.Gomptz", int, 1, 2)
+# bacteriaNameInput = Checkit.sanitised_input("Welke bactria?", str.lower)
+# temperatureInput = Checkit.sanitised_input("Wat is het tempratuur?", int)
+# pHInput = Checkit.sanitised_input("wat is de PH?", int)
+# startTime = Checkit.sanitised_input("Wat is de begintijd in uren?", int)
+# endTime = Checkit.sanitised_input("Wat is de begintijd in uren?", int)
+# typeG = Checkit.sanitised_input("Kies de soort berekneing \n 1.logstic \n 2.Gomptz", int, 1, 2)
