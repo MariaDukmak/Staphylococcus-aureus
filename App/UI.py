@@ -92,10 +92,15 @@ class InfoBact(tk.Frame):
                              bg="white", font='Arial 10', command=lambda: findJson(entryBactName.get()))
 
         def findJson(input):
-            with open(str(input) + ".json", "r") as f:
-                info = json.load(f)
-                informatieVanJson= info["info"]
-                infoUitprinten= tk.Label(frameOnderInfoBact,text=informatieVanJson, font='Arial 16 ', bg="#49A")
+            try:
+                with open(str(input) + ".json", "r") as f:
+                    info = json.load(f)
+                    informatieVanJson= info["info"]
+                    infoUitprinten= tk.Label(frameOnderInfoBact,text=informatieVanJson, font='Arial 16 ', bg="#49A")
+                    infoUitprinten.pack(side=tk.TOP, fill=tk.X, padx=5)
+            except FileNotFoundError:
+                infoUitprinten = tk.Label(frameOnderInfoBact, text="We hebben helaas geen informatie kunnen vinden voor deze bacterie",
+                                          font='Arial 16 ', bg="#49A")
                 infoUitprinten.pack(side=tk.TOP, fill=tk.X, padx=5)
 
         frameOnderInfoBact.pack(pady=0, expand=tk.TRUE)
@@ -106,7 +111,6 @@ class InfoBact(tk.Frame):
         buttonInfoJson.pack(side=tk.TOP, ipady=10, ipadx=110)
         buttonPlotGraph.pack(side=tk.LEFT, fill=tk.X, padx=10)
         buttonMainPage.pack(side=tk.LEFT, fill=tk.X, padx=10)
-
 
 class PlotGraph(tk.Frame):
 
@@ -137,24 +141,36 @@ class PlotGraph(tk.Frame):
         tim1EN = tk.Entry(frameBovenPlotGraph)
         tim2EN = tk.Entry(frameBovenPlotGraph)
         grafiekEN = tk.Entry(frameBovenPlotGraph)
-
-        laatGrafiekZien = tk.Button(frameBovenPlotGraph, text="Laat het grafiek zien!", height=5, width=23, fg="#49A", bg="white",
+        try:
+            laatGrafiekZien = tk.Button(frameBovenPlotGraph, text="Laat het grafiek zien!", height=5, width=23, fg="#49A", bg="white",
                                     font='Arial 10',command=lambda: PlotGrafiek(str(bactEN.get()), int(tempEN.get()), int(phEN.get()),
                                                        int(tim1EN.get()), int(tim2EN.get()), int(grafiekEN.get())))
+        except ValueError:
+            infoUitprinten = tk.Label(frameBovenPlotGraph,
+                                      text="Je hebt 1 of meerdere inputs verkeerd ingevoerd, probeer het opnieuw",
+                                      font='Arial 16 ', bg="#49A")
+            infoUitprinten.grid(row=25, column=0)
 
         def PlotGrafiek(bacteriaName, temperature, pH, startTime, endTime, typeG):
-            x = np.linspace(startTime, endTime, (endTime - startTime + 1))
-            y = EndResult.growth_endresult(bacteriaName, temperature, pH, startTime, endTime, typeG)
-            f = Figure(figsize=(5, 5), dpi=100)
-            a = f.add_subplot(111)
-            a.plot(x, y)
-            canvas = FigureCanvasTkAgg(f, self)
-            canvas.draw()
-            canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+            try:
+                x = np.linspace(startTime, endTime, (endTime - startTime + 1))
+                y = EndResult.growth_endresult(bacteriaName, temperature, pH, startTime, endTime, typeG)
+                f = Figure(figsize=(5, 5), dpi=100)
+                a = f.add_subplot(111)
+                a.plot(x, y)
+                canvas = FigureCanvasTkAgg(f, self)
+                canvas.draw()
+                canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-            toolbar = NavigationToolbar2Tk(canvas, self)
-            toolbar.update()
-            canvas._tkcanvas.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+                toolbar = NavigationToolbar2Tk(canvas, self)
+                toolbar.update()
+                canvas._tkcanvas.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+
+            except ValueError:
+                infoUitprinten = tk.Label(frameBovenPlotGraph,
+                                          text="Je hebt 1 of meerdere inputs verkeerd ingevoerd, probeer het opnieuw",
+                                          font='Arial 16 ', bg="#49A")
+                infoUitprinten.pack(side=tk.TOP, fill=tk.X, padx=5)
 
         frameBovenPlotGraph.pack(side=tk.LEFT, fill=tk.BOTH)
 
@@ -176,7 +192,6 @@ class PlotGraph(tk.Frame):
         tim2EN.grid(row = 14 , column =  2, pady= 10, padx= 10, ipady=10, ipadx=130)
         grafiekEN.grid(row = 16 , column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
         legeLabel.grid(row= 20, column= 0,  pady= 10, padx= 10, ipady=10, ipadx=130)
-
 
 if __name__ == '__main__':
     app = GrowthCurve()

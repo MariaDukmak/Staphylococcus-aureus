@@ -18,7 +18,7 @@ class EndResult(JsonChecker):
         time: we start at 0 end at 10 hours"""
 
         b = self.read_json(self, bactName, "gr")
-        c = self.read_json(self, bactName, "gr")
+        c = self.read_json(self, bactName, "br")
         a = c[0]-1
 
         # hier moet er goede getallen in komen + dat in de loop van de tijd moet de b wel ++ or --
@@ -28,11 +28,11 @@ class EndResult(JsonChecker):
             b[0] = b[0]*2
         if len(cFactor) == 3:
             b = b[0] * 2.2
-
         list = []
+
         for time in range(time[0], time[1] + 1):
             list.append(c[0] / (1+a * np.exp(-b[0]*time)))
-            # lijst.append(float(a)/(1.0+ np.exp(float(b[0])-(c[0]*time)))) komt van de bron vandaan
+            #list.append(float(a)/(1.0+ np.exp(float(b[0])-(c[0]*time))))# komt van de bron vandaan
         return np.array(list)
 
 
