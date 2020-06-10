@@ -47,10 +47,9 @@ class MainPage(tk.Frame):
         titel = tk.Label(frameBovenMainpage, text="Welcom to Growth Curve model!", fg='black', bg="white", font='Arial 35 bold')
         tk.Frame.configure(self, bg="#49A")
 
-
         startGrafiekTekenen = tk.Button(frameOnderMainpage, text="Teken het grafiek", height=5, width=23, fg="#49A",
                              bg="white", font='Arial 14', command=lambda: controller.showFrame("PlotGraph"))
-        infoBact = tk.Button(frameOnderMainpage, text="informatie over de bacterie ", height=5, width=23, fg="#49A",
+        infoBact = tk.Button(frameOnderMainpage, text="Informatie over de bacterie ", height=5, width=23, fg="#49A",
                              bg="white",font='Arial 14', command=lambda: controller.showFrame("InfoBact"))
 
         exitButton = tk.Button(frameOnderMainpage, text="Exit the program ",  height=5, width=23, fg="#49A",
@@ -124,10 +123,10 @@ class PlotGraph(tk.Frame):
 
         bactLab= tk.Label(frameBovenPlotGraph,text="Welke bacterie?", font='Arial 18', bg="#49A")
         tempLab = tk.Label(frameBovenPlotGraph, text="Wat is het tempratuur?",font='Arial 18', bg="#49A")
-        pHLab= tk.Label(frameBovenPlotGraph,text="Wat is de PH?",font='Arial 18', bg="#49A")
+        pHLab= tk.Label(frameBovenPlotGraph,text="Wat is de PH grade?",font='Arial 18', bg="#49A")
         tim1Lab = tk.Label(frameBovenPlotGraph, text="Wat is de begintijd in uren?",font='Arial 18', bg="#49A")
         tim2Lab= tk.Label(frameBovenPlotGraph, text="Wat is de eindtijd in uren?",font='Arial 18', bg="#49A")
-        grafiekLab = tk.Label(frameBovenPlotGraph, text="Kies de soort berekneing \n 1.logstic \n 2.Gompertz",font='Arial 16', bg="#49A")
+        grafiekLab = tk.Label(frameBovenPlotGraph, text="Kies de soort berekneing \n 1.logistic \n 2.Gompertz",font='Arial 16', bg="#49A")
         legeLabel = tk.Label(frameBovenPlotGraph, bg="#49A")
 
         bactEN = tk.Entry(frameBovenPlotGraph)
