@@ -11,9 +11,7 @@ from Code.EndResult import EndResult
 class GrowthCurve(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
-
         self.title('Growth Curve app')
-
         screenWidth = self.winfo_screenwidth()
         screenHeight = self.winfo_screenheight()
         self.geometry("{}x{}+-7+0".format(screenWidth, screenHeight - 27))
@@ -34,7 +32,6 @@ class GrowthCurve(tk.Tk):
         self.showFrame("MainPage")
 
     def showFrame(self, pageName):
-
         frame = self.frames[pageName]
         frame.tkraise()
 
@@ -44,25 +41,22 @@ class MainPage(tk.Frame):
         tk.Frame.__init__(self, parent, bg='white')
         self.controller = controller
 
-        frameBovenMainpage = tk.Frame(self, bg="red")
-        frameOnderMainpage = tk.Frame(self, bg="white")
+        frameBovenMainpage = tk.Frame(self, bg="#49A")
+        frameOnderMainpage = tk.Frame(self, bg="#49A")
 
-        titel = tk.Label(frameBovenMainpage, text="Welkom to Growth shit", fg='black', bg="white")
-        tk.Frame.configure(self, background = "#49A",)
-        titel.config(font='Arial 35 bold')
+        titel = tk.Label(frameBovenMainpage, text="Welcom to Growth Curve model!", fg='black', bg="white", font='Arial 35 bold')
+        tk.Frame.configure(self, bg="#49A")
 
-        startGrafiekTekenen = tk.Button(frameOnderMainpage, text="start grafiek tekenen", height=5, width=23, fg="#49A",
-                             bg="white",
-                                    command=lambda: controller.showFrame("PlotGraph"))
-        infoBact = tk.Button(frameOnderMainpage, text="informatie over het bact ", height=5, width=23, fg="#49A",
-                             bg="white",
-                                     command=lambda: controller.showFrame("InfoBact"))
 
-        exitButton = tk.Button(frameOnderMainpage, text="Exit ",  height=5, width=23, fg="#49A",
-                             bg="white",
-                                   command=frameBovenMainpage.quit)
+        startGrafiekTekenen = tk.Button(frameOnderMainpage, text="Teken het grafiek", height=5, width=23, fg="#49A",
+                             bg="white", font='Arial 14', command=lambda: controller.showFrame("PlotGraph"))
+        infoBact = tk.Button(frameOnderMainpage, text="informatie over de bacterie ", height=5, width=23, fg="#49A",
+                             bg="white",font='Arial 14', command=lambda: controller.showFrame("InfoBact"))
+
+        exitButton = tk.Button(frameOnderMainpage, text="Exit the program ",  height=5, width=23, fg="#49A",
+                             bg="white", font='Arial 14',command=frameBovenMainpage.quit)
         statusbar = tk.Label(self, bd=1, relief=tk.SUNKEN, padx=10, pady=20, bg="light blue",
-                             text="Copyright© Me")
+                             text="Copyright© Marya Dukmak")
 
         titel.pack(side=tk.TOP, fill=tk.X)
         startGrafiekTekenen.pack(side=tk.LEFT, fill=tk.X, padx=5)
@@ -72,89 +66,84 @@ class MainPage(tk.Frame):
         frameBovenMainpage.pack(pady=0, expand=tk.TRUE)
         frameOnderMainpage.pack(expand=tk.TRUE)
 
+
 class InfoBact(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        frameBovenPlotGraph = tk.Frame(self, bg="#49A")
-        frameOnderMainpage = tk.Frame(self, bg="#49A")
+        frameBovenInfoBact = tk.Frame(self, bg="#49A")
+        frameOnderInfoBact = tk.Frame(self, bg="#49A")
 
-        titel = tk.Label(frameOnderMainpage, text="Informatie over de bactria", fg='black', bg="#49A")
-        tk.Frame.configure(self, background="#49A" )
-        titel.config(font='Arial 35 bold')
+        titel = tk.Label(frameOnderInfoBact, text="Informatie over de bacterie", fg='black', bg="#49A", font='Arial 35 bold')
+        tk.Frame.configure(self, bg="#49A")
 
-        button1 = tk.Button(frameBovenPlotGraph, text="Back to Home",height=5, width=23, fg="#49A",
-                             bg="white",
-                            command=lambda: controller.showFrame("MainPage"))
+        buttonMainPage = tk.Button(frameBovenInfoBact, text="Terug naar de homepagina",height=5, width=23, fg="#49A",
+                             bg="white", font='Arial 10',command=lambda: controller.showFrame("MainPage"))
 
-        button2 = tk.Button(frameBovenPlotGraph, text="PLot het grafiek",height=5, width=23, fg="#49A",
-                             bg="white",
-                            command=lambda: controller.showFrame("PlotGraph"))
+        buttonPlotGraph = tk.Button(frameBovenInfoBact, text="Teken het grafiek",height=5, width=23, fg="#49A",
+                             bg="white", font='Arial 10', command=lambda: controller.showFrame("PlotGraph"))
 
-        bactLab = tk.Label(frameOnderMainpage, text="Over welke bactrie wil je informatie krijgen?\n "
-                                                     "Type de naam van de bactrie hieronder", font='Arial 18 ', bg="#49A")
+        LabelVraag = tk.Label(frameOnderInfoBact, text="Over welke bacterie wil je informatie krijgen?\n "
+                                                     "Type de naam van de  bacterie hieronder:", font='Arial 18 ', bg="#49A")
 
-        button3 = tk.Button(frameOnderMainpage, text="Zoek het op",height=2, width=12, fg="#49A",
-                             bg="white",
-                            command=lambda: VindInfo(bactEN.get()))
-        bactEN = tk.Entry(frameOnderMainpage)
+        entryBactName = tk.Entry(frameOnderInfoBact)
 
-        def VindInfo(input):
+        buttonInfoJson = tk.Button(frameOnderInfoBact, text="Zoek het op!",height=2, width=12, fg="#49A",
+                             bg="white", font='Arial 10', command=lambda: findJson(entryBactName.get()))
+
+        def findJson(input):
             with open(str(input) + ".json", "r") as f:
                 info = json.load(f)
-                inf= info["info"]
+                informatieVanJson= info["info"]
+                infoUitprinten= tk.Label(frameOnderInfoBact,text=informatieVanJson, font='Arial 16 ', bg="#49A")
+                infoUitprinten.pack(side=tk.TOP, fill=tk.X, padx=5)
 
-                bb = tk.Label(frameOnderMainpage,
-                      text=inf, font='Arial 16 ', bg="#49A")
-
-                bb.pack(side=tk.TOP, fill=tk.X, padx=5)
-
-        frameOnderMainpage.pack(pady=0, expand=tk.TRUE)
-        frameBovenPlotGraph.pack(expand=tk.TRUE)
+        frameOnderInfoBact.pack(pady=0, expand=tk.TRUE)
+        frameBovenInfoBact.pack(expand=tk.TRUE)
         titel.pack(side=tk.TOP, fill=tk.X)
-        bactLab.pack(side=tk.TOP, fill=tk.X, padx=5)
-        bactEN.pack(side=tk.TOP, padx=40, pady=40, ipady=10, ipadx=130)
-        button3.pack(side=tk.TOP, ipady=10, ipadx=110)
-        button2.pack(side=tk.LEFT, fill=tk.X, padx=10)
-        button1.pack(side=tk.LEFT, fill=tk.X, padx=10)
+        LabelVraag.pack(side=tk.TOP, fill=tk.X, padx=5)
+        entryBactName.pack(side=tk.TOP, padx=40, pady=40, ipady=10, ipadx=130)
+        buttonInfoJson.pack(side=tk.TOP, ipady=10, ipadx=110)
+        buttonPlotGraph.pack(side=tk.LEFT, fill=tk.X, padx=10)
+        buttonMainPage.pack(side=tk.LEFT, fill=tk.X, padx=10)
 
 
 class PlotGraph(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-
         frameBovenPlotGraph = tk.Frame(self, bg="#49A")
 
-        titel = tk.Label(frameBovenPlotGraph, text="Grafiek tekenen", fg='black', bg= "#49A")
-        tk.Frame.configure(self, background = "#49A",)
-        titel.config(font='Arial 35 bold')
+        titel = tk.Label(frameBovenPlotGraph, text="Grafiek tekenen", fg='black', bg= "#49A", font='Arial 35 bold')
+        tk.Frame.configure(self, bg="#49A")
 
-        buttonTerugNaarHome =tk.Button(frameBovenPlotGraph, text="Back to Home", height=5, width=23, fg="#49A",
-                             bg="white",command=lambda: controller.showFrame("MainPage"))
+        buttonTerugNaarHome =tk.Button(frameBovenPlotGraph, text="Terug naar de homepagina", height=5, width=23, fg="#49A",
+                             bg="white", font='Arial 10', command=lambda: controller.showFrame("MainPage"))
 
-        buttonNaarInfoBact =tk.Button(frameBovenPlotGraph, text="Inforamatie over de bactrie",height=5, width=23, fg="#49A",
-                             bg="white",command=lambda: controller.showFrame("InfoBact"))
+        buttonNaarInfoBact =tk.Button(frameBovenPlotGraph, text="Inforamatie de bacterie",height=5, width=23, fg="#49A",
+                             bg="white", font='Arial 10', command=lambda: controller.showFrame("InfoBact"))
 
-        bactLab= tk.Label(frameBovenPlotGraph,text="Welke bactria?", font='Arial 18 ', bg="#49A")
-        bactEN = tk.Entry(frameBovenPlotGraph)
-        tempLab = tk.Label(frameBovenPlotGraph, text="Wat is het tempratuur?",font='Arial 18 ', bg="#49A")
-        tempEN = tk.Entry(frameBovenPlotGraph )
-        pHLab= tk.Label(frameBovenPlotGraph,text="Wat is de PH?",font='Arial 18 ', bg="#49A")
-        phEN = tk.Entry(frameBovenPlotGraph )
-        tim1Lab = tk.Label(frameBovenPlotGraph, text="Wat is de begintijd in uren?",font='Arial 18 ', bg=  "#49A" )
-        tim1EN = tk.Entry(frameBovenPlotGraph )
-        tim2Lab= tk.Label(frameBovenPlotGraph, text="Wat is de eindtijd in uren?",font='Arial 18 ', bg=  "#49A" )
-        tim2EN = tk.Entry(frameBovenPlotGraph)
+        bactLab= tk.Label(frameBovenPlotGraph,text="Welke bacterie?", font='Arial 18', bg="#49A")
+        tempLab = tk.Label(frameBovenPlotGraph, text="Wat is het tempratuur?",font='Arial 18', bg="#49A")
+        pHLab= tk.Label(frameBovenPlotGraph,text="Wat is de PH?",font='Arial 18', bg="#49A")
+        tim1Lab = tk.Label(frameBovenPlotGraph, text="Wat is de begintijd in uren?",font='Arial 18', bg="#49A")
+        tim2Lab= tk.Label(frameBovenPlotGraph, text="Wat is de eindtijd in uren?",font='Arial 18', bg="#49A")
         grafiekLab = tk.Label(frameBovenPlotGraph, text="Kies de soort berekneing \n 1.logstic \n 2.Gompertz",font='Arial 16', bg="#49A")
-        grafiekEN = tk.Entry(frameBovenPlotGraph)
         legeLabel = tk.Label(frameBovenPlotGraph, bg="#49A")
-        laatzien = tk.Button(frameBovenPlotGraph, text="laat t zien", height=5, width=23, fg="#49A", bg="white",
-                             command=lambda: stuurdoor(str(bactEN.get()), int(tempEN.get()), int(phEN.get()),
+
+        bactEN = tk.Entry(frameBovenPlotGraph)
+        tempEN = tk.Entry(frameBovenPlotGraph)
+        phEN = tk.Entry(frameBovenPlotGraph)
+        tim1EN = tk.Entry(frameBovenPlotGraph)
+        tim2EN = tk.Entry(frameBovenPlotGraph)
+        grafiekEN = tk.Entry(frameBovenPlotGraph)
+
+        laatGrafiekZien = tk.Button(frameBovenPlotGraph, text="Laat het grafiek zien!", height=5, width=23, fg="#49A", bg="white",
+                                    font='Arial 10',command=lambda: PlotGrafiek(str(bactEN.get()), int(tempEN.get()), int(phEN.get()),
                                                        int(tim1EN.get()), int(tim2EN.get()), int(grafiekEN.get())))
 
-        def stuurdoor(bacteriaName, temperature, pH, startTime, endTime, typeG):
-            y = EndResult.growth_endresult(bacteriaName, temperature, pH, startTime, endTime, typeG)
+        def PlotGrafiek(bacteriaName, temperature, pH, startTime, endTime, typeG):
             x = np.linspace(startTime, endTime, (endTime - startTime + 1))
+            y = EndResult.growth_endresult(bacteriaName, temperature, pH, startTime, endTime, typeG)
             f = Figure(figsize=(5, 5), dpi=100)
             a = f.add_subplot(111)
             a.plot(x, y)
@@ -164,32 +153,30 @@ class PlotGraph(tk.Frame):
 
             toolbar = NavigationToolbar2Tk(canvas, self)
             toolbar.update()
-            canvas._tkcanvas.pack(side=tk.BOTTOM    , fill=tk.BOTH, expand=True)
+            canvas._tkcanvas.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
 
-        frameBovenPlotGraph.pack(side= tk.LEFT, fill = tk.BOTH)
+        frameBovenPlotGraph.pack(side=tk.LEFT, fill=tk.BOTH)
 
-        titel.grid(row = 0, column = 2)
-        bactLab.grid(row= 6, column = 0)
+        titel.grid(row=0, column=2)
+        bactLab.grid(row=6, column=0)
+        tempLab.grid(row=8, column=0)
+        pHLab.grid(row=10, column=0)
+        tim1Lab.grid(row=12, column=0)
+        tim2Lab.grid(row=14, column=0)
+        grafiekLab.grid(row=16, column=0)
+        laatGrafiekZien.grid(row=25, column=0)
+        buttonTerugNaarHome.grid(row=25, column=2)
+        buttonNaarInfoBact.grid(row=25, column=1)
+
         bactEN.grid(row = 6 , column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
-        tempLab.grid(row =8 , column = 0)
         tempEN.grid(row = 8 , column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
-        pHLab.grid(row= 10, column= 0)
         phEN.grid(row = 10 , column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
-        tim1Lab.grid(row= 12, column = 0)
         tim1EN.grid(row = 12 , column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
-        tim2Lab.grid(row= 14, column = 0)
         tim2EN.grid(row = 14 , column =  2, pady= 10, padx= 10, ipady=10, ipadx=130)
-        grafiekLab.grid(row =16, column=0)
         grafiekEN.grid(row = 16 , column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
-
         legeLabel.grid(row= 20, column= 0,  pady= 10, padx= 10, ipady=10, ipadx=130)
-        buttonTerugNaarHome.grid(row= 25, column= 2 )
-        laatzien.grid(row=25, column = 0)
-
-        buttonNaarInfoBact.grid(row= 25, column= 1 )
 
 
 if __name__ == '__main__':
-
     app = GrowthCurve()
     app.mainloop()
