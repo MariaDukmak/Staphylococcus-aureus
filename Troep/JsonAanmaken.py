@@ -6,7 +6,7 @@ import json
 aureus = {
   "name": "s-aureus",
   "info": "Staphylococcus aureus is een stafylokok die toxinen afscheidt en grampositief kleurt.\n De toxinen hebben een negatieve werking op het menselijk lichaam.\n"
-          " Staphylococcus aureus zit in 20 tot 30 procent van de gevallen\n op de huid van mens en dier en op de slijmvliezen, \nzoals de neusholte. Als de bacterie door de huid heen het lichaam binnendringt kan deze huidinfecties en \nwondinfectie veroorzaken (ook na operaties), maar ook urineweginfecties,\n longontsteking en bij koeien uierontsteking.De identificatie van \nStaphylococcus aureus gebeurt via een coagulasetest, "
+          " Staphylococcus aureus zit in 20 tot 30 procent van de gevallen\n op de huid van mens en dier en op de slijmvliezen, zoals de neusholte. \nAls de bacterie door de huid heen het lichaam binnendringt kan deze huidinfecties en \nwondinfectie veroorzaken (ook na operaties), maar ook urineweginfecties,\n longontsteking en bij koeien uierontsteking.De identificatie van \nStaphylococcus aureus gebeurt via een coagulasetest,\n "
           "waarbij de typische Staphylococcus aureus een positief resultaat zal geven,\n in tegenstelling tot andere soorten stafylokokken.\n Atypische varianten kunnen echter ook een negatief resultaat geven bij de coagulasetest.",
   "env-info": {
                 "temp": { "temp": 37, "min": 7 , "max": 48},

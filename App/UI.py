@@ -8,6 +8,8 @@ from matplotlib.figure import Figure
 from Code.EndResult import EndResult
 
 
+#TODO: voeg comments, maak de plot specfieker
+
 class GrowthCurve(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
