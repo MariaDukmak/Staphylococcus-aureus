@@ -1,10 +1,10 @@
-# TODO: pas de error bij waardes_check aan
 
 import json
 
+
 class JsonChecker:
-    def __init__(self, bacteriaName: str, temperature: float, pH: float, startTime: int, endTime: float, typeG: float):
-        super().__init__(bacteriaName, temperature, pH, startTime, endTime, typeG)
+    def __init__(self, bacteriaName: str, temperature: float, pH: float):
+        super().__init__(bacteriaName, temperature, pH)
 
     def read_json(self, b: str, item: str):
         try:
@@ -13,7 +13,7 @@ class JsonChecker:
                 optimum_item = info["env-info"][item][item]
                 max_item = info["env-info"][item]["max"]
                 min_item = info["env-info"][item]["min"]
-                return [optimum_item, max_item, min_item]
+                return [min_item, optimum_item, max_item]
         except KeyError as e:
             return [optimum_item]
 
@@ -31,15 +31,18 @@ class JsonChecker:
         """
         try:
             values = self.read_json(self, bestand, item)
-            if values[0] == inputWaarde:
-                return [inputWaarde, values[1]]
-            elif values[1] == inputWaarde or values[2] <= inputWaarde <= values[1]:
-                return [inputWaarde]
-            elif values[2] == inputWaarde:
-                return [inputWaarde, values[0], values[1]]
-            else:
-                print(f"incorrect type of value was entered {inputWaarde}")
-
+            if len(values) == 3:
+                if values[2] == inputWaarde:
+                    return [inputWaarde]
+                elif values[0] == inputWaarde or (values[1] > inputWaarde > values[2] and inputWaarde != values[2]):
+                    return [inputWaarde, values[1], values[2]]
+                elif values[1] == inputWaarde or (inputWaarde> values[1] and inputWaarde != values[2]):
+                    return [inputWaarde, values[2]]
+                else:
+                    print(f"incorrect type of value was entered {inputWaarde}")
+            elif len(values) == 1:
+                if inputWaarde == values[0]:
+                    return inputWaarde
         # handle exceptions
         except AttributeError as e:
             print("The json does not contain that object ", e)

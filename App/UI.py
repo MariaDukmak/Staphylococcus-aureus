@@ -130,7 +130,7 @@ class PlotGraph(tk.Frame):
         bactLab= tk.Label(frameBovenPlotGraph,text="Welke bacterie?", font='Arial 18', bg="#49A")
         tempLab = tk.Label(frameBovenPlotGraph, text="Wat is het tempratuur?",font='Arial 18', bg="#49A")
         pHLab= tk.Label(frameBovenPlotGraph,text="Wat is de PH grade?",font='Arial 18', bg="#49A")
-        tim1Lab = tk.Label(frameBovenPlotGraph, text="Wat is de begintijd in uren?",font='Arial 18', bg="#49A")
+        #tim1Lab = tk.Label(frameBovenPlotGraph, text="Wat is de begintijd in uren?",font='Arial 18', bg="#49A")
         tim2Lab= tk.Label(frameBovenPlotGraph, text="Wat is de eindtijd in uren?",font='Arial 18', bg="#49A")
         grafiekLab = tk.Label(frameBovenPlotGraph, text="Kies de soort berekneing \n 1.logistic \n 2.Gompertz",font='Arial 16', bg="#49A")
         legeLabel = tk.Label(frameBovenPlotGraph, bg="#49A")
@@ -138,23 +138,23 @@ class PlotGraph(tk.Frame):
         bactEN = tk.Entry(frameBovenPlotGraph)
         tempEN = tk.Entry(frameBovenPlotGraph)
         phEN = tk.Entry(frameBovenPlotGraph)
-        tim1EN = tk.Entry(frameBovenPlotGraph)
+        #tim1EN = tk.Entry(frameBovenPlotGraph)
         tim2EN = tk.Entry(frameBovenPlotGraph)
         grafiekEN = tk.Entry(frameBovenPlotGraph)
         try:
             laatGrafiekZien = tk.Button(frameBovenPlotGraph, text="Laat het grafiek zien!", height=5, width=23, fg="#49A", bg="white",
                                     font='Arial 10',command=lambda: PlotGrafiek(str(bactEN.get()), int(tempEN.get()), int(phEN.get()),
-                                                       int(tim1EN.get()), int(tim2EN.get()), int(grafiekEN.get())))
+                                                       int(tim2EN.get()), int(grafiekEN.get())))
         except ValueError:
             infoUitprinten = tk.Label(frameBovenPlotGraph,
-                                      text="Je hebt 1 of meerdere inputs verkeerd ingevoerd, probeer het opnieuw",
+                                      text="Je hebt 1 of meerdere inputs verkeerd ingevoerd,\n probeer het opnieuw",
                                       font='Arial 16 ', bg="#49A")
-            infoUitprinten.grid(row=25, column=0)
+            infoUitprinten.grid (row = 40, column = 0)
 
-        def PlotGrafiek(bacteriaName, temperature, pH, startTime, endTime, typeG):
+        def PlotGrafiek(bacteriaName, temperature, pH, endTime, typeG):
             try:
-                x = np.linspace(startTime, endTime, (endTime - startTime + 1))
-                y = EndResult.growth_endresult(bacteriaName, temperature, pH, startTime, endTime, typeG)
+                x = np.linspace(0, endTime, (endTime - 0 + 1))
+                y = EndResult.growth_endresult(bacteriaName, temperature, pH, endTime, typeG)
                 f = Figure(figsize=(5, 5), dpi=100)
                 a = f.add_subplot(111)
                 a.plot(x, y)
@@ -170,7 +170,7 @@ class PlotGraph(tk.Frame):
                 infoUitprinten = tk.Label(frameBovenPlotGraph,
                                           text="Je hebt 1 of meerdere inputs verkeerd ingevoerd, probeer het opnieuw",
                                           font='Arial 16 ', bg="#49A")
-                infoUitprinten.pack(side=tk.TOP, fill=tk.X, padx=5)
+                infoUitprinten.grid(row=25, column=0)
 
         frameBovenPlotGraph.pack(side=tk.LEFT, fill=tk.BOTH)
 
@@ -178,20 +178,21 @@ class PlotGraph(tk.Frame):
         bactLab.grid(row=6, column=0)
         tempLab.grid(row=8, column=0)
         pHLab.grid(row=10, column=0)
-        tim1Lab.grid(row=12, column=0)
+        #tim1Lab.grid(row=12, column=0)
         tim2Lab.grid(row=14, column=0)
         grafiekLab.grid(row=16, column=0)
         laatGrafiekZien.grid(row=25, column=0)
         buttonTerugNaarHome.grid(row=25, column=2)
         buttonNaarInfoBact.grid(row=25, column=1)
 
-        bactEN.grid(row = 6 , column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
-        tempEN.grid(row = 8 , column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
-        phEN.grid(row = 10 , column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
-        tim1EN.grid(row = 12 , column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
-        tim2EN.grid(row = 14 , column =  2, pady= 10, padx= 10, ipady=10, ipadx=130)
-        grafiekEN.grid(row = 16 , column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
-        legeLabel.grid(row= 20, column= 0,  pady= 10, padx= 10, ipady=10, ipadx=130)
+        bactEN.grid(row=6, column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
+        tempEN.grid(row=8, column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
+        phEN.grid(row=10, column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
+        #tim1EN.grid(row=12, column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
+        tim2EN.grid(row=14, column =  2, pady= 10, padx= 10, ipady=10, ipadx=130)
+        grafiekEN.grid(row=16, column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
+        legeLabel.grid(row=20, column= 0,  pady= 10, padx= 10, ipady=10, ipadx=130)
+
 
 if __name__ == '__main__':
     app = GrowthCurve()
