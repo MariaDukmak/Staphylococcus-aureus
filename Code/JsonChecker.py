@@ -31,10 +31,11 @@ class JsonChecker:
         """
         try:
             values = self.read_json(self, bestand, item)
+            print(values)
             if len(values) == 3:
                 if values[2] == inputWaarde:
                     return [inputWaarde]
-                elif values[0] == inputWaarde or (values[1] > inputWaarde > values[2] and inputWaarde != values[2]):
+                elif values[0] == inputWaarde or (values[0] <= inputWaarde <= values[1] and inputWaarde != values[1]):
                     return [inputWaarde, values[1], values[2]]
                 elif values[1] == inputWaarde or (inputWaarde> values[1] and inputWaarde != values[2]):
                     return [inputWaarde, values[2]]
