@@ -153,8 +153,8 @@ class PlotGraph(tk.Frame):
 
         def PlotGrafiek(bacteriaName, temperature, pH, endTime, typeG):
             try:
-                x = np.linspace(0, endTime, (endTime - 0 + 1))
                 y = EndResult.growth_endresult(bacteriaName, temperature, pH, endTime, typeG)
+                x = np.linspace(0, len(y), (len(y)))
                 f = Figure(figsize=(5, 5), dpi=100)
                 a = f.add_subplot(111)
                 a.plot(x, y)
