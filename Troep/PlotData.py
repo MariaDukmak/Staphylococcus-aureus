@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from Code.EndResult import EndResult
-from Code.InputVrager import Inputs, endTime, temperatureInput, pHInput, bacteriaNameInput, typeG
+from Troep.InputVrager import Inputs, endTime, temperatureInput, pHInput, bacteriaNameInput, typeG
 
 
 class Plots(Inputs): # s-aureus

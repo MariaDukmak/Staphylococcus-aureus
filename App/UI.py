@@ -132,7 +132,9 @@ class PlotGraph(tk.Frame):
         pHLab= tk.Label(frameBovenPlotGraph,text="Wat is de PH grade?",font='Arial 18', bg="#49A")
         #tim1Lab = tk.Label(frameBovenPlotGraph, text="Wat is de begintijd in uren?",font='Arial 18', bg="#49A")
         tim2Lab= tk.Label(frameBovenPlotGraph, text="Wat is de eindtijd in uren?",font='Arial 18', bg="#49A")
-        grafiekLab = tk.Label(frameBovenPlotGraph, text="Kies de soort berekneing \n 1.logistic \n 2.Gompertz",font='Arial 16', bg="#49A")
+        grafiekLab = tk.Label(frameBovenPlotGraph, text=" Kies de soort berekneing \n 1.logstic met max aantaal cellen als beperkende factor"
+                                                        " \n 2.logstic met max tempratuur als beperkende factor\n 3.log groei met 4 faces",
+                                                        font='Arial 16', bg="#49A")
         legeLabel = tk.Label(frameBovenPlotGraph, bg="#49A")
 
         bactEN = tk.Entry(frameBovenPlotGraph)
