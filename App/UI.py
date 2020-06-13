@@ -11,6 +11,7 @@ from Code.EndResult import EndResult
 #TODO: voeg comments, maak de plot specfieker
 
 class GrowthCurve(tk.Tk):
+    """Dit is de main window, in dit klasse worden de andere frames geshowed"""
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
         self.title('Growth Curve app')
@@ -39,6 +40,7 @@ class GrowthCurve(tk.Tk):
 
 
 class MainPage(tk.Frame):
+    "Dit is de main frame, hier zijn er 3 buttons aangamaakt om vervolgens andere klasses aanteroepen"
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, bg='white')
         self.controller = controller
@@ -46,7 +48,8 @@ class MainPage(tk.Frame):
         frameBovenMainpage = tk.Frame(self, bg="#49A")
         frameOnderMainpage = tk.Frame(self, bg="#49A")
 
-        titel = tk.Label(frameBovenMainpage, text="Welcom to Growth Curve model!", fg='black', bg="white", font='Arial 35 bold')
+        titel=tk.Label(frameBovenMainpage, text="Welcom to Growth Curve model!", fg='black', bg="white",
+                       font='Arial 35 bold')
         tk.Frame.configure(self, bg="#49A")
 
         startGrafiekTekenen = tk.Button(frameOnderMainpage, text="Teken het grafiek", height=5, width=23, fg="#49A",
@@ -69,12 +72,16 @@ class MainPage(tk.Frame):
 
 
 class InfoBact(tk.Frame):
+    """In dit klass kunnen er informatie over een bepaalde bactrie geshowed worden, door gebruik van de json bestand
+    te maken"""
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.controller = controller
+
         frameBovenInfoBact = tk.Frame(self, bg="#49A")
         frameOnderInfoBact = tk.Frame(self, bg="#49A")
 
-        titel = tk.Label(frameOnderInfoBact, text="Informatie over de bacterie", fg='black', bg="#49A", font='Arial 35 bold')
+        titel=tk.Label(frameOnderInfoBact, text="Informatie over de bacterie", fg='black', bg="#49A", font='Arial 35 bold')
         tk.Frame.configure(self, bg="#49A")
 
         buttonMainPage = tk.Button(frameBovenInfoBact, text="Terug naar de homepagina",height=5, width=23, fg="#49A",
@@ -84,7 +91,7 @@ class InfoBact(tk.Frame):
                              bg="white", font='Arial 10', command=lambda: controller.showFrame("PlotGraph"))
 
         LabelVraag = tk.Label(frameOnderInfoBact, text="Over welke bacterie wil je informatie krijgen?\n "
-                                                     "Type de naam van de  bacterie hieronder:", font='Arial 18 ', bg="#49A")
+                                             "Type de naam van de  bacterie hieronder:", font='Arial 18', bg="#49A")
 
         entryBactName = tk.Entry(frameOnderInfoBact)
 
@@ -92,6 +99,9 @@ class InfoBact(tk.Frame):
                              bg="white", font='Arial 10', command=lambda: findJson(entryBactName.get()))
 
         def findJson(input):
+            """De entry van de gebruiker wordt naar deze functie doorgestuurd om vervolgens de bijhornde info in de json
+                bestand te zoeken. Voor het gevaal dat de gebruiker een naam invoert die niet tussen de json bestanden staat,
+                 gebruik ik een try except"""
             try:
                 with open(str(input) + ".json", "r") as f:
                     info = json.load(f)
@@ -99,8 +109,9 @@ class InfoBact(tk.Frame):
                     infoUitprinten= tk.Label(frameOnderInfoBact,text=informatieVanJson, font='Arial 16 ', bg="#49A")
                     infoUitprinten.pack(side=tk.TOP, fill=tk.X, padx=5)
             except FileNotFoundError:
-                infoUitprinten = tk.Label(frameOnderInfoBact, text="We hebben helaas geen informatie kunnen vinden voor deze bacterie",
-                                          font='Arial 16 ', bg="#49A")
+
+                infoUitprinten = tk.Label(frameOnderInfoBact, text="We hebben helaas geen informatie kunnen vinden"
+                                                                   " voor deze bacterie",font='Arial 16 ', bg="#49A")
                 infoUitprinten.pack(side=tk.TOP, fill=tk.X, padx=5)
 
         frameOnderInfoBact.pack(pady=0, expand=tk.TRUE)
@@ -113,7 +124,9 @@ class InfoBact(tk.Frame):
         buttonMainPage.pack(side=tk.LEFT, fill=tk.X, padx=10)
 
 class PlotGraph(tk.Frame):
-
+    """In dit klass worden de inputs dir nodig voor het bereken van de intervals en het tekenen van het grafiek gevraagd
+       verolgens wordt de gerafiek aan de rechtere kant van de scherm geschowed, hier ook maak ik gebruik van de try,
+       except voor het geval dat de gebruiker een verkerede type in toetst """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         frameBovenPlotGraph = tk.Frame(self, bg="#49A")
@@ -121,7 +134,7 @@ class PlotGraph(tk.Frame):
         titel = tk.Label(frameBovenPlotGraph, text="Grafiek tekenen", fg='black', bg= "#49A", font='Arial 35 bold')
         tk.Frame.configure(self, bg="#49A")
 
-        buttonTerugNaarHome =tk.Button(frameBovenPlotGraph, text="Terug naar de homepagina", height=5, width=23, fg="#49A",
+        buttonTerugNaarHome=tk.Button(frameBovenPlotGraph, text="Terug naar de homepagina",height=5,width=23, fg="#49A",
                              bg="white", font='Arial 10', command=lambda: controller.showFrame("MainPage"))
 
         buttonNaarInfoBact =tk.Button(frameBovenPlotGraph, text="Inforamatie de bacterie",height=5, width=23, fg="#49A",
@@ -130,23 +143,21 @@ class PlotGraph(tk.Frame):
         bactLab= tk.Label(frameBovenPlotGraph,text="Welke bacterie?", font='Arial 18', bg="#49A")
         tempLab = tk.Label(frameBovenPlotGraph, text="Wat is het tempratuur?",font='Arial 18', bg="#49A")
         pHLab= tk.Label(frameBovenPlotGraph,text="Wat is de PH grade?",font='Arial 18', bg="#49A")
-        #tim1Lab = tk.Label(frameBovenPlotGraph, text="Wat is de begintijd in uren?",font='Arial 18', bg="#49A")
         tim2Lab= tk.Label(frameBovenPlotGraph, text="Wat is de eindtijd in uren?",font='Arial 18', bg="#49A")
-        grafiekLab = tk.Label(frameBovenPlotGraph, text=" Kies de soort berekneing \n 1.logstic met max aantaal cellen als beperkende factor"
-                                                        " \n 2.logstic met max tempratuur als beperkende factor\n 3.log groei met 4 faces",
+        grafiekLab = tk.Label(frameBovenPlotGraph, text=" Kies de soort berekneing \n 1.logstic met max aantaal cellen"
+                                                        " als beperkende factor \n 2.logstic met max tempratuur als "
+                                                        "beperkende factor\n 3.log groei met 4 faces",
                                                         font='Arial 16', bg="#49A")
         legeLabel = tk.Label(frameBovenPlotGraph, bg="#49A")
-
         bactEN = tk.Entry(frameBovenPlotGraph)
         tempEN = tk.Entry(frameBovenPlotGraph)
         phEN = tk.Entry(frameBovenPlotGraph)
-        #tim1EN = tk.Entry(frameBovenPlotGraph)
         tim2EN = tk.Entry(frameBovenPlotGraph)
         grafiekEN = tk.Entry(frameBovenPlotGraph)
         try:
-            laatGrafiekZien = tk.Button(frameBovenPlotGraph, text="Laat het grafiek zien!", height=5, width=23, fg="#49A", bg="white",
-                                    font='Arial 10',command=lambda: PlotGrafiek(str(bactEN.get()), int(tempEN.get()), int(phEN.get()),
-                                                       int(tim2EN.get()), int(grafiekEN.get())))
+            laatGrafiekZien=tk.Button(frameBovenPlotGraph, text="Laat het grafiek zien!", height=5, width=23, fg="#49A",
+                                        bg="white", font='Arial 10',command=lambda: PlotGrafiek(str(bactEN.get()),
+                                        int(tempEN.get()), int(phEN.get()),int(tim2EN.get()), int(grafiekEN.get())))
         except ValueError:
             infoUitprinten = tk.Label(frameBovenPlotGraph,
                                       text="Je hebt 1 of meerdere inputs verkeerd ingevoerd,\n probeer het opnieuw",
@@ -180,7 +191,6 @@ class PlotGraph(tk.Frame):
         bactLab.grid(row=6, column=0)
         tempLab.grid(row=8, column=0)
         pHLab.grid(row=10, column=0)
-        #tim1Lab.grid(row=12, column=0)
         tim2Lab.grid(row=14, column=0)
         grafiekLab.grid(row=16, column=0)
         laatGrafiekZien.grid(row=25, column=0)
@@ -190,7 +200,6 @@ class PlotGraph(tk.Frame):
         bactEN.grid(row=6, column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
         tempEN.grid(row=8, column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
         phEN.grid(row=10, column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
-        #tim1EN.grid(row=12, column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
         tim2EN.grid(row=14, column =  2, pady= 10, padx= 10, ipady=10, ipadx=130)
         grafiekEN.grid(row=16, column = 2, pady= 10, padx= 10, ipady=10, ipadx=130)
         legeLabel.grid(row=20, column= 0,  pady= 10, padx= 10, ipady=10, ipadx=130)
