@@ -1,6 +1,5 @@
 
 import numpy as np
-from numpy import log as ln
 
 from Code.JsonChecker import JsonChecker
 
@@ -17,33 +16,34 @@ afstervingsfase:de periode, waarin het aantal levende cellen per ml afneemt"""
 
 
 class EndResult(JsonChecker):
-    def __init__(self, bactName: str, temperature: float, pH: float, endTime: float, typeG: int):
+    def __init__(self, bactName:str, temperature: float, pH: float, endTime: float, typeG: int):
         super().__init__(bactName, temperature, pH, endTime, typeG)
 
 
-    def logistic(self, bact_name:str, time:float):
+    def logistic(self, bact_name:str, time:float, list = []):
 
-          """"c= is de beperkende factor, kan tempratuur, ph of max aantaal cellen zijn
+          """"c = is de beperkende factor, kan tempratuur, ph of max aantaal cellen zijn
             b= is de groeifactor
-            a = is de beginwaarde"""""
+            a = is de beginwaarde
+            De gebuikte formule komt uit een atrtikel die in de bronnen(1) vermeld staat"""""
 
           groeisFcator = self.read_json(self, bact_name, "gr")
           beperkendeFactor = self.read_json(self, bact_name, "br")
-          beginWaarde = beperkendeFactor[0] - 1
-          list = []
+          beginWaarde = self.read_json(self, bact_name, "bw")
+
           for t in range(0, int(time) + 1):
-              list.append(beperkendeFactor[0] / (1 + beginWaarde * np.exp(-groeisFcator[0] * t)))
+              list.append(beperkendeFactor[0] / (1 + beginWaarde[0] * np.exp(-groeisFcator[0] * t)))
               #xx=  np.exp((b[0])-(c[0]*time))
               #list.append(a/(1 + xx))# komt van de bron vandaan
           return np.array(list)
 
 
-    def temp_logistic(self, bact_name: str, temp_check:list):
+    def temp_logistic(self, bact_name: str, temp_check:list, list = []):
         """hier moet de grafiek van de growth getekend, in verglijking met de tempratuur verandering per uur
-             begint bij de min temp en eindigt bij de max """
-        list = []
-        beginRange = 0
-        eindRange = 0
+             begint bij de min temp en eindigt bij de max
+             De gebruikt formule komt uit een atrikel die in de bronnen(2) vermeld staat """
+
+        beginRange, eindRange = 0, 0
         groeisFactor = self.read_json(self, bact_name, "gr")
 
         if temp_check is not None:
@@ -73,23 +73,33 @@ class EndResult(JsonChecker):
                 list.append(eindRange / (1 + begingValue * np.exp(-groeisFactor[0] * time)))
 
 
-    def log_growth(self, bact_name, time):
-        """log N -log N0 = growth rate /2.303(t-t0)"""
-        lijst= []
-        logN0 = np.log(2.05e6)
+    def log_growth(self, bact_name, time, lijst=[]):
+
+        """log N -log N0 = growth rate /2.303(t-t0)
+           LogN0 is de inoclum biomass oftewel de begincellen/culture in CFU/ml
+           Growth rate is de groeisfactor, staat in de json file van de bactrie
+           Beperkende factor is in dit geval de max aantaal cellen die gemaakt kunnen worden in XX C tempratuur.
+           M is de max biomass = M(t)- M(0)
+           De cijfers voor bactrie XX komen uit een onderzoek die in de bronnen(3) vermeld staat."""
+
+        lnN0 = self.read_json(self, bact_name, "bw")
         growthrate = self.read_json(self, bact_name, "gr")
         beperkendeFactor = self.read_json(self, bact_name, "br")
-        lijst.append(logN0)
+        lijst.append(lnN0[0])
+
         for t in range(0, int(time)+1):
-             logN = (growthrate[0]/2.303*(t)) + logN0
-             if logN < beperkendeFactor[0]:
-                lijst.append(logN)
+             lnN = (growthrate[0]*(t)) + lnN0[0]
+             if lnN < beperkendeFactor[0]:
+                lijst.append(lnN)
              else:
                  lijst.append(beperkendeFactor[0])
-        print(lijst)
         M = max(lijst) - min(lijst)
-        print(M)
 
+        lijst2 = [int(item) for item in lijst[::-1] if int(item) != int(lnN0[0])]
+        unique = [x for i, x in enumerate(lijst2) if i == lijst2.index(x)]
+
+        for item in unique:
+            lijst.append(item)
         return np.array(lijst)
 
     def Gompertz(self, bact_input, t, b, c):  # TODO: maak in versie 2 de Gompertz af

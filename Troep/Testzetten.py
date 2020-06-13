@@ -79,6 +79,6 @@
   #           else:
   #               print(np.array(list))
   #               return np.array(list)
-
-x =[0,0,0]
-print(len(x))
+import numpy as np
+x =np.log(2.05e6)
+print((x))
