@@ -4,7 +4,7 @@ import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.figure import Figure
 
-from Code.EndResult import EndResult
+from Code.EndResults import EndResults
 
 
 class PlotGraph(tk.Frame):
@@ -55,7 +55,7 @@ class PlotGraph(tk.Frame):
         def PlotGrafiek(bacteriaName, temperature, pH, endTime, typeG):
             # Hier wordt de y voor het grafiek van het aloritme opgehaald en getekent.
             try:
-                y = EndResult.growth_endresult(bacteriaName, temperature, pH, endTime, typeG)
+                y = EndResults(bacteriaName, temperature, pH, endTime, typeG)
                 x = np.linspace(0, len(y), (len(y)))  # wordt op basis van de lengte van y gemaakt
                 f = Figure(figsize=(5, 5), dpi=100)
                 f.suptitle('Growth Curve', fontsize=14, fontweight='bold')

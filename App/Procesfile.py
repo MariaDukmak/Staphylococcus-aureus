@@ -73,18 +73,17 @@ class ProcesFile(tk.Frame):
             # hier wordt de classes aangroepen die de growth rate en/de max aantaal cellen kan uitrekenen
             # en vervolgens aangetoond
             answer = readit(self.fileDai)
-            eind_answer = answer.verzamel(self.fileDai)
+            #eind_answer = answer.(self.fileDai)
 
             if var.get() == 1: # als de growth rate wordt gekozen
-                antwoordShowLabel.config(text = f"De growth rate is "+str(eind_answer[0]))
+                antwoordShowLabel.config(text = f"De growth rate is "+str(answer[0]))
             if var2.get() == 1: # als de max aantaal cellen wordt gekozen
-                antwoordShowLabel2.config(text= " De max aantaal gemaakte cellen is " + str(eind_answer[1][1]))
+                antwoordShowLabel2.config(text= " De max aantaal gemaakte cellen is " + str(answer[1][1]))
 
         def plot_file():
             # hier kunnnen de data van de file in een grafiek getekend worden
-            try:
-                xeny =readit(self.fileDai)
-                xenyy = xeny.readd(self.fileDai)
+            # try:
+                xenyy =readit(self.fileDai, 1)
                 x, y = xenyy[0], xenyy[1]
                 f = Figure(figsize=(5, 5), dpi=100)
                 f.suptitle('Growth Curve', fontsize=14, fontweight='bold')
@@ -96,11 +95,11 @@ class ProcesFile(tk.Frame):
                 canvas.draw()
 
                 canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
-            except Exception as e:
-                infoUitprinten = tk.Label(frameBovenPlotGraph,
-                                          text="Je hebt 1 of meerdere inputs verkeerd ingevoerd, probeer het opnieuw",
-                                          font='Arial 16 ', bg="#49A")
-                infoUitprinten.grid(row=25, column=0)
+            # except Exception as e:
+            #     infoUitprinten = tk.Label(frameBovenPlotGraph,
+            #                               text="Je hebt 1 of meerdere inputs verkeerd ingevoerd, probeer het opnieuw",
+            #                               font='Arial 16 ', bg="#49A")
+            #     infoUitprinten.grid(row=25, column=0)
 
     def file(self):
         # hierdoor kan de gebruiker een file uploaden
