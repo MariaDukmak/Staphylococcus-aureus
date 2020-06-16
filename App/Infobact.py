@@ -1,3 +1,5 @@
+
+
 import json
 import tkinter as tk
 
@@ -25,7 +27,7 @@ class InfoBact(tk.Frame):
         LabelVraag = tk.Label(frameOnderInfoBact, text="Over welke bacterie wil je informatie krijgen?\n "
                                              "Type de naam van de  bacterie hieronder:", font='Arial 18', bg="#49A")
 
-        entryBactName = tk.Entry(frameOnderInfoBact)
+        entryBactName = tk.Entry(frameOnderInfoBact, font="Arial 18")
 
         buttonInfoJson = tk.Button(frameOnderInfoBact, text="Zoek het op!",height=2, width=12, fg="#49A",
                              bg="white", font='Arial 10', command=lambda: findJson(entryBactName.get()))
