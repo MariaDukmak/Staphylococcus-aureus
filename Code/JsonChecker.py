@@ -3,21 +3,28 @@ import json
 
 
 class JsonChecker:
-    def __init__(self, bacteriaName: str, temperature: float, pH: float):
-        super().__init__(bacteriaName, temperature, pH)
+    def __init__(self, bacteriaName: str, temperature: float, pH: float, item: str, inputWaarde: float):
+        self.bacteriaName = bacteriaName
+        self.temperature = temperature
+        self.pH = pH
+        self.item = item
+        self.inputWaarde = inputWaarde
 
-    def read_json(self, b: str, item: str):
+    def read_json(self):
         try:
-            with open(b + ".json", "r") as f:
+            with open(self.bacteriaName + ".json", "r") as f:
                 info = json.load(f)
-                optimum_item = info["env-info"][item][item]
-                max_item = info["env-info"][item]["max"]
-                min_item = info["env-info"][item]["min"]
+                optimum_item = info["env-info"][self.item][self.item]
+                max_item = info["env-info"][self.item]["max"]
+                min_item = info["env-info"][self.item]["min"]
                 return [min_item, optimum_item, max_item]
         except KeyError as e:
             return [optimum_item]
 
-    def values_check(self, bestand: str, inputWaarde: float, item: str):
+        except FileNotFoundError as e:
+            return "File not found"
+
+    def values_check(self):
 
         """"Here the input of the user is checked for the conditions of growth such as: PH and the temperature.
             It is examined whether the input value is greater, equal or smaller than the optimum value.
@@ -30,20 +37,20 @@ class JsonChecker:
                          For this we need the max, optimum and the min.
         """
         try:
-            values = self.read_json(self, bestand, item)
-            print(values)
+            values = self.read_json()
+            print("values", values)
             if len(values) == 3:
-                if values[2] == inputWaarde:
-                    return [inputWaarde]
-                elif values[0] == inputWaarde or (values[0] <= inputWaarde <= values[1] and inputWaarde != values[1]):
-                    return [inputWaarde, values[1], values[2]]
-                elif values[1] == inputWaarde or (inputWaarde> values[1] and inputWaarde != values[2]):
-                    return [inputWaarde, values[2]]
+                if values[2] == self.inputWaarde:
+                    return [self.inputWaarde]
+                elif values[0] == self.inputWaarde or (values[0] <= self.inputWaarde <= values[1] and self.inputWaarde != values[1]):
+                    return [self.inputWaarde, values[1], values[2]]
+                elif values[1] == self.inputWaarde or (self.inputWaarde> values[1] and self.inputWaarde != values[2]):
+                    return [self.inputWaarde, values[2]]
                 else:
-                    print(f"incorrect type of value was entered {inputWaarde}")
+                    print(f"incorrect type of value was entered {self.inputWaarde}")
             elif len(values) == 1:
-                if inputWaarde == values[0]:
-                    return inputWaarde
+                if self.inputWaarde == values[0]:
+                    return self.inputWaarde
         # handle exceptions
         except AttributeError as e:
             print("The json does not contain that object ", e)
