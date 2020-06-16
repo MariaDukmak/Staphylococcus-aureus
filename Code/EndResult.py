@@ -99,17 +99,24 @@ class EndResult(JsonChecker):
         pH_waardes = self.read_json(self, bact_name, "ph")
         lijst.append(lnN0[0])
 
-        tt = ((temp_waardes[1]-temp_waardes[0])*(temerature - temp_waardes[1]) - (temp_waardes[1] - temp_waardes[2])
-              * (temp_waardes[1] + temp_waardes[0] - 2*temerature))
-        tt2 = ((temp_waardes[1] - temp_waardes[0]) * tt)
-        tt3 = ((temerature - temp_waardes[2])*(temerature - temp_waardes[0])**2 / tt2)
+        # max growth rate(T, pH) = CTPM(T, pH)= optimum growth rate t(T) p(pH)
+
+        # temerature t(T)
+        tt = ((temp_waardes[1]-temp_waardes[0])*(temerature - temp_waardes[1])
+              - (temp_waardes[1] - temp_waardes[2])
+              * (temp_waardes[1] + temp_waardes[0] - 2*temerature)) # de noemer stukje 1
+
+        tt2 = ((temp_waardes[1] - temp_waardes[0]) * tt) # de noemer stukje 2
+        tt3 = ((temerature - temp_waardes[2])*(temerature - temp_waardes[0])**2 / tt2) # de teller
         print("tt3", tt3)
 
-        phh = ((pH - pH_waardes[0])*(pH-pH_waardes[2]) - (pH - pH_waardes[1])**2)
-        phh2 = ((pH - pH_waardes[0])*(pH-pH_waardes[2])/phh)
-
+        # pH p(pH)
+        phh = ((pH - pH_waardes[0])*(pH-pH_waardes[2]) - (pH - pH_waardes[1])**2) # de noemer
+        phh2 = ((pH - pH_waardes[0])*(pH-pH_waardes[2])/phh) # de teller
         print("phh2", phh2)
-        newgroeiFactpr = growthrate[0]*tt3 * phh2
+
+        # new groei factor
+        newgroeiFactpr = growthrate[0]*tt3* phh2
         print(newgroeiFactpr)
 
         for t in range(0, int(time)+1):
