@@ -6,11 +6,10 @@ from App.Plotgraph import PlotGraph
 from App.Procesfile import ProcesFile
 
 
-#TODO: voeg comments, maak de plot specfieker
-
 class GrowthCurve(tk.Tk):
     """Dit is de main window, in dit klasse worden de andere frames geshowed"""
     def __init__(self, *args, **kwargs):
+        # Bouwt het aantal pagina's op als wordt ingegeven.
         tk.Tk.__init__(self, *args, **kwargs)
         self.title('Growth Curve app')
         screenWidth = self.winfo_screenwidth()
@@ -33,10 +32,12 @@ class GrowthCurve(tk.Tk):
         self.showFrame("MainPage")
 
     def showFrame(self, pageName):
+        # Plaatst de gewenste frame voor de andere frames.
         frame = self.frames[pageName]
         frame.tkraise()
 
 
 if __name__ == '__main__':
+    # runt de GUI door de root te runnen.
     app = GrowthCurve()
     app.mainloop()

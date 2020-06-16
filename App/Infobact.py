@@ -4,11 +4,12 @@ import tkinter as tk
 
 class InfoBact(tk.Frame):
     """In dit klass kunnen er informatie over een bepaalde bactrie geshowed worden, door gebruik van de json bestand
-    te maken"""
+        te maken"""
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
+        # 2 frames aangemaakt om  de layout beter te kunnen organisieren
         frameBovenInfoBact = tk.Frame(self, bg="#49A")
         frameOnderInfoBact = tk.Frame(self, bg="#49A")
 
@@ -41,12 +42,13 @@ class InfoBact(tk.Frame):
                     informatieVanJson= info["info"]
                     infoUitprinten= tk.Label(frameOnderInfoBact,text=informatieVanJson, font='Arial 16 ', bg="#49A")
                     infoUitprinten.pack(side=tk.TOP, fill=tk.X, padx=5)
-            except FileNotFoundError:
 
+            except FileNotFoundError:
                 infoUitprinten = tk.Label(frameOnderInfoBact, text="We hebben helaas geen informatie kunnen vinden"
                                                                    " voor deze bacterie",font='Arial 16 ', bg="#49A")
                 infoUitprinten.pack(side=tk.TOP, fill=tk.X, padx=5)
 
+        # hier wordt alles op het scherm aangetoond
         frameOnderInfoBact.pack(pady=0, expand=tk.TRUE)
         frameBovenInfoBact.pack(expand=tk.TRUE)
         titel.pack(side=tk.TOP, fill=tk.X)
