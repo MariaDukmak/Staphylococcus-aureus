@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 
 import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
@@ -47,10 +48,8 @@ class PlotGraph(tk.Frame):
                                         bg="white", font='Arial 10',command=lambda: PlotGrafiek(str(bactEN.get()),
                                         int(tempEN.get()), int(phEN.get()),int(tim2EN.get()), int(grafiekEN.get())))
         except ValueError:
-            infoUitprinten = tk.Label(frameBovenPlotGraph,
-                                      text="Je hebt 1 of meerdere inputs verkeerd ingevoerd,\n probeer het opnieuw",
-                                      font='Arial 16 ', bg="#49A")
-            infoUitprinten.grid(row=40, column=0)
+            messagebox.showwarning("warning", "Je hebt 1 of meerdere inputs verkeerd ingevoerd,\n probeer het opnieuw")
+
 
         def PlotGrafiek(bacteriaName, temperature, pH, endTime, typeG):
             # Hier wordt de y voor het grafiek van het aloritme opgehaald en getekent.
@@ -76,11 +75,7 @@ class PlotGraph(tk.Frame):
                 toolbar.update()
                 canvas._tkcanvas.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
             except ValueError:
-                # Voor het gaval dat de gebruiker de verkeerde type input intoetst
-                infoUitprinten = tk.Label(frameBovenPlotGraph,
-                                          text="Je hebt 1 of meerdere inputs verkeerd ingevoerd, probeer het opnieuw",
-                                          font='Arial 16 ', bg="#49A")
-                infoUitprinten.grid(row=25, column=0)
+                messagebox.showwarning("warning", "Je hebt 1 of meerdere inputs verkeerd ingevoerd,\n probeer het opnieuw")
 
         frameBovenPlotGraph.pack(side=tk.LEFT, fill=tk.BOTH)
 

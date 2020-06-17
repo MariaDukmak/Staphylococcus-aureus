@@ -39,7 +39,7 @@ class InfoBact(tk.Frame):
                 bestand te zoeken. Voor het gevaal dat de gebruiker een naam invoert die niet tussen de json bestanden staat,
                  gebruik ik een try except"""
             try:
-                with open(str(input) + ".json", "r") as f:
+                with open("../json bestanden/"+str(input)+ ".json", "r") as f:
                     info = json.load(f)
                     informatieVanJson= info["info"]
                     infoUitprinten= tk.Label(frameOnderInfoBact,text=informatieVanJson, font='Arial 16 ', bg="#49A")

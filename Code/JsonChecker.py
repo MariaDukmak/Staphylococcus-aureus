@@ -12,7 +12,7 @@ class JsonChecker:
 
     def read_json(self):
         try:
-            with open(self.bacteriaName + ".json", "r") as f:
+            with open("../json bestanden/" + self.bacteriaName + ".json", "r") as f:
                 info = json.load(f)
                 optimum_item = info["env-info"][self.item][self.item]
                 max_item = info["env-info"][self.item]["max"]
@@ -44,10 +44,11 @@ class JsonChecker:
                     return [self.inputWaarde]
                 elif values[0] == self.inputWaarde or (values[0] <= self.inputWaarde <= values[1] and self.inputWaarde != values[1]):
                     return [self.inputWaarde, values[1], values[2]]
-                elif values[1] == self.inputWaarde or (self.inputWaarde> values[1] and self.inputWaarde != values[2]):
+                elif values[1] == self.inputWaarde or (values[1] < self.inputWaarde < values[2] and self.inputWaarde != values[2]):
                     return [self.inputWaarde, values[2]]
-                else:
-                    print(f"incorrect type of value was entered {self.inputWaarde}")
+                elif values[2] < self.inputWaarde:
+                    return [0.0]
+
             elif len(values) == 1:
                 if self.inputWaarde == values[0]:
                     return self.inputWaarde

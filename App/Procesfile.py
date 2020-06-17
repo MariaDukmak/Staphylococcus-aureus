@@ -1,13 +1,6 @@
-#  Copyright (c) 2020 Marya Dukmak
-#
-#  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-#
-#  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-#
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import tkinter as tk
-from tkinter import filedialog
+from tkinter import filedialog, messagebox
 
 import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -46,13 +39,18 @@ class ProcesFile(tk.Frame):
 
         antwoordShowLabel = tk.Label(frameBovenPlotGraph, font='Arial 16 ', bg="#49A", width=40, text='')
         antwoordShowLabel2 = tk.Label(frameBovenPlotGraph, font='Arial 16 ', bg="#49A", width=40, text='')
+        antwoordShowLabel3 = tk.Label(frameBovenPlotGraph, font='Arial 16 ', bg="#49A", width=40, text='')
 
         # variabel voor de checkbuttons om te kijken of ze geselecteerd
         var = tk.IntVar()
         var2 = tk.IntVar()
+        var3 = tk.IntVar()
         # hier kan de gebruiker de opties kiezen die hij wil laten berekenen
         checkButtton = tk.Checkbutton(frameBovenPlotGraph, text= "Growth rate", variable = var, font='Arial 16 ', bg="#49A" )
         checkButtton2 = tk.Checkbutton(frameBovenPlotGraph, text="Max aantaal gemaakte cellen", variable=var2, font='Arial 16',
+                                       bg="#49A")
+        checkButtton3 = tk.Checkbutton(frameBovenPlotGraph, text="De gekoste tijd voor het experiment", variable=var3,
+                                       font='Arial 16',
                                        bg="#49A")
 
         # Hier wordt alles in de schrem aangetood
@@ -63,8 +61,11 @@ class ProcesFile(tk.Frame):
         infoUitprinten.grid(row=4, column=0, sticky = "w")
         checkButtton.grid(row=20, column=0, sticky = "w")
         checkButtton2.grid(row=25, column=0, sticky = "w")
-        antwoordShowLabel.grid(row=30, column=0)
-        antwoordShowLabel2.grid(row=35, column=0)
+        checkButtton3.grid(row=30, column=0, sticky = "w")
+        antwoordShowLabel.grid(row=35, column=0)
+        antwoordShowLabel2.grid(row=40, column=0)
+        antwoordShowLabel3.grid(row=45, column=0)
+
         buttonPlotGrafiekFile.grid(row=60, column=1)
         buttonPrintBerekeningen.grid(row=50, column=1)
         statusbar.pack(side=tk.BOTTOM, fill=tk.BOTH)
@@ -72,19 +73,25 @@ class ProcesFile(tk.Frame):
         def print_uitkomsten():
             # hier wordt de classes aangroepen die de growth rate en/de max aantaal cellen kan uitrekenen
             # en vervolgens aangetoond
-            answer = readit(self.fileDai)
-            #eind_answer = answer.(self.fileDai)
 
+            #global answe_growth_rate
+            answerr= readit(self.fileDai)
+            answe_growth_rate= answerr.bereken_growthrate()
+            answer_aantaal_cellen= answerr.bereken_maxcellen()
             if var.get() == 1: # als de growth rate wordt gekozen
-                antwoordShowLabel.config(text = f"De growth rate is "+str(answer[0]))
+                antwoordShowLabel.config(text="De growth rate is "+str(answe_growth_rate))
             if var2.get() == 1: # als de max aantaal cellen wordt gekozen
-                antwoordShowLabel2.config(text= " De max aantaal gemaakte cellen is " + str(answer[1][1]))
+                antwoordShowLabel2.config(text="De max aantaal cellen is " + str(answer_aantaal_cellen[1]))
+            if var3.get() == 1:# als de tijd woordt gekozen
+                antwoordShowLabel3.config(text="De tijd van het experiment is :" + str(answer_aantaal_cellen[0]) + "uur")
+
 
         def plot_file():
             # hier kunnnen de data van de file in een grafiek getekend worden
-            # try:
-                xenyy =readit(self.fileDai, 1)
-                x, y = xenyy[0], xenyy[1]
+             try:
+                answerr = readit(self.fileDai)
+                anw= answerr.readd(self.fileDai)
+                x, y = anw[0], anw[1]
                 f = Figure(figsize=(5, 5), dpi=100)
                 f.suptitle('Growth Curve', fontsize=14, fontweight='bold')
                 a = f.add_subplot(111)
@@ -95,11 +102,8 @@ class ProcesFile(tk.Frame):
                 canvas.draw()
 
                 canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
-            # except Exception as e:
-            #     infoUitprinten = tk.Label(frameBovenPlotGraph,
-            #                               text="Je hebt 1 of meerdere inputs verkeerd ingevoerd, probeer het opnieuw",
-            #                               font='Arial 16 ', bg="#49A")
-            #     infoUitprinten.grid(row=25, column=0)
+             except Exception:
+                messagebox.showwarning("warning", "Je hebt 1 of meerdere inputs verkeerd ingevoerd,\n probeer het opnieuw")
 
     def file(self):
         # hierdoor kan de gebruiker een file uploaden

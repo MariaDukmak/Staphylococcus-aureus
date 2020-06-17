@@ -22,13 +22,10 @@ class EndResults(JsonChecker):
 
         if (temp_check_terug and ph_check_terug) is not None:
             if typeG == 1:
-                #antwoord = [333]
                 antwoord = cls.logistic( cls, bact_input, endTime, ph_input, tem_input)
             if typeG == 2:
-                #antwoord = [888]
                 antwoord = cls.temp_logistic(cls, bact_input, temp_check_terug)
             if typeG == 3:
-                #antwoord = [87654]
                 antwoord = cls.log_growth(cls, bact_input, endTime, ph_input, tem_input)
             print("we got this temp after the value check ", temp_check_terug)
             print("we got this ph after the value check ", ph_check_terug)
@@ -44,13 +41,11 @@ class EndResults(JsonChecker):
                               aantal zich elke generatietijd
           de stationaire fase: de periode, waarin het aantal levende cellen per ml constant blijft
           afstervingsfase:de periode, waarin het aantal levende cellen per ml afneemt
-
          Ln N -Ln N0 = growth rate *(t-t0)
          Ln N0 is de inoclum biomass oftewel de begincellen/culture in CFU/ml
          Growth rate is de groeisfactor, staat in de json file van de bactrie
          Beperkende factor is in dit geval de max aantaal cellen die gemaakt kunnen worden in XX C tempratuur.
          M is de max biomass = M(t)- M(0)
-
          De cijfers voor bactrie XX komen uit een onderzoek die in de bronnen(3) vermeld staat."""
 
 
@@ -109,6 +104,8 @@ class EndResults(JsonChecker):
           b= is de groeifactor
           a = is de beginwaarde
           De gebuikte formule komt uit een atrtikel die in de bronnen(1) vermeld staat"""""
+
+
         #[min_item, optimum_item, max_item]
         groeisFcator = JsonChecker(bact_name, temerature, pH,"gr", None)
         groeisFcator_is = groeisFcator.read_json()
