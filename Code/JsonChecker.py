@@ -2,16 +2,76 @@ import json
 
 
 class JsonChecker:
-    def __init__(self, bacteriaName: str, temperature: float, pH: float, item: str, inputWaarde: float):
-        self.bacteriaName = bacteriaName
-        self.temperature = temperature
-        self.pH = pH
-        self.item = item
-        self.inputWaarde = inputWaarde
+    """
+    A JsonCheker object can be read from a json file. and compared with the user's input.
 
-    def read_json(self):
+    Parameters
+    ----------
+    bacteria_name: String
+         The name of the bacteria
+
+    temperature: Float
+         The user input for the temperature
+
+    pH: Float
+        The user input of the PH
+
+    item: String
+        The item that would be read from the json file
+
+    inputWaarde: Float
+        The input value that would be chacked, could be temperature or PH
+
+    Attributes
+    ----------
+
+    bacteria_name: String
+         Stores the name of the bacteria
+
+    temperature: Float
+         Stores the user input for the temperature
+
+    pH: Float
+        Stores the user input of the PH
+
+    item: String
+        Stores the item that would be read from the json file
+
+    inputWaarde: Float
+        Stores the input value that would be chacked, could be temperature or PH
+    """
+
+    # the constructor
+    def __init__(self, bacteria_name: str, temperature: float, pH: float, item: str, inputWaarde: float):
         try:
-            with open("../json bestanden/" + self.bacteriaName + ".json", "r") as f:
+            self.bacteria_name = bacteria_name
+            self.temperature = temperature
+            self.pH = pH
+            self.item = item
+            self.inputWaarde = inputWaarde
+        except ValueError:
+            print("incorrect variable type was entered")
+
+    def read_value_json(self):
+        """
+        Opens a json file based on the bacteria name and reads the requested values.
+
+        Raises
+        ------
+        KeyError
+            when the key is not under "env-info", like aw value.
+
+        FileNotFoundError
+            when the file name (the bacteria name) not found.
+
+        Returns
+        -------
+            list
+                A list with the read values from the json file. In the order:
+                    [min, optimum, max] or only [optimum]
+        """
+        try:
+            with open("../json bestanden/" + self.bacteria_name + ".json", "r") as f:
                 info = json.load(f)
                 optimum_item = info["env-info"][self.item][self.item]
                 max_item = info["env-info"][self.item]["max"]
@@ -25,7 +85,8 @@ class JsonChecker:
 
     def values_check(self):
 
-        """"Here the input of the user is checked for the conditions of growth such as: PH and the temperature.
+        """"
+        Here the input of the user is checked for the conditions of growth such as: PH and the temperature.
             It is examined whether the input value is greater, equal or smaller than the optimum value.
 
             - If the value is equal to the optimum, the growth at that point would be the fastest.
@@ -34,9 +95,19 @@ class JsonChecker:
                     For this we need the max
             - If the value is equal to the minus, the growth would be slow, but it will get faster.
                          For this we need the max, optimum and the min.
+
+            Raises
+            --------
+            Exception
+                When an unexpected error happens
+
+            Returns
+            -------
+            list
+                A list with the required values based on the explanation above
         """
         try:
-            values = self.read_json()
+            values = self.read_value_json()
             print("values", values)
             if len(values) == 3:
                 if values[2] == self.inputWaarde:
@@ -50,11 +121,7 @@ class JsonChecker:
 
             elif len(values) == 1:
                 if self.inputWaarde == values[0]:
-                    return self.inputWaarde
+                    return [self.inputWaarde]
         # handle exceptions
-        except AttributeError as e:
-            print("The json does not contain that object ", e)
-        except ValueError as e:
-            print("No iterable type is given", e)
         except Exception as e:
             print("Unexpected error ", e)
