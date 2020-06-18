@@ -96,15 +96,15 @@ class JsonChecker:
             - If the value is equal to the minus, the growth would be slow, but it will get faster.
                          For this we need the max, optimum and the min.
 
-            Raises
-            --------
-            Exception
-                When an unexpected error happens
+        Raises
+        --------
+        Exception
+            When an unexpected error happens
 
-            Returns
-            -------
-            list
-                A list with the required values based on the explanation above
+        Returns
+        -------
+        list
+            A list with the required values based on the explanation above
         """
         try:
             values = self.read_value_json()
