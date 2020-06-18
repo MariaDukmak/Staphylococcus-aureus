@@ -22,12 +22,12 @@ class EndResults:
 
         if (temp_check_terug and ph_check_terug) is not None:
             if type_graph == 1:
-                antwoord = cls.logistic( cls, bact_naam, end_time, ph_input, temp_input)
+                antwoord = cls.logistic(cls, bact_naam, end_time, ph_input, temp_input)
             if type_graph == 2:
                 antwoord = cls.logstic_curve(cls, bact_naam,  end_time, ph_input, temp_input)
             if type_graph == 3:
                 antwoord = cls.log_growth(cls, bact_naam, end_time, ph_input, temp_input)
-            if type_graph ==4 :
+            if type_graph == 4:
                 antwoord= cls.temp_logistic(cls, bact_naam, ph_input, end_time, temp_check_terug)
             # print("we got this temp after the value check ", temp_check_terug)
             # print("we got this ph after the value check ", ph_check_terug)
@@ -69,7 +69,7 @@ class EndResults:
 
         return newgroeiFactor
 
-    def log_growth(self, bact_name: str, time: float, pH: float, temerature: float, lijst = [], lijstDeath = []) -> np.array:
+    def log_growth(self, bact_name: str, time: float, pH: float, temerature: float, lijst = [], lijstDeath = []) -> list:
 
         """Lag-fase: de periode die verloopt voordat de vermeerdering van de bacteriecellen begint;
           logaritmische fase: de periode, waarin de feitelijke groei plaatsvindt, hierbij verdubbelt het
@@ -82,7 +82,6 @@ class EndResults:
          Beperkende factor is in dit geval de max aantaal cellen die gemaakt kunnen worden in XX C tempratuur.
          M is de max biomass = M(t)- M(0)
          De cijfers voor bactrie XX komen uit een onderzoek die in de bronnen(3) vermeld staat."""
-
 
         beperkendeFactor = JsonChecker(bact_name, temerature, pH, "br", None)
         beperkendeFactor_is = beperkendeFactor.read_json()
@@ -114,7 +113,7 @@ class EndResults:
             lijst.append(item)
         return lijst
 
-    def logistic(self, bact_name: str, time: float, pH: float, temerature: float, list =[]) -> np.array:
+    def logistic(self, bact_name: str, time: float, pH: float, temerature: float, list =[]) -> list:
         """"c = is de beperkende factor, kan tempratuur, ph of max aantaal cellen zijn
           b= is de groeifactor
           a = is de beginwaarde
@@ -132,7 +131,7 @@ class EndResults:
                 list.append(ant)
         return list
 
-    def logstic_curve(self, bact_name: str, time: float, pH: float, temerature: float, lijstDeath=[]):
+    def logstic_curve(self, bact_name: str, time: float, pH: float, temerature: float, lijstDeath=[])-> list:
         list = EndResults.logistic(self, bact_name, time, pH, temerature)
         groeisFcator = EndResults.new_groeigrowth(self, bact_name, pH, temerature)
         beperkendeFactor = JsonChecker(bact_name, temerature, pH, "br", None)
@@ -153,14 +152,12 @@ class EndResults:
             list.append(item)
         return list
 
-
-    def temp_logistic(self, bact_name: str, pH, end_time: float, temp_check:list, list = []):
+    def temp_logistic(self, bact_name: str, pH, end_time: float, temp_check:list, list = [], tijd_lijst=[])-> list:
         """hier moet de grafiek van de growth getekend, in verglijking met de tempratuur verandering per uur
              begint bij de min temp en eindigt bij de max
-             De gebruikt formule komt uit een atrikel die in de bronnen(2) vermeld staat """
+                De gebruikt formule komt uit een atrikel die in de bronnen(2) vermeld staat """
 
         beginRange, eindRange = 0, 0
-        print(temp_check)
 
         if temp_check is not None:
             if len(temp_check) == 3:
@@ -175,16 +172,21 @@ class EndResults:
                 beginRange = temp_check[0]
                 eindRange = temp_check[0] + 1
 
-        begingValue_is = JsonChecker(bact_name, None, None,"bw", None)
+        begingValue_is = JsonChecker(bact_name, None, None, "bw", None)
         begingValue = begingValue_is.read_json()
-        print(beginRange, eindRange)
+
+        beperkingsFactor_is = JsonChecker(bact_name, None, None, "br", None)
+        beperkingsFactor = beperkingsFactor_is.read_json()
+
         for time in range(0, int(end_time)+1):
-            for temp in range(int(beginRange), int(eindRange+1)):
-                if list:
-                    if list[-1] != eindRange:
-                        groeisFactor = EndResults.new_groeigrowth(self, bact_name, pH,temp)
-                        list.append(eindRange / (1 + begingValue[0] * np.exp(-groeisFactor * time)))
-                        print(list)
-                else:
-                    list.append(0)
+            tijd_lijst.append(time)
+        for temp in range(int(beginRange), int(eindRange)+1):
+            if list:
+                if list[-1] <= beperkingsFactor[0]:
+                    if tijd_lijst:
+                        groeisFactor = EndResults.new_groeigrowth(self, bact_name, pH, temp)
+                        list.append(beperkingsFactor[0] / (1 + begingValue[0] * np.exp(-groeisFactor * tijd_lijst[0])))
+                        tijd_lijst.pop(0)
+            else:
+                list.append(0)
         return list
