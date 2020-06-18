@@ -60,11 +60,14 @@ class PlotGraph(tk.Frame):
                 f.suptitle('Growth Curve', fontsize=14, fontweight='bold')
                 a = f.add_subplot(111)
                 a.set_ylabel('Groei in CFU/ml')
-                if typeG == 1 or typeG == 3: # hier moet de x-as tijd zijn
+                if typeG == 1 or typeG == 3 or typeG == 2: # hier moet de x-as tijd zijn
                     a.set_xlabel('Tijd in uur')
-                else: # hier is de x-as temperature
+                if typeG == 4:
+                    x = np.linspace(int(tempEN.get()), 46 ,len(y))
                     a.set_xlabel("Temperature in celsius")
-                a.plot(x, y)
+                    print(int(tempEN.get()))
+
+                a.plot(x, np.array(y))
 
                 # Hier wordt het grafiek in getekend
                 canvas = FigureCanvasTkAgg(f, self)
