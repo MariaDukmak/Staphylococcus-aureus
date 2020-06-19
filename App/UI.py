@@ -32,12 +32,12 @@ class GrowthCurve(tk.Tk):
         self.showFrame("MainPage")
 
     def showFrame(self, pageName):
-        # Plaatst de gewenste frame voor de andere frames.
+        """Plaatst de gewenste frame voor de andere frames."""
         frame = self.frames[pageName]
         frame.tkraise()
 
 
 if __name__ == '__main__':
-    # runt de GUI door de root te runnen.
+    """ runt de GUI door de root te runnen."""
     app = GrowthCurve()
     app.mainloop()

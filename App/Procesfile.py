@@ -6,7 +6,7 @@ import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
-from Code.CSV_reader import readit
+from Code.CSV_reader import ReadIt
 
 
 class ProcesFile(tk.Frame):
@@ -71,12 +71,11 @@ class ProcesFile(tk.Frame):
         statusbar.pack(side=tk.BOTTOM, fill=tk.BOTH)
 
         def print_uitkomsten():
-            # hier wordt de classes aangroepen die de growth rate en/de max aantaal cellen kan uitrekenen
-            # en vervolgens aangetoond
+            """ hier wordt de classes aangroepen die de growth rate en/de max aantaal cellen kan uitrekenen
+                en vervolgens aangetoond"""
 
-            #global answe_growth_rate
-            answerr= readit(self.fileDai)
-            answe_growth_rate= answerr.bereken_growthrate()
+            answerr= ReadIt(self.fileDai)
+            answe_growth_rate= answerr.bereken_growth_rate()
             answer_aantaal_cellen= answerr.bereken_maxcellen()
             if var.get() == 1: # als de growth rate wordt gekozen
                 antwoordShowLabel.config(text="De growth rate is "+str(answe_growth_rate))
@@ -87,9 +86,9 @@ class ProcesFile(tk.Frame):
 
 
         def plot_file():
-            # hier kunnnen de data van de file in een grafiek getekend worden
+             """hier kunnnen de data van de file in een grafiek getekend worden"""
              try:
-                answerr = readit(self.fileDai)
+                answerr = ReadIt(self.fileDai)
                 anw= answerr.readd(self.fileDai)
                 x, y = anw[0], anw[1]
                 f = Figure(figsize=(5, 5), dpi=100)
@@ -106,5 +105,5 @@ class ProcesFile(tk.Frame):
                 messagebox.showwarning("warning", "Je hebt 1 of meerdere inputs verkeerd ingevoerd,\n probeer het opnieuw")
 
     def file(self):
-        # hierdoor kan de gebruiker een file uploaden
+        """ hierdoor kan de gebruiker een file uploaden"""
         self.fileDai= filedialog.askopenfilename(initialdir = "/Bureaublad",title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.*")))

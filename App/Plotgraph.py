@@ -51,10 +51,10 @@ class PlotGraph(tk.Frame):
             messagebox.showwarning("warning", "Je hebt 1 of meerdere inputs verkeerd ingevoerd,\n probeer het opnieuw")
 
 
-        def PlotGrafiek(bacteriaName, temperature, pH, endTime, typeG):
+        def PlotGrafiek(bact_naam, temperature, pH, endTime, typeG):
             # Hier wordt de y voor het grafiek van het aloritme opgehaald en getekent.
             try:
-                y = EndResults(bacteriaName, temperature, pH, endTime, typeG)
+                y = EndResults(bact_naam, temperature, pH, endTime, typeG)
                 x = np.linspace(0, len(y), (len(y)))  # wordt op basis van de lengte van y gemaakt
                 f = Figure(figsize=(5, 5), dpi=100)
                 f.suptitle('Growth Curve', fontsize=14, fontweight='bold')
@@ -64,6 +64,7 @@ class PlotGraph(tk.Frame):
                     a.set_xlabel('Tijd in uur')
                 if typeG == 4:
                     x = np.linspace(int(tempEN.get()), 46 ,len(y))
+                    a.set_ylabel("μ (h−1)")
                     a.set_xlabel("Temperature in celsius")
                     print(int(tempEN.get()))
 
