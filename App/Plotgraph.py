@@ -6,6 +6,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 from matplotlib.figure import Figure
 
 from Code.EndResults import EndResults
+from Code.JsonChecker import JsonChecker
 
 
 class PlotGraph(tk.Frame):
@@ -31,10 +32,21 @@ class PlotGraph(tk.Frame):
         tempLab = tk.Label(frameBovenPlotGraph, text="Wat is het tempratuur?",font='Arial 18', bg="#49A")
         pHLab= tk.Label(frameBovenPlotGraph,text="Wat is de PH grade?",font='Arial 18', bg="#49A")
         tim2Lab= tk.Label(frameBovenPlotGraph, text="Wat is de eindtijd in uren?",font='Arial 18', bg="#49A")
-        grafiekLab = tk.Label(frameBovenPlotGraph, text="Kies de soort berekneing \n 1.logstic met max aantaal cellen"
-                                                        "\n als beperkende factor \n 2.logstic met max tempratuur \nals "
-                                                        "beperkende factor\n 3.log groei met 4 faces, lag, log, "
-                                                        "\nstationaire en sterffases",  font='Arial 16', bg="#49A")
+        grafiekLab = tk.Label(frameBovenPlotGraph, text="Kies de soort berekneing \n" ,font='Arial 18', bg="#49A")
+
+        typeGrafiek = tk.IntVar()
+        typeGrafiek.set(1)
+
+        RadioButton1= tk.Radiobutton( frameBovenPlotGraph, text = "1.logstic met max aantaal cellen\n als beperkende factor",
+                                      variable = typeGrafiek, value = 1,  bg="#49A",  font='Arial 16')
+        RadioButton2= tk.Radiobutton( frameBovenPlotGraph, text = "2. logsistic curve\n met sterf fase", variable = typeGrafiek,
+                                      value = 2,  bg="#49A", font='Arial 16')
+        RadioButton3= tk.Radiobutton( frameBovenPlotGraph, text = "3.log groei met 4 faces, lag, log, \nstationaire en sterffases",
+                                      variable = typeGrafiek, value = 3,  bg="#49A", font='Arial 16')
+        RadioButton4= tk.Radiobutton( frameBovenPlotGraph, text = "4.logstic met max tempratuur \nals beperkende factor",
+                                      variable = typeGrafiek, value = 4,  bg="#49A",  font='Arial 16')
+
+
         statusbar = tk.Label(self, bd=1, relief=tk.SUNKEN, padx=10, pady=20, bg="light blue",text="Copyright© Marya Dukmak")
         legeLabel = tk.Label(frameBovenPlotGraph, bg="#49A")
 
@@ -42,44 +54,53 @@ class PlotGraph(tk.Frame):
         tempEN = tk.Entry(frameBovenPlotGraph)
         phEN = tk.Entry(frameBovenPlotGraph)
         tim2EN = tk.Entry(frameBovenPlotGraph)
-        grafiekEN = tk.Entry(frameBovenPlotGraph)
         try:
             laatGrafiekZien=tk.Button(frameBovenPlotGraph, text="Laat het grafiek zien!", height=5, width=23, fg="#49A",
                                         bg="white", font='Arial 10',command=lambda: PlotGrafiek(str(bactEN.get()),
-                                        int(tempEN.get()), int(phEN.get()),int(tim2EN.get()), int(grafiekEN.get())))
+                                        float(tempEN.get()), float(phEN.get()),int(tim2EN.get()), int(typeGrafiek.get())))
         except ValueError:
             messagebox.showwarning("warning", "Je hebt 1 of meerdere inputs verkeerd ingevoerd,\n probeer het opnieuw")
 
 
         def PlotGrafiek(bact_naam, temperature, pH, endTime, typeG):
-            # Hier wordt de y voor het grafiek van het aloritme opgehaald en getekent.
-            try:
-                y = EndResults(bact_naam, temperature, pH, endTime, typeG)
-                x = np.linspace(0, len(y), (len(y)))  # wordt op basis van de lengte van y gemaakt
-                f = Figure(figsize=(5, 5), dpi=100)
-                f.suptitle('Growth Curve', fontsize=14, fontweight='bold')
-                a = f.add_subplot(111)
-                a.set_ylabel('Groei in CFU/ml')
-                if typeG == 1 or typeG == 3 or typeG == 2: # hier moet de x-as tijd zijn
-                    a.set_xlabel('Tijd in uur')
-                if typeG == 4:
-                    x = np.linspace(int(tempEN.get()), 46 ,len(y))
-                    a.set_ylabel("μ (h−1)")
-                    a.set_xlabel("Temperature in celsius")
-                    print(int(tempEN.get()))
+            """Hier wordt de y voor het grafiek van het aloritme opgehaald en getekent."""
+            temp_check = JsonChecker(bact_naam, temperature, pH, "temp", temperature)
+            temp_check_terug = temp_check.values_check()
+            print(temp_check_terug)
 
-                a.plot(x, np.array(y))
+            ph_check = JsonChecker(bact_naam, temperature, pH, "ph", pH)
+            ph_check_terug = ph_check.values_check()
+            if (temp_check_terug and ph_check_terug) is not None:
+                try:
+                    y = EndResults(bact_naam, temperature, pH, endTime, typeG)
+                    x = np.linspace(0, len(y), (len(y)))  # wordt op basis van de lengte van y gemaakt
+                    f = Figure(figsize=(5, 5), dpi=100)
+                    f.suptitle('Growth Curve', fontsize=14, fontweight='bold')
+                    a = f.add_subplot(111)
+                    a.set_ylabel('Groei in CFU/ml')
+                    if typeGrafiek.get() == 1 or typeGrafiek.get() == 3 or typeGrafiek.get() == 2: # hier moet de x-as tijd zijn
+                        a.set_xlabel('Tijd in uur')
+                    if typeGrafiek.get() == 4:
+                        x = np.linspace(int(tempEN.get()), 46 ,len(y))
+                        a.set_ylabel("μ (h−1)")
+                        a.set_xlabel("Temperature in celsius")
+                        print(int(tempEN.get()))
 
-                # Hier wordt het grafiek in getekend
-                canvas = FigureCanvasTkAgg(f, self)
-                canvas.draw()
-                canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
-                # Hier wordt de toolbar aangetoond
-                toolbar = NavigationToolbar2Tk(canvas, self)
-                toolbar.update()
-                canvas._tkcanvas.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
-            except ValueError:
-                messagebox.showwarning("warning", "Je hebt 1 of meerdere inputs verkeerd ingevoerd,\n probeer het opnieuw")
+                    a.plot(x, np.array(y))
+
+                    # Hier wordt het grafiek in getekend
+                    canvas = FigureCanvasTkAgg(f, self)
+                    canvas.draw()
+                    canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+                    # Hier wordt de toolbar aangetoond
+                    toolbar = NavigationToolbar2Tk(canvas, self)
+                    toolbar.update()
+                    canvas._tkcanvas.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+                except ValueError:
+                    messagebox.showwarning("warning", "Je hebt 1 of meerdere inputs verkeerd ingevoerd,\n probeer het opnieuw")
+            else:
+                messagebox.showwarning("warning",
+                                       "Je hebt 1 of meerdere inputs verkeerd ingevoerd,\n probeer het opnieuw")
 
         frameBovenPlotGraph.pack(side=tk.LEFT, fill=tk.BOTH)
 
@@ -95,10 +116,13 @@ class PlotGraph(tk.Frame):
         buttonNaarInfoBact.grid(row=25, column=1)
         statusbar.pack(side=tk.BOTTOM, fill=tk.BOTH)
 
-        bactEN.grid(row=6, column=1, pady= 10, padx= 10, ipady=10, ipadx=130)
-        tempEN.grid(row=8, column=1, pady= 10, padx= 10, ipady=10, ipadx=130)
-        phEN.grid(row=10, column=1, pady= 10, padx= 10, ipady=10, ipadx=130)
-        tim2EN.grid(row=14, column=1, pady= 10, padx= 10, ipady=10, ipadx=130)
-        grafiekEN.grid(row=16, column=1, pady= 10, padx= 10, ipady=30, ipadx=130)
-        legeLabel.grid(row=20, column=0,  pady= 10, padx= 10, ipady=10, ipadx=130)
+        bactEN.grid(row=6, column=1, pady= 10, padx= 10, ipady=10, ipadx=120)
+        tempEN.grid(row=8, column=1, pady= 10, padx= 10, ipady=10, ipadx=120)
+        phEN.grid(row=10, column=1, pady= 10, padx= 10, ipady=10, ipadx=120)
+        tim2EN.grid(row=14, column=1, pady= 10, padx= 10, ipady=10, ipadx=120)
+        legeLabel.grid(row=20, column=0,  pady= 10, padx= 10, ipady=10, ipadx=120)
 
+        RadioButton1.grid(row=17, column=0, sticky="w")
+        RadioButton2.grid(row=17, column=1, sticky="w")
+        RadioButton3.grid(row=19, column=0, sticky="w")
+        RadioButton4.grid(row=19, column=1, sticky="w")

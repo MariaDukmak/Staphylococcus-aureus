@@ -108,16 +108,18 @@ class JsonChecker:
         """
         try:
             values = self.read_value_json()
-            print("values", values)
             if len(values) == 3:
                 if values[2] == self.inputWaarde:
                     return [self.inputWaarde]
+                elif values[2]< self.inputWaarde or values[0]> self.inputWaarde:
+                    return None
                 elif values[0] == self.inputWaarde or (values[0] <= self.inputWaarde <= values[1] and self.inputWaarde != values[1]):
                     return [self.inputWaarde, values[1], values[2]]
                 elif values[1] == self.inputWaarde or (values[1] < self.inputWaarde < values[2] and self.inputWaarde != values[2]):
                     return [self.inputWaarde, values[2]]
                 elif values[2] < self.inputWaarde:
                     return [0.0]
+
 
             elif len(values) == 1:
                 if self.inputWaarde == values[0]:
