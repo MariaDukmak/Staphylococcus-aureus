@@ -44,14 +44,14 @@ class EndResults:
         Store the user choice for the equation / formulas
 
     """
-    # def __init__(self, bact_naam: str, temp_input: float, ph_input: float, end_time: float, type_graph: int):
-    #     super().__init__(bact_naam, temp_input, ph_input, end_time, type_graph)
-    #     self.bact_naam = bact_naam
-    #     self.temp_input = temp_input
-    #     self.ph_input = ph_input
-    #     self.end_time = end_time
-    #     self.type_graph = type_graph
-    #     self.__new__()
+    def __init__(self, bact_naam: str, temp_input: float, ph_input: float, end_time: float, type_graph: int):
+        super().__init__(bact_naam, temp_input, ph_input, end_time, type_graph)
+        self.bact_naam = bact_naam
+        self.temp_input = temp_input
+        self.ph_input = ph_input
+        self.end_time = end_time
+        self.type_graph = type_graph
+        self.__new__()
 
     def __new__(cls, bact_naam: str, temp_input: float, ph_input: float, end_time: float, type_graph: int) -> list:
         """
