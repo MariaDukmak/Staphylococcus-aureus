@@ -7,13 +7,13 @@ from Code.EndResults import EndResults
 
 class TestEndResults(TestCase):
     def setUp(self) -> None:
-        self.object = EndResults(bact_input="xx", tem_input=10, ph_input=10, endTime=3, typeG=1)
-        self.object2 = EndResults(bact_input="xx", tem_input=10, ph_input=5, endTime=3, typeG=3)
-        self.object3 = EndResults(bact_input="xx", tem_input=10, ph_input=4, endTime=3, typeG=2)
+        self.object = EndResults(bact_naam="xx", temp_input=10, ph_input=10, end_time=3, type_graph=1)
+        self.object2 = EndResults(bact_naam="xx", temp_input=10, ph_input=5, end_time=3, type_graph=3)
+        self.object3 = EndResults(bact_naam="xx", temp_input=10, ph_input=4, end_time=3, type_graph=2)
 
-        self.object4 = EndResults(bact_input= "s-aureus", tem_input=10, ph_input=7, endTime=3, typeG=1)
-        self.object5 = EndResults(bact_input= "s-aureus", tem_input=20, ph_input=6, endTime=3, typeG=2)
-        self.object6 = EndResults(bact_input= "s-aureus", tem_input=10, ph_input=10, endTime=3, typeG=3)
+        self.object4 = EndResults(bact_naam="s-aureus", temp_input=10, ph_input=7, end_time=3, type_graph=1)
+        self.object5 = EndResults(bact_naam="s-aureus", temp_input=20, ph_input=6, end_time=3, type_graph=2)
+        self.object6 = EndResults(bact_naam="s-aureus", temp_input=10, ph_input=10, end_time=3, type_graph=3)
 
     def tearDown(self) -> None:
         self.object = None

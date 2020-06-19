@@ -56,10 +56,10 @@ class ReadIt:
                 tijd_lijst = [float(i) for i in cellen_index]
                 cellen_lijst = [float(i) for i in time_index]
                 return [tijd_lijst, cellen_lijst]
-        except FileNotFoundError as e:
+        except FileNotFoundError:
             print("File not found")
 
-    def bereken_growthrate(self) -> float:
+    def bereken_growth_rate(self) -> float:
         """
         Here the growth rate is calculated using the following equation:
                     μ = (ln N - Ln N0)/(t-t0)
@@ -81,7 +81,7 @@ class ReadIt:
         """
         lijst = self.readd(self.filepath)
         lijst_cellen, lijst_tijd = lijst[1], lijst[0]
-        lnN, lnN0=lijst_cellen[-1], lijst_cellen[0]
+        lnN, lnN0 = lijst_cellen[-1], lijst_cellen[0]
         t, t0 = lijst_tijd[-1], lijst_tijd[0]
         growth_rate = (lnN - lnN0)/(t - t0)
 
@@ -102,7 +102,6 @@ class ReadIt:
 
         """
         lijst = self.readd(self.filepath)
-        deltatijd = max(lijst[0]) - min(lijst[0])
-        deltacellen = max(lijst[1]) - min(lijst[1])
-        return [deltatijd, deltacellen]
-
+        delta_tijd = max(lijst[0]) - min(lijst[0])
+        delta_cellen = max(lijst[1]) - min(lijst[1])
+        return [delta_tijd, delta_cellen]
