@@ -8,8 +8,19 @@ van de Json bestanden die zich onder Json bestanden/ bevinden. De applicatie cod
 is de runnen van de library nodig. 
 
 
+## Documentatie
 
-Bronnen:
+De documentatie is te vinden onder elke class en functie. De gegenereerde documentatie die bij de code hoort bevindt zich onder Documentation/. De documentatie kan ook als een HTML file gerund worden. Hiervoor moet de file gedownload worden.
+
+## Applicatie 
+
+Voor het gebruiken van de applicatie moet de code gerund worden. Hiervoor zijn de Code/ , App/ en Json bestanden/ files nodig. 
+
+## Tests 
+
+De tests van de library bevindt zich onder Tests/. Alleen de modules/classes in Code/ zijn getests
+
+## Bronnen:
 
 1. https://towardsdatascience.com/modeling-logistic-growth-1367dc971de2
 2. https://aem.asm.org/content/aem/56/6/1875.full.pdf
