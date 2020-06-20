@@ -36,7 +36,7 @@ De tests van de library bevindt zich onder `Tests/`. Alleen de modules/classes i
 
 6. Estimation of Staphylococcus aureus Growth Parameters from Turbidity Data: Characterization of Strain Variation and Comparison of Methods. (2006, July 1). PubMed Central (PMC). https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1489309/
 
-7.Exponential growth & logistic growth (article). (2020). Khan Academy. https://www.khanacademy.org/science/biology/ecology/population-growth-and-regulation/a/exponential-logistic-growth
+7. Exponential growth & logistic growth (article). (2020). Khan Academy. https://www.khanacademy.org/science/biology/ecology/population-growth-and-regulation/a/exponential-logistic-growth
 
 8. Bacterial growth curve microbiology | Log phase lag phase stationary phase in microbial growth. (2019, November 10). [Video]. YouTube. https://www.youtube.com/watch?v=ZebbwJ6H_DI
 
