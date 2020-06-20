@@ -1,0 +1,1035 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.1" />
+<title>EndResults API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>EndResults</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import numpy as np
+
+from Code.JsonChecker import JsonChecker
+
+
+class EndResults:
+    &#34;&#34;&#34;
+    In this class, the intervals of growth of the bacteria are calculated using different formulas/equations that are
+    specifically called in the class.
+    There are a total of 4 different formulas/equations to calculate the growth of a bacterium.
+
+    Parameters
+    ----------
+    bact_naam: String
+        The name of a bacteria
+
+    temp_input: Float
+         The user input for the temperature
+
+    ph_input: Float
+         The user input of the PH
+
+    end_time: Float
+         The user input of end time
+
+    type_graph: int
+        The user choice for the equation / formulas
+
+    Attributes
+    ----------
+     bact_naam: String
+        Store the name of a bacteria
+
+    temp_input: Float
+         Store the user input for the temperature
+
+    ph_input: Float
+         Store the user input of the PH
+
+    end_time: Float
+         Store the user input of end time
+
+    type_graph: int
+        Store the user choice for the equation / formulas
+
+    &#34;&#34;&#34;
+    def __init__(self, bact_naam: str, temp_input: float, ph_input: float, end_time: float, type_graph: int):
+        super().__init__(bact_naam, temp_input, ph_input, end_time, type_graph)
+        self.bact_naam = bact_naam
+        self.temp_input = temp_input
+        self.ph_input = ph_input
+        self.end_time = end_time
+        self.type_graph = type_graph
+        self.__new__()
+
+    def __new__(cls, bact_naam: str, temp_input: float, ph_input: float, end_time: float, type_graph: int) -&gt; list:
+        &#34;&#34;&#34;
+        Constructs based, got everything the same except that in the this method there is a return of the answer.
+        Based on the type equation that the user chooses, calls a function.
+
+        Raises
+        --------
+        ValueError
+                when the check of the ph and the temperature returns a None
+
+        Return
+        --------
+        list
+            A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
+
+        &#34;&#34;&#34;
+        temp_check = JsonChecker(bact_naam, temp_input, ph_input, &#34;temp&#34;, temp_input)
+        temp_check_terug = temp_check.values_check()
+
+        ph_check = JsonChecker(bact_naam, temp_input, ph_input, &#34;ph&#34;, ph_input)
+        ph_check_terug = ph_check.values_check()
+
+        antwoord = 0
+        if (temp_check_terug and ph_check_terug) is not None:
+            if type_graph == 1:
+                antwoord = cls.logistic(cls,bact_naam, end_time, ph_input, temp_input)
+            if type_graph == 2:
+                antwoord = cls.logstic_curve(cls, bact_naam,  end_time, ph_input, temp_input)
+            if type_graph == 3:
+                antwoord = cls.log_growth(cls, bact_naam, end_time, ph_input, temp_input)
+            if type_graph == 4:
+                antwoord= cls.temp_growth_factor(cls, bact_naam, ph_input, end_time, temp_check_terug)
+
+            return antwoord
+        else:
+            raise ValueError(&#34;incorrect type of value was entered&#34;)
+
+
+    def new_growth_rate(self, bact_name: str, pH: float, temerature: float) -&gt; list:
+        &#34;&#34;&#34;
+        Here the growth factor is calculated at a certain temperature and ph value.
+        Using the CTPM equation :
+
+            μ max (T, pH) = CTPM(T, pH) = μ opt t(T)* p(pH)
+
+            t(T)= (T - T MAX)(T - T MIN)**2 / (T opt 2 T min) [(Topt - Tmin)(T - Topt) - (Topt - Tmax) (Topt + Tmin - 2T)]
+
+             p(pH) = (pH - pH min) (pH - pH max)/(pH - pH min)(pH - pH max) - (pH - pH opt) **2
+
+        Return
+        --------
+        Float
+            A float of the new growth rate
+
+        &#34;&#34;&#34;
+        temp_check = JsonChecker(bact_name, temerature, pH, &#34;temp&#34;, temerature)
+        temp_waardes= temp_check.read_value_json()
+
+        ph_check = JsonChecker(bact_name, temerature, pH, &#34;ph&#34;, pH)
+        pH_waardes = ph_check.read_value_json()
+
+        groeisFcator = JsonChecker(bact_name, temerature, pH, &#34;gr&#34;, None)
+        groeisFcator_is = groeisFcator.read_value_json()
+
+        # max growth rate(T, pH) = CTPM(T, pH)= optimum growth rate t(T) p(pH)
+
+        # temerature t(T)
+        # de noemer stukje 1
+        tt = ((temp_waardes[1] - temp_waardes[0]) * (temerature - temp_waardes[1]) - (temp_waardes[1] - temp_waardes[2])
+              * (temp_waardes[1] + temp_waardes[0] - 2 * temerature))
+
+        # de noemer stukje 2
+        tt2 = ((temp_waardes[1] - temp_waardes[0]) * tt)
+        # de teller
+        tt3 = ((temerature - temp_waardes[2]) * (temerature - temp_waardes[0]) ** 2 / tt2)
+
+        # pH p(pH)
+        # de noemer
+        phh = ((pH - pH_waardes[0]) * (pH - pH_waardes[2]) - (pH - pH_waardes[1]) ** 2)
+        # de teller
+        phh2 = ((pH - pH_waardes[0]) * (pH - pH_waardes[2]) / phh)
+
+        # new groei factor
+        newgroeiFactor = groeisFcator_is[0] * tt3 * phh2
+
+        return newgroeiFactor
+
+    def log_growth(self, bact_name: str, time: float, pH: float, temerature: float, ant_lijst = [], lijstDeath = []) -&gt; list:
+        &#34;&#34;&#34;
+        This function calculates the growth of the bactria on the basis of 4 phases:
+            Lag phase, logarithmic phase, the stationary phase and the death phase.
+            Using this equation: Ln N -Ln N0 = μ *(t-t0)
+                                where:
+                                   μ stands for the growth rate per h^-1
+                                   N stands for the number of CFU / ml at time t
+                                   N0 stands for the initial number of CFU / ml at time t0
+                                   t stands for time
+        Parameters
+        ----------
+        bact_naam: String
+            The name of a bacteria
+        time: Float
+             The user input of end time
+
+        pH: Float
+             The user input of the PH
+
+        temerature: Float
+             The user input for the temperature
+
+        ant_lijst: List
+             The list where the results of the algorithm are stored
+
+        Return
+        --------
+        List
+            A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
+        &#34;&#34;&#34;
+
+        beperkendeFactor = JsonChecker(bact_name, temerature, pH, &#34;br&#34;, None)
+        beperkendeFactor_is = beperkendeFactor.read_value_json()
+
+        lnN0_ = JsonChecker(bact_name, temerature, pH, &#34;bw&#34;, None)
+        lnN0 = lnN0_.read_value_json()
+        ant_lijst.append(lnN0[0])
+
+        newgroeiFactor = EndResults.new_growth_rate(self, bact_name, pH, temerature)
+
+        for t in range(0, int(time)+1):
+            lnN = (newgroeiFactor * t) + (ant_lijst[-1])
+            if lnN &lt; beperkendeFactor_is[0]:
+                ant_lijst.append(lnN)
+            else:
+                ant_lijst.append(beperkendeFactor_is[0])
+
+        lijstDeath.append(beperkendeFactor_is[0])
+        while lijstDeath[-1] &gt;= lnN0[0]:
+            antwoord= lijstDeath[-1] - (newgroeiFactor*len(lijstDeath))
+            if antwoord &gt;= lnN0[0]:
+                 lijstDeath.append(antwoord)
+            else:
+                lijstDeath.append(lnN0[0])
+                break
+
+        for item in lijstDeath:
+            ant_lijst.append(item)
+        return ant_lijst
+
+    def logistic(self, bact_name: str, time: float, pH: float, temerature: float, ant_lijst =[]) -&gt; list:
+        &#34;&#34;&#34;
+        This formula calculates the growth of the bacteria based on the logistics formula.
+        Here the growth is calculated until reaching the limiting factor.
+            Using the formula:
+                    y(t) = limiting factor/ (1+ initial value* exp^(- growth rate *t ))
+
+        Return
+        --------
+        List
+            A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
+        &#34;&#34;&#34;
+
+        groeisFcator = EndResults.new_growth_rate(self, bact_name, pH, temerature)
+        beperkendeFactor = JsonChecker(bact_name, temerature, pH, &#34;br&#34;, None)
+        beperkendeFactor_is = beperkendeFactor.read_value_json()
+        begingValue_is = JsonChecker(bact_name, None, None, &#34;bw&#34;, None)
+        begingValue = begingValue_is.read_value_json()
+
+        for t in range(0, int(time) + 1):
+            ant = (beperkendeFactor_is[0] / (1 + begingValue[0] * np.exp(-groeisFcator * t)))
+            if ant &lt;= beperkendeFactor_is[0]:
+                ant_lijst.append(ant)
+        return ant_lijst
+
+    def logstic_curve(self, bact_name: str, time: float, pH: float, temerature: float, lijstDeath=[])-&gt; list:
+        &#34;&#34;&#34;
+        This formula use the logistic formula to calculate the growth until the limiting factor.
+        Then it would calculate the death phase of the bacteria.
+
+        Return
+        --------
+        List
+            A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
+        &#34;&#34;&#34;
+        list = EndResults.logistic(self, bact_name, time, pH, temerature)
+        groeisFcator = EndResults.new_growth_rate(self, bact_name, pH, temerature)
+        beperkendeFactor = JsonChecker(bact_name, temerature, pH, &#34;br&#34;, None)
+        beperkendeFactor_is = beperkendeFactor.read_value_json()
+
+        lijstDeath.append(beperkendeFactor_is[0])
+
+        while lijstDeath[-1] &gt;= list[0]:
+            antwoord = lijstDeath[-1] - (groeisFcator * len(lijstDeath))
+            if antwoord &lt;= beperkendeFactor_is[0]:
+                lijstDeath.append(antwoord)
+            else:
+                lijstDeath.append(beperkendeFactor_is[0])
+                break
+
+        for item in lijstDeath:
+            list.append(item)
+        return list
+
+    def temp_growth_factor(self, bact_name: str, pH: float, end_time: float, temp_check:list, list = [], tijd_lijst=[]) -&gt; list:
+        &#34;&#34;&#34;
+        This formula calculates the growth factor per temperature difference. the temperature rises one grade up every
+         hour, until the max temperature is reached.
+         The temperatures are shown on the x-axis and the growth factors on the y-axis.
+
+           Using the function : new_growth_rate
+
+         Return
+         ------
+         list
+            A list with growth factors that were calculated in the algorithm
+         &#34;&#34;&#34;
+
+        beginRange, eindRange = 0, 0
+
+        if temp_check is not None:
+            if len(temp_check) == 3:
+                beginRange = temp_check[0]
+                eindRange = temp_check[2] + 1
+
+            elif len(temp_check) == 2:
+                beginRange = temp_check[0]
+                eindRange = temp_check[1] + 1
+
+            elif len(temp_check) == 1:
+                beginRange = temp_check[0]
+                eindRange = temp_check[0] + 1
+
+        begingValue_is = JsonChecker(bact_name, None, None, &#34;bw&#34;, None)
+        begingValue = begingValue_is.read_value_json()
+
+        beperkingsFactor_is = JsonChecker(bact_name, None, None, &#34;br&#34;, None)
+        beperkingsFactor = beperkingsFactor_is.read_value_json()
+        groei_lijst = []
+
+        for time in range(0, int(end_time)+1):
+            tijd_lijst.append(time)
+        for temp in range(int(beginRange), int(eindRange)+1):
+            if list:
+                if list[-1] &lt;= beperkingsFactor[0]:
+                    if tijd_lijst:
+                        groeisFactor = EndResults.new_growth_rate(self, bact_name, pH, temp)
+                        groei_lijst.append(groeisFactor)
+                        list.append(beperkingsFactor[0] / (1 + begingValue[0] * np.exp(-groeisFactor * tijd_lijst[0])))
+                        tijd_lijst.pop(0)
+            else:
+                list.append(0)
+        return groei_lijst</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="EndResults.EndResults"><code class="flex name class">
+<span>class <span class="ident">EndResults</span></span>
+<span>(</span><span>bact_naam: str, temp_input: float, ph_input: float, end_time: float, type_graph: int)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>In this class, the intervals of growth of the bacteria are calculated using different formulas/equations that are
+specifically called in the class.
+There are a total of 4 different formulas/equations to calculate the growth of a bacterium.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>bact_naam</code></strong> :&ensp;<code>String</code></dt>
+<dd>The name of a bacteria</dd>
+<dt><strong><code>temp_input</code></strong> :&ensp;<code>Float</code></dt>
+<dd>The user input for the temperature</dd>
+<dt><strong><code>ph_input</code></strong> :&ensp;<code>Float</code></dt>
+<dd>The user input of the PH</dd>
+<dt><strong><code>end_time</code></strong> :&ensp;<code>Float</code></dt>
+<dd>The user input of end time</dd>
+<dt><strong><code>type_graph</code></strong> :&ensp;<code>int</code></dt>
+<dd>The user choice for the equation / formulas</dd>
+</dl>
+<h2 id="attributes">Attributes</h2>
+<p>bact_naam: String
+Store the name of a bacteria</p>
+<dl>
+<dt><strong><code>temp_input</code></strong> :&ensp;<code>Float</code></dt>
+<dd>Store the user input for the temperature</dd>
+<dt><strong><code>ph_input</code></strong> :&ensp;<code>Float</code></dt>
+<dd>Store the user input of the PH</dd>
+<dt><strong><code>end_time</code></strong> :&ensp;<code>Float</code></dt>
+<dd>Store the user input of end time</dd>
+<dt><strong><code>type_graph</code></strong> :&ensp;<code>int</code></dt>
+<dd>Store the user choice for the equation / formulas</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EndResults:
+    &#34;&#34;&#34;
+    In this class, the intervals of growth of the bacteria are calculated using different formulas/equations that are
+    specifically called in the class.
+    There are a total of 4 different formulas/equations to calculate the growth of a bacterium.
+
+    Parameters
+    ----------
+    bact_naam: String
+        The name of a bacteria
+
+    temp_input: Float
+         The user input for the temperature
+
+    ph_input: Float
+         The user input of the PH
+
+    end_time: Float
+         The user input of end time
+
+    type_graph: int
+        The user choice for the equation / formulas
+
+    Attributes
+    ----------
+     bact_naam: String
+        Store the name of a bacteria
+
+    temp_input: Float
+         Store the user input for the temperature
+
+    ph_input: Float
+         Store the user input of the PH
+
+    end_time: Float
+         Store the user input of end time
+
+    type_graph: int
+        Store the user choice for the equation / formulas
+
+    &#34;&#34;&#34;
+    def __init__(self, bact_naam: str, temp_input: float, ph_input: float, end_time: float, type_graph: int):
+        super().__init__(bact_naam, temp_input, ph_input, end_time, type_graph)
+        self.bact_naam = bact_naam
+        self.temp_input = temp_input
+        self.ph_input = ph_input
+        self.end_time = end_time
+        self.type_graph = type_graph
+        self.__new__()
+
+    def __new__(cls, bact_naam: str, temp_input: float, ph_input: float, end_time: float, type_graph: int) -&gt; list:
+        &#34;&#34;&#34;
+        Constructs based, got everything the same except that in the this method there is a return of the answer.
+        Based on the type equation that the user chooses, calls a function.
+
+        Raises
+        --------
+        ValueError
+                when the check of the ph and the temperature returns a None
+
+        Return
+        --------
+        list
+            A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
+
+        &#34;&#34;&#34;
+        temp_check = JsonChecker(bact_naam, temp_input, ph_input, &#34;temp&#34;, temp_input)
+        temp_check_terug = temp_check.values_check()
+
+        ph_check = JsonChecker(bact_naam, temp_input, ph_input, &#34;ph&#34;, ph_input)
+        ph_check_terug = ph_check.values_check()
+
+        antwoord = 0
+        if (temp_check_terug and ph_check_terug) is not None:
+            if type_graph == 1:
+                antwoord = cls.logistic(cls,bact_naam, end_time, ph_input, temp_input)
+            if type_graph == 2:
+                antwoord = cls.logstic_curve(cls, bact_naam,  end_time, ph_input, temp_input)
+            if type_graph == 3:
+                antwoord = cls.log_growth(cls, bact_naam, end_time, ph_input, temp_input)
+            if type_graph == 4:
+                antwoord= cls.temp_growth_factor(cls, bact_naam, ph_input, end_time, temp_check_terug)
+
+            return antwoord
+        else:
+            raise ValueError(&#34;incorrect type of value was entered&#34;)
+
+
+    def new_growth_rate(self, bact_name: str, pH: float, temerature: float) -&gt; list:
+        &#34;&#34;&#34;
+        Here the growth factor is calculated at a certain temperature and ph value.
+        Using the CTPM equation :
+
+            μ max (T, pH) = CTPM(T, pH) = μ opt t(T)* p(pH)
+
+            t(T)= (T - T MAX)(T - T MIN)**2 / (T opt 2 T min) [(Topt - Tmin)(T - Topt) - (Topt - Tmax) (Topt + Tmin - 2T)]
+
+             p(pH) = (pH - pH min) (pH - pH max)/(pH - pH min)(pH - pH max) - (pH - pH opt) **2
+
+        Return
+        --------
+        Float
+            A float of the new growth rate
+
+        &#34;&#34;&#34;
+        temp_check = JsonChecker(bact_name, temerature, pH, &#34;temp&#34;, temerature)
+        temp_waardes= temp_check.read_value_json()
+
+        ph_check = JsonChecker(bact_name, temerature, pH, &#34;ph&#34;, pH)
+        pH_waardes = ph_check.read_value_json()
+
+        groeisFcator = JsonChecker(bact_name, temerature, pH, &#34;gr&#34;, None)
+        groeisFcator_is = groeisFcator.read_value_json()
+
+        # max growth rate(T, pH) = CTPM(T, pH)= optimum growth rate t(T) p(pH)
+
+        # temerature t(T)
+        # de noemer stukje 1
+        tt = ((temp_waardes[1] - temp_waardes[0]) * (temerature - temp_waardes[1]) - (temp_waardes[1] - temp_waardes[2])
+              * (temp_waardes[1] + temp_waardes[0] - 2 * temerature))
+
+        # de noemer stukje 2
+        tt2 = ((temp_waardes[1] - temp_waardes[0]) * tt)
+        # de teller
+        tt3 = ((temerature - temp_waardes[2]) * (temerature - temp_waardes[0]) ** 2 / tt2)
+
+        # pH p(pH)
+        # de noemer
+        phh = ((pH - pH_waardes[0]) * (pH - pH_waardes[2]) - (pH - pH_waardes[1]) ** 2)
+        # de teller
+        phh2 = ((pH - pH_waardes[0]) * (pH - pH_waardes[2]) / phh)
+
+        # new groei factor
+        newgroeiFactor = groeisFcator_is[0] * tt3 * phh2
+
+        return newgroeiFactor
+
+    def log_growth(self, bact_name: str, time: float, pH: float, temerature: float, ant_lijst = [], lijstDeath = []) -&gt; list:
+        &#34;&#34;&#34;
+        This function calculates the growth of the bactria on the basis of 4 phases:
+            Lag phase, logarithmic phase, the stationary phase and the death phase.
+            Using this equation: Ln N -Ln N0 = μ *(t-t0)
+                                where:
+                                   μ stands for the growth rate per h^-1
+                                   N stands for the number of CFU / ml at time t
+                                   N0 stands for the initial number of CFU / ml at time t0
+                                   t stands for time
+        Parameters
+        ----------
+        bact_naam: String
+            The name of a bacteria
+        time: Float
+             The user input of end time
+
+        pH: Float
+             The user input of the PH
+
+        temerature: Float
+             The user input for the temperature
+
+        ant_lijst: List
+             The list where the results of the algorithm are stored
+
+        Return
+        --------
+        List
+            A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
+        &#34;&#34;&#34;
+
+        beperkendeFactor = JsonChecker(bact_name, temerature, pH, &#34;br&#34;, None)
+        beperkendeFactor_is = beperkendeFactor.read_value_json()
+
+        lnN0_ = JsonChecker(bact_name, temerature, pH, &#34;bw&#34;, None)
+        lnN0 = lnN0_.read_value_json()
+        ant_lijst.append(lnN0[0])
+
+        newgroeiFactor = EndResults.new_growth_rate(self, bact_name, pH, temerature)
+
+        for t in range(0, int(time)+1):
+            lnN = (newgroeiFactor * t) + (ant_lijst[-1])
+            if lnN &lt; beperkendeFactor_is[0]:
+                ant_lijst.append(lnN)
+            else:
+                ant_lijst.append(beperkendeFactor_is[0])
+
+        lijstDeath.append(beperkendeFactor_is[0])
+        while lijstDeath[-1] &gt;= lnN0[0]:
+            antwoord= lijstDeath[-1] - (newgroeiFactor*len(lijstDeath))
+            if antwoord &gt;= lnN0[0]:
+                 lijstDeath.append(antwoord)
+            else:
+                lijstDeath.append(lnN0[0])
+                break
+
+        for item in lijstDeath:
+            ant_lijst.append(item)
+        return ant_lijst
+
+    def logistic(self, bact_name: str, time: float, pH: float, temerature: float, ant_lijst =[]) -&gt; list:
+        &#34;&#34;&#34;
+        This formula calculates the growth of the bacteria based on the logistics formula.
+        Here the growth is calculated until reaching the limiting factor.
+            Using the formula:
+                    y(t) = limiting factor/ (1+ initial value* exp^(- growth rate *t ))
+
+        Return
+        --------
+        List
+            A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
+        &#34;&#34;&#34;
+
+        groeisFcator = EndResults.new_growth_rate(self, bact_name, pH, temerature)
+        beperkendeFactor = JsonChecker(bact_name, temerature, pH, &#34;br&#34;, None)
+        beperkendeFactor_is = beperkendeFactor.read_value_json()
+        begingValue_is = JsonChecker(bact_name, None, None, &#34;bw&#34;, None)
+        begingValue = begingValue_is.read_value_json()
+
+        for t in range(0, int(time) + 1):
+            ant = (beperkendeFactor_is[0] / (1 + begingValue[0] * np.exp(-groeisFcator * t)))
+            if ant &lt;= beperkendeFactor_is[0]:
+                ant_lijst.append(ant)
+        return ant_lijst
+
+    def logstic_curve(self, bact_name: str, time: float, pH: float, temerature: float, lijstDeath=[])-&gt; list:
+        &#34;&#34;&#34;
+        This formula use the logistic formula to calculate the growth until the limiting factor.
+        Then it would calculate the death phase of the bacteria.
+
+        Return
+        --------
+        List
+            A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
+        &#34;&#34;&#34;
+        list = EndResults.logistic(self, bact_name, time, pH, temerature)
+        groeisFcator = EndResults.new_growth_rate(self, bact_name, pH, temerature)
+        beperkendeFactor = JsonChecker(bact_name, temerature, pH, &#34;br&#34;, None)
+        beperkendeFactor_is = beperkendeFactor.read_value_json()
+
+        lijstDeath.append(beperkendeFactor_is[0])
+
+        while lijstDeath[-1] &gt;= list[0]:
+            antwoord = lijstDeath[-1] - (groeisFcator * len(lijstDeath))
+            if antwoord &lt;= beperkendeFactor_is[0]:
+                lijstDeath.append(antwoord)
+            else:
+                lijstDeath.append(beperkendeFactor_is[0])
+                break
+
+        for item in lijstDeath:
+            list.append(item)
+        return list
+
+    def temp_growth_factor(self, bact_name: str, pH: float, end_time: float, temp_check:list, list = [], tijd_lijst=[]) -&gt; list:
+        &#34;&#34;&#34;
+        This formula calculates the growth factor per temperature difference. the temperature rises one grade up every
+         hour, until the max temperature is reached.
+         The temperatures are shown on the x-axis and the growth factors on the y-axis.
+
+           Using the function : new_growth_rate
+
+         Return
+         ------
+         list
+            A list with growth factors that were calculated in the algorithm
+         &#34;&#34;&#34;
+
+        beginRange, eindRange = 0, 0
+
+        if temp_check is not None:
+            if len(temp_check) == 3:
+                beginRange = temp_check[0]
+                eindRange = temp_check[2] + 1
+
+            elif len(temp_check) == 2:
+                beginRange = temp_check[0]
+                eindRange = temp_check[1] + 1
+
+            elif len(temp_check) == 1:
+                beginRange = temp_check[0]
+                eindRange = temp_check[0] + 1
+
+        begingValue_is = JsonChecker(bact_name, None, None, &#34;bw&#34;, None)
+        begingValue = begingValue_is.read_value_json()
+
+        beperkingsFactor_is = JsonChecker(bact_name, None, None, &#34;br&#34;, None)
+        beperkingsFactor = beperkingsFactor_is.read_value_json()
+        groei_lijst = []
+
+        for time in range(0, int(end_time)+1):
+            tijd_lijst.append(time)
+        for temp in range(int(beginRange), int(eindRange)+1):
+            if list:
+                if list[-1] &lt;= beperkingsFactor[0]:
+                    if tijd_lijst:
+                        groeisFactor = EndResults.new_growth_rate(self, bact_name, pH, temp)
+                        groei_lijst.append(groeisFactor)
+                        list.append(beperkingsFactor[0] / (1 + begingValue[0] * np.exp(-groeisFactor * tijd_lijst[0])))
+                        tijd_lijst.pop(0)
+            else:
+                list.append(0)
+        return groei_lijst</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="EndResults.EndResults.log_growth"><code class="name flex">
+<span>def <span class="ident">log_growth</span></span>(<span>self, bact_name: str, time: float, pH: float, temerature: float, ant_lijst=[], lijstDeath=[]) -> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This function calculates the growth of the bactria on the basis of 4 phases:
+Lag phase, logarithmic phase, the stationary phase and the death phase.
+Using this equation: Ln N -Ln N0 = μ *(t-t0)
+where:
+μ stands for the growth rate per h^-1
+N stands for the number of CFU / ml at time t
+N0 stands for the initial number of CFU / ml at time t0
+t stands for time
+Parameters</p>
+<hr>
+<dl>
+<dt><strong><code>bact_naam</code></strong> :&ensp;<code>String</code></dt>
+<dd>The name of a bacteria</dd>
+<dt><strong><code>time</code></strong> :&ensp;<code>Float</code></dt>
+<dd>The user input of end time</dd>
+<dt><strong><code>pH</code></strong> :&ensp;<code>Float</code></dt>
+<dd>The user input of the PH</dd>
+<dt><strong><code>temerature</code></strong> :&ensp;<code>Float</code></dt>
+<dd>The user input for the temperature</dd>
+<dt><strong><code>ant_lijst</code></strong> :&ensp;<code>List</code></dt>
+<dd>The list where the results of the algorithm are stored</dd>
+</dl>
+<h2 id="return">Return</h2>
+<p>List
+A list of the intervals of growth of the bacteria, that would be used by the plot of the graph</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def log_growth(self, bact_name: str, time: float, pH: float, temerature: float, ant_lijst = [], lijstDeath = []) -&gt; list:
+    &#34;&#34;&#34;
+    This function calculates the growth of the bactria on the basis of 4 phases:
+        Lag phase, logarithmic phase, the stationary phase and the death phase.
+        Using this equation: Ln N -Ln N0 = μ *(t-t0)
+                            where:
+                               μ stands for the growth rate per h^-1
+                               N stands for the number of CFU / ml at time t
+                               N0 stands for the initial number of CFU / ml at time t0
+                               t stands for time
+    Parameters
+    ----------
+    bact_naam: String
+        The name of a bacteria
+    time: Float
+         The user input of end time
+
+    pH: Float
+         The user input of the PH
+
+    temerature: Float
+         The user input for the temperature
+
+    ant_lijst: List
+         The list where the results of the algorithm are stored
+
+    Return
+    --------
+    List
+        A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
+    &#34;&#34;&#34;
+
+    beperkendeFactor = JsonChecker(bact_name, temerature, pH, &#34;br&#34;, None)
+    beperkendeFactor_is = beperkendeFactor.read_value_json()
+
+    lnN0_ = JsonChecker(bact_name, temerature, pH, &#34;bw&#34;, None)
+    lnN0 = lnN0_.read_value_json()
+    ant_lijst.append(lnN0[0])
+
+    newgroeiFactor = EndResults.new_growth_rate(self, bact_name, pH, temerature)
+
+    for t in range(0, int(time)+1):
+        lnN = (newgroeiFactor * t) + (ant_lijst[-1])
+        if lnN &lt; beperkendeFactor_is[0]:
+            ant_lijst.append(lnN)
+        else:
+            ant_lijst.append(beperkendeFactor_is[0])
+
+    lijstDeath.append(beperkendeFactor_is[0])
+    while lijstDeath[-1] &gt;= lnN0[0]:
+        antwoord= lijstDeath[-1] - (newgroeiFactor*len(lijstDeath))
+        if antwoord &gt;= lnN0[0]:
+             lijstDeath.append(antwoord)
+        else:
+            lijstDeath.append(lnN0[0])
+            break
+
+    for item in lijstDeath:
+        ant_lijst.append(item)
+    return ant_lijst</code></pre>
+</details>
+</dd>
+<dt id="EndResults.EndResults.logistic"><code class="name flex">
+<span>def <span class="ident">logistic</span></span>(<span>self, bact_name: str, time: float, pH: float, temerature: float, ant_lijst=[]) -> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This formula calculates the growth of the bacteria based on the logistics formula.
+Here the growth is calculated until reaching the limiting factor.
+Using the formula:
+y(t) = limiting factor/ (1+ initial value<em> exp^(- growth rate </em>t ))</p>
+<h2 id="return">Return</h2>
+<p>List
+A list of the intervals of growth of the bacteria, that would be used by the plot of the graph</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def logistic(self, bact_name: str, time: float, pH: float, temerature: float, ant_lijst =[]) -&gt; list:
+    &#34;&#34;&#34;
+    This formula calculates the growth of the bacteria based on the logistics formula.
+    Here the growth is calculated until reaching the limiting factor.
+        Using the formula:
+                y(t) = limiting factor/ (1+ initial value* exp^(- growth rate *t ))
+
+    Return
+    --------
+    List
+        A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
+    &#34;&#34;&#34;
+
+    groeisFcator = EndResults.new_growth_rate(self, bact_name, pH, temerature)
+    beperkendeFactor = JsonChecker(bact_name, temerature, pH, &#34;br&#34;, None)
+    beperkendeFactor_is = beperkendeFactor.read_value_json()
+    begingValue_is = JsonChecker(bact_name, None, None, &#34;bw&#34;, None)
+    begingValue = begingValue_is.read_value_json()
+
+    for t in range(0, int(time) + 1):
+        ant = (beperkendeFactor_is[0] / (1 + begingValue[0] * np.exp(-groeisFcator * t)))
+        if ant &lt;= beperkendeFactor_is[0]:
+            ant_lijst.append(ant)
+    return ant_lijst</code></pre>
+</details>
+</dd>
+<dt id="EndResults.EndResults.logstic_curve"><code class="name flex">
+<span>def <span class="ident">logstic_curve</span></span>(<span>self, bact_name: str, time: float, pH: float, temerature: float, lijstDeath=[]) -> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This formula use the logistic formula to calculate the growth until the limiting factor.
+Then it would calculate the death phase of the bacteria.</p>
+<h2 id="return">Return</h2>
+<p>List
+A list of the intervals of growth of the bacteria, that would be used by the plot of the graph</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def logstic_curve(self, bact_name: str, time: float, pH: float, temerature: float, lijstDeath=[])-&gt; list:
+    &#34;&#34;&#34;
+    This formula use the logistic formula to calculate the growth until the limiting factor.
+    Then it would calculate the death phase of the bacteria.
+
+    Return
+    --------
+    List
+        A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
+    &#34;&#34;&#34;
+    list = EndResults.logistic(self, bact_name, time, pH, temerature)
+    groeisFcator = EndResults.new_growth_rate(self, bact_name, pH, temerature)
+    beperkendeFactor = JsonChecker(bact_name, temerature, pH, &#34;br&#34;, None)
+    beperkendeFactor_is = beperkendeFactor.read_value_json()
+
+    lijstDeath.append(beperkendeFactor_is[0])
+
+    while lijstDeath[-1] &gt;= list[0]:
+        antwoord = lijstDeath[-1] - (groeisFcator * len(lijstDeath))
+        if antwoord &lt;= beperkendeFactor_is[0]:
+            lijstDeath.append(antwoord)
+        else:
+            lijstDeath.append(beperkendeFactor_is[0])
+            break
+
+    for item in lijstDeath:
+        list.append(item)
+    return list</code></pre>
+</details>
+</dd>
+<dt id="EndResults.EndResults.new_growth_rate"><code class="name flex">
+<span>def <span class="ident">new_growth_rate</span></span>(<span>self, bact_name: str, pH: float, temerature: float) -> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Here the growth factor is calculated at a certain temperature and ph value.
+Using the CTPM equation :</p>
+<pre><code>μ max (T, pH) = CTPM(T, pH) = μ opt t(T)* p(pH)
+
+t(T)= (T - T MAX)(T - T MIN)**2 / (T opt 2 T min) [(Topt - Tmin)(T - Topt) - (Topt - Tmax) (Topt + Tmin - 2T)]
+
+ p(pH) = (pH - pH min) (pH - pH max)/(pH - pH min)(pH - pH max) - (pH - pH opt) **2
+</code></pre>
+<h2 id="return">Return</h2>
+<p>Float
+A float of the new growth rate</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def new_growth_rate(self, bact_name: str, pH: float, temerature: float) -&gt; list:
+    &#34;&#34;&#34;
+    Here the growth factor is calculated at a certain temperature and ph value.
+    Using the CTPM equation :
+
+        μ max (T, pH) = CTPM(T, pH) = μ opt t(T)* p(pH)
+
+        t(T)= (T - T MAX)(T - T MIN)**2 / (T opt 2 T min) [(Topt - Tmin)(T - Topt) - (Topt - Tmax) (Topt + Tmin - 2T)]
+
+         p(pH) = (pH - pH min) (pH - pH max)/(pH - pH min)(pH - pH max) - (pH - pH opt) **2
+
+    Return
+    --------
+    Float
+        A float of the new growth rate
+
+    &#34;&#34;&#34;
+    temp_check = JsonChecker(bact_name, temerature, pH, &#34;temp&#34;, temerature)
+    temp_waardes= temp_check.read_value_json()
+
+    ph_check = JsonChecker(bact_name, temerature, pH, &#34;ph&#34;, pH)
+    pH_waardes = ph_check.read_value_json()
+
+    groeisFcator = JsonChecker(bact_name, temerature, pH, &#34;gr&#34;, None)
+    groeisFcator_is = groeisFcator.read_value_json()
+
+    # max growth rate(T, pH) = CTPM(T, pH)= optimum growth rate t(T) p(pH)
+
+    # temerature t(T)
+    # de noemer stukje 1
+    tt = ((temp_waardes[1] - temp_waardes[0]) * (temerature - temp_waardes[1]) - (temp_waardes[1] - temp_waardes[2])
+          * (temp_waardes[1] + temp_waardes[0] - 2 * temerature))
+
+    # de noemer stukje 2
+    tt2 = ((temp_waardes[1] - temp_waardes[0]) * tt)
+    # de teller
+    tt3 = ((temerature - temp_waardes[2]) * (temerature - temp_waardes[0]) ** 2 / tt2)
+
+    # pH p(pH)
+    # de noemer
+    phh = ((pH - pH_waardes[0]) * (pH - pH_waardes[2]) - (pH - pH_waardes[1]) ** 2)
+    # de teller
+    phh2 = ((pH - pH_waardes[0]) * (pH - pH_waardes[2]) / phh)
+
+    # new groei factor
+    newgroeiFactor = groeisFcator_is[0] * tt3 * phh2
+
+    return newgroeiFactor</code></pre>
+</details>
+</dd>
+<dt id="EndResults.EndResults.temp_growth_factor"><code class="name flex">
+<span>def <span class="ident">temp_growth_factor</span></span>(<span>self, bact_name: str, pH: float, end_time: float, temp_check: list, list=[], tijd_lijst=[]) -> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This formula calculates the growth factor per temperature difference. the temperature rises one grade up every
+hour, until the max temperature is reached.
+The temperatures are shown on the x-axis and the growth factors on the y-axis.</p>
+<p>Using the function : new_growth_rate</p>
+<p>Return</p>
+<hr>
+<p>list
+A list with growth factors that were calculated in the algorithm</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def temp_growth_factor(self, bact_name: str, pH: float, end_time: float, temp_check:list, list = [], tijd_lijst=[]) -&gt; list:
+    &#34;&#34;&#34;
+    This formula calculates the growth factor per temperature difference. the temperature rises one grade up every
+     hour, until the max temperature is reached.
+     The temperatures are shown on the x-axis and the growth factors on the y-axis.
+
+       Using the function : new_growth_rate
+
+     Return
+     ------
+     list
+        A list with growth factors that were calculated in the algorithm
+     &#34;&#34;&#34;
+
+    beginRange, eindRange = 0, 0
+
+    if temp_check is not None:
+        if len(temp_check) == 3:
+            beginRange = temp_check[0]
+            eindRange = temp_check[2] + 1
+
+        elif len(temp_check) == 2:
+            beginRange = temp_check[0]
+            eindRange = temp_check[1] + 1
+
+        elif len(temp_check) == 1:
+            beginRange = temp_check[0]
+            eindRange = temp_check[0] + 1
+
+    begingValue_is = JsonChecker(bact_name, None, None, &#34;bw&#34;, None)
+    begingValue = begingValue_is.read_value_json()
+
+    beperkingsFactor_is = JsonChecker(bact_name, None, None, &#34;br&#34;, None)
+    beperkingsFactor = beperkingsFactor_is.read_value_json()
+    groei_lijst = []
+
+    for time in range(0, int(end_time)+1):
+        tijd_lijst.append(time)
+    for temp in range(int(beginRange), int(eindRange)+1):
+        if list:
+            if list[-1] &lt;= beperkingsFactor[0]:
+                if tijd_lijst:
+                    groeisFactor = EndResults.new_growth_rate(self, bact_name, pH, temp)
+                    groei_lijst.append(groeisFactor)
+                    list.append(beperkingsFactor[0] / (1 + begingValue[0] * np.exp(-groeisFactor * tijd_lijst[0])))
+                    tijd_lijst.pop(0)
+        else:
+            list.append(0)
+    return groei_lijst</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="EndResults.EndResults" href="#EndResults.EndResults">EndResults</a></code></h4>
+<ul class="">
+<li><code><a title="EndResults.EndResults.log_growth" href="#EndResults.EndResults.log_growth">log_growth</a></code></li>
+<li><code><a title="EndResults.EndResults.logistic" href="#EndResults.EndResults.logistic">logistic</a></code></li>
+<li><code><a title="EndResults.EndResults.logstic_curve" href="#EndResults.EndResults.logstic_curve">logstic_curve</a></code></li>
+<li><code><a title="EndResults.EndResults.new_growth_rate" href="#EndResults.EndResults.new_growth_rate">new_growth_rate</a></code></li>
+<li><code><a title="EndResults.EndResults.temp_growth_factor" href="#EndResults.EndResults.temp_growth_factor">temp_growth_factor</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.1</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
