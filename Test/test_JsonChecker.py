@@ -79,7 +79,7 @@ class TestJsonChecker(TestCase):
         # ph is kleiner dan de optimum en groter dan de min
         self.assertEqual(self.readeersteFile_pH_O4_1,[4.5,5.0, 10.0])
         # ph is grooter dan de max
-        self.assertEqual(self.readeersteFile_pH_O5_1, [0.0])
+        self.assertEqual(self.readeersteFile_pH_O5_1, None)
 
 
 if __name__ == '__main__':

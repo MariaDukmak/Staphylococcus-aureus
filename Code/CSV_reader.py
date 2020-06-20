@@ -13,6 +13,7 @@ class ReadIt:
 
     Attributes
     ----------
+    filepath
         Stores the file name specifies a unique location in the system
     """
     # the constructor

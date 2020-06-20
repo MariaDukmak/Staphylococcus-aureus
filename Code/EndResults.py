@@ -76,22 +76,23 @@ class EndResults:
         ph_check_terug = ph_check.values_check()
 
         antwoord = 0
-        if (temp_check_terug and ph_check_terug) is not None:
-            if type_graph == 1:
-                antwoord = cls.logistic(cls,bact_naam, end_time, ph_input, temp_input)
-            if type_graph == 2:
-                antwoord = cls.logstic_curve(cls, bact_naam,  end_time, ph_input, temp_input)
-            if type_graph == 3:
-                antwoord = cls.log_growth(cls, bact_naam, end_time, ph_input, temp_input)
-            if type_graph == 4:
-                antwoord= cls.temp_growth_factor(cls, bact_naam, ph_input, end_time, temp_check_terug)
+        try:
+            if (temp_check_terug and ph_check_terug) is not None:
+                if type_graph == 1:
+                    antwoord = cls.logistic(cls,bact_naam, end_time, ph_input, temp_input)
+                if type_graph == 2:
+                    antwoord = cls.logstic_curve(cls, bact_naam,  end_time, ph_input, temp_input)
+                if type_graph == 3:
+                    antwoord = cls.log_growth(cls, bact_naam, end_time, ph_input, temp_input)
+                if type_graph == 4:
+                    antwoord= cls.temp_growth_factor(cls, bact_naam, ph_input, end_time, temp_check_terug)
 
-            return antwoord
-        else:
-            raise ValueError("incorrect type of value was entered")
+                return antwoord
+        except ValueError as e:
+            print("incorrect type of value was entered", e)
 
 
-    def new_growth_rate(self, bact_name: str, pH: float, temerature: float) -> list:
+    def new_growth_rate(self, bact_name: str, pH: float, temperature: float) -> list:
         """
         Here the growth factor is calculated at a certain temperature and ph value.
         Using the CTPM equation :
@@ -108,26 +109,26 @@ class EndResults:
             A float of the new growth rate
 
         """
-        temp_check = JsonChecker(bact_name, temerature, pH, "temp", temerature)
+        temp_check = JsonChecker(bact_name, temperature, pH, "temp", temperature)
         temp_waardes= temp_check.read_value_json()
 
-        ph_check = JsonChecker(bact_name, temerature, pH, "ph", pH)
+        ph_check = JsonChecker(bact_name, temperature, pH, "ph", pH)
         pH_waardes = ph_check.read_value_json()
 
-        groeisFcator = JsonChecker(bact_name, temerature, pH, "gr", None)
+        groeisFcator = JsonChecker(bact_name, temperature, pH, "gr", None)
         groeisFcator_is = groeisFcator.read_value_json()
 
         # max growth rate(T, pH) = CTPM(T, pH)= optimum growth rate t(T) p(pH)
 
         # temerature t(T)
         # de noemer stukje 1
-        tt = ((temp_waardes[1] - temp_waardes[0]) * (temerature - temp_waardes[1]) - (temp_waardes[1] - temp_waardes[2])
-              * (temp_waardes[1] + temp_waardes[0] - 2 * temerature))
+        tt = ((temp_waardes[1] - temp_waardes[0]) * (temperature - temp_waardes[1]) - (temp_waardes[1] - temp_waardes[2])
+              * (temp_waardes[1] + temp_waardes[0] - 2 * temperature))
 
         # de noemer stukje 2
         tt2 = ((temp_waardes[1] - temp_waardes[0]) * tt)
         # de teller
-        tt3 = ((temerature - temp_waardes[2]) * (temerature - temp_waardes[0]) ** 2 / tt2)
+        tt3 = ((temperature - temp_waardes[2]) * (temperature - temp_waardes[0]) ** 2 / tt2)
 
         # pH p(pH)
         # de noemer
@@ -140,7 +141,7 @@ class EndResults:
 
         return newgroeiFactor
 
-    def log_growth(self, bact_name: str, time: float, pH: float, temerature: float, ant_lijst = [], lijstDeath = []) -> list:
+    def log_growth(self, bact_name: str, time: float, pH: float, temperature: float, ant_lijst = [], lijstDeath = []) -> list:
         """
         This function calculates the growth of the bactria on the basis of 4 phases:
             Lag phase, logarithmic phase, the stationary phase and the death phase.
@@ -160,7 +161,7 @@ class EndResults:
         pH: Float
              The user input of the PH
 
-        temerature: Float
+        temperature: Float
              The user input for the temperature
 
         ant_lijst: List
@@ -172,14 +173,14 @@ class EndResults:
             A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
         """
 
-        beperkendeFactor = JsonChecker(bact_name, temerature, pH, "br", None)
+        beperkendeFactor = JsonChecker(bact_name, temperature, pH, "br", None)
         beperkendeFactor_is = beperkendeFactor.read_value_json()
 
-        lnN0_ = JsonChecker(bact_name, temerature, pH, "bw", None)
+        lnN0_ = JsonChecker(bact_name, temperature, pH, "bw", None)
         lnN0 = lnN0_.read_value_json()
         ant_lijst.append(lnN0[0])
 
-        newgroeiFactor = EndResults.new_growth_rate(self, bact_name, pH, temerature)
+        newgroeiFactor = EndResults.new_growth_rate(self, bact_name, pH, temperature)
 
         for t in range(0, int(time)+1):
             lnN = (newgroeiFactor * t) + (ant_lijst[-1])
@@ -201,7 +202,7 @@ class EndResults:
             ant_lijst.append(item)
         return ant_lijst
 
-    def logistic(self, bact_name: str, time: float, pH: float, temerature: float, ant_lijst =[]) -> list:
+    def logistic(self, bact_name: str, time: float, pH: float, temperature: float, ant_lijst =[]) -> list:
         """
         This formula calculates the growth of the bacteria based on the logistics formula.
         Here the growth is calculated until reaching the limiting factor.
@@ -214,8 +215,8 @@ class EndResults:
             A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
         """
 
-        groeisFcator = EndResults.new_growth_rate(self, bact_name, pH, temerature)
-        beperkendeFactor = JsonChecker(bact_name, temerature, pH, "br", None)
+        groeisFcator = EndResults.new_growth_rate(self, bact_name, pH, temperature)
+        beperkendeFactor = JsonChecker(bact_name, temperature, pH, "br", None)
         beperkendeFactor_is = beperkendeFactor.read_value_json()
         begingValue_is = JsonChecker(bact_name, None, None, "bw", None)
         begingValue = begingValue_is.read_value_json()
@@ -226,7 +227,7 @@ class EndResults:
                 ant_lijst.append(ant)
         return ant_lijst
 
-    def logstic_curve(self, bact_name: str, time: float, pH: float, temerature: float, lijstDeath=[])-> list:
+    def logstic_curve(self, bact_name: str, time: float, pH: float, temperature: float, lijstDeath=[])-> list:
         """
         This formula use the logistic formula to calculate the growth until the limiting factor.
         Then it would calculate the death phase of the bacteria.
@@ -236,9 +237,9 @@ class EndResults:
         List
             A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
         """
-        list = EndResults.logistic(self, bact_name, time, pH, temerature)
-        groeisFcator = EndResults.new_growth_rate(self, bact_name, pH, temerature)
-        beperkendeFactor = JsonChecker(bact_name, temerature, pH, "br", None)
+        list = EndResults.logistic(self, bact_name, time, pH, temperature)
+        groeisFcator = EndResults.new_growth_rate(self, bact_name, pH, temperature)
+        beperkendeFactor = JsonChecker(bact_name, temperature, pH, "br", None)
         beperkendeFactor_is = beperkendeFactor.read_value_json()
 
         lijstDeath.append(beperkendeFactor_is[0])

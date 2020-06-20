@@ -8,7 +8,7 @@ class Testreadit(TestCase):
         self.testIt= ReadIt("C:/Users/marya/OneDrive/Bureaublad/xx-waardes.csv")
         self.pathread = self.testIt.readd("C:/Users/marya/OneDrive/Bureaublad/xx-waardes.csv")
         self.growth = self.testIt.bereken_growth_rate()
-        self.cellen = self.testIt.bereken_maxcellen
+        self.cellen = self.testIt.bereken_maxcellen()
 
     def tearDown(self) -> None:
         self.testIt = None
@@ -20,7 +20,7 @@ class Testreadit(TestCase):
         self.assertNotEqual(self.pathread, None)
 
     def test_bereken_growthrate(self):
-        self.assertEqual(self.growth, 0.370000000000001)
+        self.assertEqual(self.growth, 0.15266666666666673)
         self.assertNotEqual(self.growth, None)
         self.assertNotEqual(self.growth, [])
 

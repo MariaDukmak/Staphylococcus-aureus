@@ -27,6 +27,8 @@ class PlotGraph(tk.Frame):
 
         buttonNaarInfoBact =tk.Button(frameBovenPlotGraph, text="Inforamatie de bacterie",height=5, width=23, fg="#49A",
                              bg="white", font='Arial 10', command=lambda: controller.showFrame("InfoBact"))
+        procesFileButton = tk.Button(frameBovenPlotGraph, text="Upload a file", height=5, width=23, fg="#49A",
+                                     bg="white", font='Arial 10', command=lambda: controller.showFrame("ProcesFile"))
 
         bactLab= tk.Label(frameBovenPlotGraph,text="Welke bacterie?", font='Arial 18', bg="#49A")
         tempLab = tk.Label(frameBovenPlotGraph, text="Wat is het tempratuur?",font='Arial 18', bg="#49A")
@@ -50,10 +52,10 @@ class PlotGraph(tk.Frame):
         statusbar = tk.Label(self, bd=1, relief=tk.SUNKEN, padx=10, pady=20, bg="light blue",text="Copyright© Marya Dukmak")
         legeLabel = tk.Label(frameBovenPlotGraph, bg="#49A")
 
-        bactEN = tk.Entry(frameBovenPlotGraph)
-        tempEN = tk.Entry(frameBovenPlotGraph)
-        phEN = tk.Entry(frameBovenPlotGraph)
-        tim2EN = tk.Entry(frameBovenPlotGraph)
+        bactEN = tk.Entry(frameBovenPlotGraph, font='Arial 14')
+        tempEN = tk.Entry(frameBovenPlotGraph, font='Arial 14')
+        phEN = tk.Entry(frameBovenPlotGraph, font='Arial 14')
+        tim2EN = tk.Entry(frameBovenPlotGraph, font='Arial 14')
         try:
             laatGrafiekZien=tk.Button(frameBovenPlotGraph, text="Laat het grafiek zien!", height=5, width=23, fg="#49A",
                                         bg="white", font='Arial 10',command=lambda: PlotGrafiek(str(bactEN.get()),
@@ -114,13 +116,14 @@ class PlotGraph(tk.Frame):
         laatGrafiekZien.grid(row=25, column=0)
         buttonTerugNaarHome.grid(row=33, column=0)
         buttonNaarInfoBact.grid(row=25, column=1)
+        procesFileButton.grid(row=33, column=1)
         statusbar.pack(side=tk.BOTTOM, fill=tk.BOTH)
 
-        bactEN.grid(row=6, column=1, pady= 10, padx= 10, ipady=10, ipadx=120)
-        tempEN.grid(row=8, column=1, pady= 10, padx= 10, ipady=10, ipadx=120)
-        phEN.grid(row=10, column=1, pady= 10, padx= 10, ipady=10, ipadx=120)
-        tim2EN.grid(row=14, column=1, pady= 10, padx= 10, ipady=10, ipadx=120)
-        legeLabel.grid(row=20, column=0,  pady= 10, padx= 10, ipady=10, ipadx=120)
+        bactEN.grid(row=6, column=1, pady= 10, padx= 10, ipady=10, ipadx=100)
+        tempEN.grid(row=8, column=1, pady= 10, padx= 10, ipady=10, ipadx=100)
+        phEN.grid(row=10, column=1, pady= 10, padx= 10, ipady=10, ipadx=100)
+        tim2EN.grid(row=14, column=1, pady= 10, padx= 10, ipady=10, ipadx=100)
+        legeLabel.grid(row=20, column=0,  pady= 10, padx= 10, ipady=10, ipadx=100)
 
         RadioButton1.grid(row=17, column=0, sticky="w")
         RadioButton2.grid(row=17, column=1, sticky="w")
