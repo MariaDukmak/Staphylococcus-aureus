@@ -1,7 +1,7 @@
 # IPASS: Bacterial growth curve modeling
 Curve Growth modeling -IPASS project 2020 
 
-##Repository
+## Repository
 
 De repository bevat de code, documentatie en de applicatie van het IPASS-projec. De library bevindt zich onder Code/. De code maakt gebruik 
 van de Json bestanden die zich onder Json bestanden/ bevinden. De applicatie code bevindt zich onder App/ voor de runnen van de applicatie,
