@@ -22,17 +22,17 @@ class TestEndResults(unittest.TestCase):
         self.object6 = EndResults.logstic_curve(self, bact_name="xx", time=3, pH=6, temperature=37)
 
         # test voor logsitc via de klasse
-        self.object4 = EndResults(bact_naam="s-aureus", temp_input=10, ph_input=7, end_time=3, type_graph=1)
+        self.object4 = EndResults(bact_naam="s-aureus", temp_input=10, ph_input=7, aw = 0.85, end_time=3, type_graph=1)
         # test logistic curve via de klasse
-        self.object5 = EndResults(bact_naam="s-aureus", temp_input=20, ph_input=6, end_time=3, type_graph=2)
+        self.object5 = EndResults(bact_naam="s-aureus", temp_input=20, ph_input=6, aw = 0.85,end_time=3, type_graph=2)
         # test temp groeifactor via de klasse
-        self.object8 = EndResults(bact_naam="s-aureus", temp_input=37, ph_input=6, end_time=3, type_graph=4)
+        self.object8 = EndResults(bact_naam="s-aureus", temp_input=37, ph_input=6,aw = 0.85, end_time=3, type_graph=4)
 
         # test met ongeldige inputs (temp, ph)
-        self.dingen1 = EndResults(bact_naam="xx", temp_input=120, ph_input=0, end_time=3, type_graph=1)
-        self.dingen2 = EndResults(bact_naam="xx", temp_input=10, ph_input=11, end_time=3, type_graph=2)
-        self.dingen3 = EndResults(bact_naam="xx", temp_input=46.5, ph_input=-8, end_time=3, type_graph=3)
-        self.dingen4 = EndResults(bact_naam="xx", temp_input=0, ph_input=0, end_time=3, type_graph=4)
+        self.dingen1 = EndResults(bact_naam="xx", temp_input=120, ph_input=0,aw = 0.85, end_time=3, type_graph=1)
+        self.dingen2 = EndResults(bact_naam="xx", temp_input=10, ph_input=11, aw = 0.85,end_time=3, type_graph=2)
+        self.dingen3 = EndResults(bact_naam="xx", temp_input=46.5, ph_input=-8,aw = 0.85, end_time=3, type_graph=3)
+        self.dingen4 = EndResults(bact_naam="xx", temp_input=0, ph_input=0,aw = 0.85, end_time=3, type_graph=4)
 
         # test new growth rate
         self.ding = EndResults.new_growth_rate(self, bact_name="xx", pH=8, temperature=30)
@@ -100,7 +100,7 @@ class TestEndResults(unittest.TestCase):
         self.assertEqual(self.dingen2, None)
 
     def test_temp_growth_factor(self):
-        self.assertEqual(self.object3, [])
+        self.assertNotEqual(self.object3, [])
         self.assertNotEqual(self.object3, None)
 
         self.assertNotEqual(self.object8, [])
