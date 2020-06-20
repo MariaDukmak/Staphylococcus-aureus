@@ -119,11 +119,11 @@ class JsonChecker:
                     return [self.inputWaarde, values[2]]
                 elif values[2] < self.inputWaarde:
                     return [0.0]
-
-
             elif len(values) == 1:
                 if self.inputWaarde == values[0]:
                     return [self.inputWaarde]
+                else:
+                    return None
         # handle exceptions
         except Exception as e:
             print("Unexpected error ", e)

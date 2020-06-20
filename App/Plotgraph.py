@@ -33,8 +33,10 @@ class PlotGraph(tk.Frame):
         bactLab= tk.Label(frameBovenPlotGraph,text="Welke bacterie?", font='Arial 18', bg="#49A")
         tempLab = tk.Label(frameBovenPlotGraph, text="Wat is het tempratuur?",font='Arial 18', bg="#49A")
         pHLab= tk.Label(frameBovenPlotGraph,text="Wat is de PH grade?",font='Arial 18', bg="#49A")
+        awLab= tk.Label(frameBovenPlotGraph,text="Wat is het water activiteit?", font='Arial 18', bg="#49A")
+
         tim2Lab= tk.Label(frameBovenPlotGraph, text="Wat is de eindtijd in uren?",font='Arial 18', bg="#49A")
-        grafiekLab = tk.Label(frameBovenPlotGraph, text="Kies de soort berekneing \n" ,font='Arial 18', bg="#49A")
+        grafiekLab = tk.Label(frameBovenPlotGraph, text="Kies de soort berekneing \n",font='Arial 18', bg="#49A")
 
         typeGrafiek = tk.IntVar()
         typeGrafiek.set(1)
@@ -48,23 +50,21 @@ class PlotGraph(tk.Frame):
         RadioButton4= tk.Radiobutton( frameBovenPlotGraph, text = "4.logstic met max tempratuur \nals beperkende factor",
                                       variable = typeGrafiek, value = 4,  bg="#49A",  font='Arial 16')
 
-
-        statusbar = tk.Label(self, bd=1, relief=tk.SUNKEN, padx=10, pady=20, bg="light blue",text="Copyright© Marya Dukmak")
-        legeLabel = tk.Label(frameBovenPlotGraph, bg="#49A")
-
         bactEN = tk.Entry(frameBovenPlotGraph, font='Arial 14')
         tempEN = tk.Entry(frameBovenPlotGraph, font='Arial 14')
         phEN = tk.Entry(frameBovenPlotGraph, font='Arial 14')
         tim2EN = tk.Entry(frameBovenPlotGraph, font='Arial 14')
+        awEN = tk.Entry(frameBovenPlotGraph, font='Arial 14')
         try:
             laatGrafiekZien=tk.Button(frameBovenPlotGraph, text="Laat het grafiek zien!", height=5, width=23, fg="#49A",
                                         bg="white", font='Arial 10',command=lambda: PlotGrafiek(str(bactEN.get()),
-                                        float(tempEN.get()), float(phEN.get()),int(tim2EN.get()), int(typeGrafiek.get())))
+                                        float(tempEN.get()), float(phEN.get()), float(awEN.get()),int(tim2EN.get()),
+                                                                                                int(typeGrafiek.get())))
         except ValueError:
             messagebox.showwarning("warning", "Je hebt 1 of meerdere inputs verkeerd ingevoerd,\n probeer het opnieuw")
 
 
-        def PlotGrafiek(bact_naam, temperature, pH, endTime, typeG):
+        def PlotGrafiek(bact_naam, temperature, pH, aw,  endTime, typeG):
             """Hier wordt de y voor het grafiek van het aloritme opgehaald en getekent."""
             temp_check = JsonChecker(bact_naam, temperature, pH, "temp", temperature)
             temp_check_terug = temp_check.values_check()
@@ -72,9 +72,13 @@ class PlotGraph(tk.Frame):
 
             ph_check = JsonChecker(bact_naam, temperature, pH, "ph", pH)
             ph_check_terug = ph_check.values_check()
-            if (temp_check_terug and ph_check_terug) is not None:
+
+            aw_check = JsonChecker(bact_naam, temperature, pH, "aw", aw)
+            aw_check_terug = aw_check.values_check()
+
+            if (temp_check_terug and ph_check_terug and aw_check_terug) is not None:
                 try:
-                    y = EndResults(bact_naam, temperature, pH, endTime, typeG)
+                    y = EndResults(bact_naam, temperature, pH, aw, endTime, typeG)
                     x = np.linspace(0, len(y), (len(y)))  # wordt op basis van de lengte van y gemaakt
                     f = Figure(figsize=(5, 5), dpi=100)
                     f.suptitle('Growth Curve', fontsize=14, fontweight='bold')
@@ -112,18 +116,19 @@ class PlotGraph(tk.Frame):
         tempLab.grid(row=8, column=0, sticky="w")
         pHLab.grid(row=10, column=0, sticky="w")
         tim2Lab.grid(row=14, column=0, sticky="w")
+        awLab.grid(row=15, column=0, sticky="w")
         grafiekLab.grid(row=16, column=0, sticky="w")
         laatGrafiekZien.grid(row=25, column=0)
         buttonTerugNaarHome.grid(row=33, column=0)
         buttonNaarInfoBact.grid(row=25, column=1)
         procesFileButton.grid(row=33, column=1)
-        statusbar.pack(side=tk.BOTTOM, fill=tk.BOTH)
 
         bactEN.grid(row=6, column=1, pady= 10, padx= 10, ipady=10, ipadx=100)
         tempEN.grid(row=8, column=1, pady= 10, padx= 10, ipady=10, ipadx=100)
         phEN.grid(row=10, column=1, pady= 10, padx= 10, ipady=10, ipadx=100)
         tim2EN.grid(row=14, column=1, pady= 10, padx= 10, ipady=10, ipadx=100)
-        legeLabel.grid(row=20, column=0,  pady= 10, padx= 10, ipady=10, ipadx=100)
+        awEN.grid(row=15, column=1, pady= 10, padx= 10, ipady=10, ipadx=100)
+
 
         RadioButton1.grid(row=17, column=0, sticky="w")
         RadioButton2.grid(row=17, column=1, sticky="w")

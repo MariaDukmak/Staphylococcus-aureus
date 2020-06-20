@@ -44,16 +44,17 @@ class EndResults:
         Store the user choice for the equation / formulas
 
     """
-    def __init__(self, bact_naam: str, temp_input: float, ph_input: float, end_time: float, type_graph: int):
-        super().__init__(bact_naam, temp_input, ph_input, end_time, type_graph)
+    def __init__(self, bact_naam: str, temp_input: float, ph_input: float, aw:float, end_time: float, type_graph: int):
+        super().__init__(bact_naam, temp_input, ph_input, aw, end_time, type_graph)
         self.bact_naam = bact_naam
         self.temp_input = temp_input
         self.ph_input = ph_input
+        self.aw = aw
         self.end_time = end_time
         self.type_graph = type_graph
         self.__new__()
 
-    def __new__(cls, bact_naam: str, temp_input: float, ph_input: float, end_time: float, type_graph: int) -> list:
+    def __new__(cls, bact_naam: str, temp_input: float, ph_input: float, aw:float, end_time: float, type_graph: int) -> list:
         """
         Constructs based, got everything the same except that in the this method there is a return of the answer.
         Based on the type equation that the user chooses, calls a function.
@@ -75,9 +76,12 @@ class EndResults:
         ph_check = JsonChecker(bact_naam, temp_input, ph_input, "ph", ph_input)
         ph_check_terug = ph_check.values_check()
 
+        aw_check = JsonChecker(bact_naam, temp_input, ph_input, "aw", aw)
+        aw_check_terug = aw_check.values_check()
+
         antwoord = 0
         try:
-            if (temp_check_terug and ph_check_terug) is not None:
+            if (temp_check_terug and ph_check_terug and aw_check_terug) is not None:
                 if type_graph == 1:
                     antwoord = cls.logistic(cls,bact_naam, end_time, ph_input, temp_input)
                 if type_graph == 2:

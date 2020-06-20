@@ -35,8 +35,6 @@ class ProcesFile(tk.Frame):
         buttonPrintBerekeningen = tk.Button(frameBovenPlotGraph, text="Laat de antwoord zien", height=5, width=23,
                                         fg="#49A", bg="white", font='Arial 10', command= lambda:print_uitkomsten())
 
-        statusbar = tk.Label(self, bd=1, relief=tk.SUNKEN, padx=10, pady=20, bg="light blue",text="Copyright© Marya Dukmak")
-
         antwoordShowLabel = tk.Label(frameBovenPlotGraph, font='Arial 16 ', bg="#49A", width=40, text='')
         antwoordShowLabel2 = tk.Label(frameBovenPlotGraph, font='Arial 16 ', bg="#49A", width=40, text='')
         antwoordShowLabel3 = tk.Label(frameBovenPlotGraph, font='Arial 16 ', bg="#49A", width=40, text='')
@@ -68,7 +66,6 @@ class ProcesFile(tk.Frame):
 
         buttonPlotGrafiekFile.grid(row=60, column=1)
         buttonPrintBerekeningen.grid(row=50, column=1)
-        statusbar.pack(side=tk.BOTTOM, fill=tk.BOTH)
 
         def print_uitkomsten():
             """ hier wordt de classes aangroepen die de growth rate en/de max aantaal cellen kan uitrekenen

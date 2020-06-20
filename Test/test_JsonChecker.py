@@ -54,7 +54,7 @@ class TestJsonChecker(TestCase):
         # ph lezen
         self.assertEqual(self.readeersteFile_pH1, [4.0, 5.0, 10.0])
         #aw lezen
-        self.assertEqual(self.readeersteFile_aw_1, ["bestaat ffetje niet"])
+        self.assertEqual(self.readeersteFile_aw_1, [0.85])
 
     def test_value_check(self):
         #temp check
