@@ -1,5 +1,4 @@
 
-
 import json
 import tkinter as tk
 
@@ -31,8 +30,7 @@ class InfoBact(tk.Frame):
 
         buttonInfoJson = tk.Button(frameOnderInfoBact, text="Zoek het op!",height=2, width=12, fg="#49A",
                              bg="white", font='Arial 10', command=lambda: findJson(entryBactName.get()))
-        statusbar = tk.Label(self, bd=1, relief=tk.SUNKEN, padx=10, pady=20, bg="light blue",
-                             text="Copyright© Marya Dukmak")
+
 
         def findJson(input):
             """De entry van de gebruiker wordt naar deze functie doorgestuurd om vervolgens de bijhornde info in de json
@@ -42,12 +40,12 @@ class InfoBact(tk.Frame):
                 with open("../json bestanden/"+str(input)+ ".json", "r") as f:
                     info = json.load(f)
                     informatieVanJson= info["info"]
-                    infoUitprinten= tk.Label(frameOnderInfoBact,text=informatieVanJson, font='Arial 16 ', bg="#49A")
+                    infoUitprinten= tk.Label(frameOnderInfoBact,text="", font='Arial 16 ', bg="#49A")
+                    infoUitprinten.config(text= informatieVanJson)
                     infoUitprinten.pack(side=tk.TOP, fill=tk.X, padx=5)
 
             except FileNotFoundError:
-                infoUitprinten = tk.Label(frameOnderInfoBact, text="We hebben helaas geen informatie kunnen vinden"
-                                                                   " voor deze bacterie",font='Arial 16 ', bg="#49A")
+                infoUitprinten.config(text="We hebben helaas geen informatie kunnen vinden over deze bacterie")
                 infoUitprinten.pack(side=tk.TOP, fill=tk.X, padx=5)
 
         # hier wordt alles op het scherm aangetoond
@@ -59,4 +57,3 @@ class InfoBact(tk.Frame):
         buttonInfoJson.pack(side=tk.TOP, ipady=10, ipadx=110)
         buttonPlotGraph.pack(side=tk.LEFT, fill=tk.X, padx=10)
         buttonMainPage.pack(side=tk.LEFT, fill=tk.X, padx=10)
-        statusbar.pack(side=tk.BOTTOM, fill=tk.BOTH)
