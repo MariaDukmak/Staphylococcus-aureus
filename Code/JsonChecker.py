@@ -86,7 +86,7 @@ class JsonChecker:
     def values_check(self):
 
         """"
-        Here the input of the user is checked for the conditions of growth such as: PH and the temperature.
+        Here the input of the user is checked for the conditions of growth such as: PH , aw and the temperature.
             It is examined whether the input value is greater, equal or smaller than the optimum value.
 
             - If the value is equal to the optimum, the growth at that point would be the fastest.

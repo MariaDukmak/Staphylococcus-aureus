@@ -89,7 +89,7 @@ class EndResults:
                 if type_graph == 3:
                     antwoord = cls.log_growth(cls, bact_naam, end_time, ph_input, temp_input)
                 if type_graph == 4:
-                    antwoord= cls.temp_growth_factor(cls, bact_naam, ph_input, end_time, temp_check_terug)
+                    antwoord= cls.temp_growth_rate(cls, bact_naam, ph_input, end_time, temp_check_terug)
 
                 return antwoord
         except ValueError as e:
@@ -145,7 +145,7 @@ class EndResults:
 
         return newgroeiFactor
 
-    def log_growth(self, bact_name: str, time: float, pH: float, temperature: float, ant_lijst = [], lijstDeath = []) -> list:
+    def log_growth(self, bact_name: str, time: float, pH: float, temperature: float) -> list:
         """
         This function calculates the growth of the bactria on the basis of 4 phases:
             Lag phase, logarithmic phase, the stationary phase and the death phase.
@@ -177,13 +177,17 @@ class EndResults:
             A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
         """
 
+        ant_lijst, lijstDeath  = [], []
         beperkendeFactor = JsonChecker(bact_name, temperature, pH, "br", None)
         beperkendeFactor_is = beperkendeFactor.read_value_json()
+        groeisFcator = JsonChecker(bact_name, temperature, pH, "gr", None)
+        groeisFcator_is = groeisFcator.read_value_json()
 
         lnN0_ = JsonChecker(bact_name, temperature, pH, "bw", None)
         lnN0 = lnN0_.read_value_json()
         ant_lijst.append(lnN0[0])
-
+        # beperkendeFactor = lnN0[0]*(np.exp(groeisFcator_is[0]* time))
+        # print(beperkendeFactor)
         newgroeiFactor = EndResults.new_growth_rate(self, bact_name, pH, temperature)
 
         for t in range(0, int(time)+1):
@@ -206,19 +210,19 @@ class EndResults:
             ant_lijst.append(item)
         return ant_lijst
 
-    def logistic(self, bact_name: str, time: float, pH: float, temperature: float, ant_lijst =[]) -> list:
+    def logistic(self, bact_name: str, time: float, pH: float, temperature: float) -> list:
         """
         This formula calculates the growth of the bacteria based on the logistics formula.
         Here the growth is calculated until reaching the limiting factor.
             Using the formula:
-                    y(t) = limiting factor/ (1+ initial value* exp^(- growth rate *t ))
+                    y(t) = limiting factor/ (1+ initial value* exp^(-growth rate *t ))
 
         Return
         --------
         List
             A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
         """
-
+        ant_lijst = []
         groeisFcator = EndResults.new_growth_rate(self, bact_name, pH, temperature)
         beperkendeFactor = JsonChecker(bact_name, temperature, pH, "br", None)
         beperkendeFactor_is = beperkendeFactor.read_value_json()
@@ -231,7 +235,7 @@ class EndResults:
                 ant_lijst.append(ant)
         return ant_lijst
 
-    def logstic_curve(self, bact_name: str, time: float, pH: float, temperature: float, lijstDeath=[])-> list:
+    def logstic_curve(self, bact_name: str, time: float, pH: float, temperature: float )-> list:
         """
         This formula use the logistic formula to calculate the growth until the limiting factor.
         Then it would calculate the death phase of the bacteria.
@@ -245,12 +249,14 @@ class EndResults:
         groeisFcator = EndResults.new_growth_rate(self, bact_name, pH, temperature)
         beperkendeFactor = JsonChecker(bact_name, temperature, pH, "br", None)
         beperkendeFactor_is = beperkendeFactor.read_value_json()
-
+        lijstDeath = []
         lijstDeath.append(beperkendeFactor_is[0])
 
         while lijstDeath[-1] >= list[0]:
+        # zolang de deathwaarde grooter of glijk is aan de beginwaarde van de groei is:
             antwoord = lijstDeath[-1] - (groeisFcator * len(lijstDeath))
             if antwoord <= beperkendeFactor_is[0]:
+                # als de antwoord niet gelijk of groter aan de beperkende factor is
                 lijstDeath.append(antwoord)
             else:
                 lijstDeath.append(beperkendeFactor_is[0])
@@ -260,7 +266,7 @@ class EndResults:
             list.append(item)
         return list
 
-    def temp_growth_factor(self, bact_name: str, pH: float, end_time: float, temp_check:list, list = [], tijd_lijst=[]) -> list:
+    def temp_growth_rate(self, bact_name: str, pH: float, end_time: float, temp_check:list, ) -> list:
         """
         This formula calculates the growth factor per temperature difference. the temperature rises one grade up every
          hour, until the max temperature is reached.
@@ -275,7 +281,8 @@ class EndResults:
          """
 
         beginRange, eindRange = 0, 0
-
+        list = []
+        tijd_lijst = []
         if temp_check is not None:
             if len(temp_check) == 3:
                 beginRange = temp_check[0]

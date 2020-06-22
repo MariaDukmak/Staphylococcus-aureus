@@ -1,4 +1,3 @@
-
 import tkinter as tk
 from tkinter import filedialog, messagebox
 
@@ -8,6 +7,9 @@ from matplotlib.figure import Figure
 
 from Code.CSV_reader import ReadIt
 
+bg_background = "#81B29A"
+bg_button = "#F4F1DE"
+fg = "#3D405B"
 
 class ProcesFile(tk.Frame):
     """In dit klasse kan de gebruiker een csv file uploaden en de progranmmma een bepaalde constanten laten uitrekenen
@@ -15,47 +17,51 @@ class ProcesFile(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        frameBovenPlotGraph = tk.Frame(self, bg="#49A")
-        tk.Frame.configure(self, bg="#49A")
+        frameBovenPlotGraph = tk.Frame(self, bg=bg_background)
+        tk.Frame.configure(self, bg=bg_background)
 
-        titel = tk.Label(frameBovenPlotGraph,text="Bereken constanten van een dataset",  font='Arial 18 bold', bg="#49A")
+        titel = tk.Label(frameBovenPlotGraph,text="Bereken constanten van een dataset",  font='Arial 20 bold', bg=bg_background)
         infoUitprinten = tk.Label(frameBovenPlotGraph,
                                   text="\n\n\nUpload je csv bestand eerst \n "
                                        "Daarna kies de constanten die je wilt laten uitrekenen\n\n\n",
-                                  font='Arial 18 ', bg="#49A")
+                                  font='Arial 18 ', bg=bg_background, fg=fg)
+
         buttonTerugNaarHome = tk.Button(frameBovenPlotGraph, text="Terug naar de homepagina", height=5, width=23,
-                                        fg="#49A",
-                                        bg="white", font='Arial 10', command=lambda: controller.showFrame("MainPage"))
+                                        fg=fg,
+                                        bg=bg_button, font='Arial 10', command=lambda: controller.showFrame("MainPage"))
         buttoChoosFile = tk.Button(frameBovenPlotGraph, text="Selecteer een bestand", height=5, width=23,
-                                        fg="#49A", bg="white", font='Arial 10', command=lambda: ProcesFile.file(self))
+                                        fg=fg,  bg=bg_button, font='Arial 10', command=lambda: ProcesFile.file(self))
 
-        buttonPlotGrafiekFile = tk.Button(frameBovenPlotGraph, text="Klik hier om het grafiek \nte laten tekenen", height=5,
-                                          width=23, fg="#49A", bg="white", font='Arial 10', command=lambda: plot_file())
+        buttonPlotGrafiekFile = tk.Button(frameBovenPlotGraph, text="Klik hier om de grafiek \nte laten tekenen", height=5,
+                                          width=23, fg=fg,  bg=bg_button, font='Arial 10', command=lambda: plot_file())
 
-        buttonPrintBerekeningen = tk.Button(frameBovenPlotGraph, text="Laat de antwoord zien", height=5, width=23,
-                                        fg="#49A", bg="white", font='Arial 10', command= lambda:print_uitkomsten())
+        buttonPrintBerekeningen = tk.Button(frameBovenPlotGraph, text="Laat het antwoord zien", height=5, width=23,
+                                        fg=fg,  bg=bg_button, font='Arial 10', command= lambda:print_uitkomsten())
 
-        antwoordShowLabel = tk.Label(frameBovenPlotGraph, font='Arial 16 ', bg="#49A", width=40, text='')
-        antwoordShowLabel2 = tk.Label(frameBovenPlotGraph, font='Arial 16 ', bg="#49A", width=40, text='')
-        antwoordShowLabel3 = tk.Label(frameBovenPlotGraph, font='Arial 16 ', bg="#49A", width=40, text='')
+        antwoordShowLabel = tk.Label(frameBovenPlotGraph, font='Arial 16 ',bg=bg_background, width=40, text='', fg=fg)
+        antwoordShowLabel2 = tk.Label(frameBovenPlotGraph, font='Arial 16 ',bg=bg_background, width=40, text='',fg=fg)
+        antwoordShowLabel3 = tk.Label(frameBovenPlotGraph, font='Arial 16 ', bg=bg_background, width=40, text='', fg=fg)
 
         # variabel voor de checkbuttons om te kijken of ze geselecteerd
         var = tk.IntVar()
         var2 = tk.IntVar()
         var3 = tk.IntVar()
         # hier kan de gebruiker de opties kiezen die hij wil laten berekenen
-        checkButtton = tk.Checkbutton(frameBovenPlotGraph, text= "Growth rate", variable = var, font='Arial 16 ', bg="#49A" )
+        checkButtton = tk.Checkbutton(frameBovenPlotGraph, text= "Growth rate", variable = var, font='Arial 16 ',bg=bg_background)
         checkButtton2 = tk.Checkbutton(frameBovenPlotGraph, text="Max aantaal gemaakte cellen", variable=var2, font='Arial 16',
-                                       bg="#49A")
+                                       bg=bg_background)
         checkButtton3 = tk.Checkbutton(frameBovenPlotGraph, text="De gekoste tijd voor het experiment", variable=var3,
                                        font='Arial 16',
-                                       bg="#49A")
+                                       bg=bg_background)
 
         # Hier wordt alles in de schrem aangetood
         frameBovenPlotGraph.pack(side=tk.LEFT, fill=tk.BOTH)
-        buttonTerugNaarHome.grid(row=60, column=0)
-        buttoChoosFile.grid(row=50, column=0, )
-        titel.grid(row = 0 , column= 0)
+        titel.grid(row=0, column=0)
+        buttonTerugNaarHome.grid(row=50, column=0, sticky="w")
+        buttoChoosFile.grid(row=50, column=1,)
+        buttonPlotGrafiekFile.grid(row=50, column=2)
+        buttonPrintBerekeningen.grid(row=50, column=3)
+
         infoUitprinten.grid(row=4, column=0, sticky = "w")
         checkButtton.grid(row=20, column=0, sticky = "w")
         checkButtton2.grid(row=25, column=0, sticky = "w")
@@ -64,8 +70,7 @@ class ProcesFile(tk.Frame):
         antwoordShowLabel2.grid(row=40, column=0)
         antwoordShowLabel3.grid(row=45, column=0)
 
-        buttonPlotGrafiekFile.grid(row=60, column=1)
-        buttonPrintBerekeningen.grid(row=50, column=1)
+
 
         def print_uitkomsten():
             """ hier wordt de classes aangroepen die de growth rate en/de max aantaal cellen kan uitrekenen
@@ -85,21 +90,22 @@ class ProcesFile(tk.Frame):
         def plot_file():
              """hier kunnnen de data van de file in een grafiek getekend worden"""
              try:
-                answerr = ReadIt(self.fileDai)
-                anw= answerr.readd(self.fileDai)
-                x, y = anw[0], anw[1]
-                f = Figure(figsize=(5, 5), dpi=100)
-                f.suptitle('Growth Curve', fontsize=14, fontweight='bold')
-                a = f.add_subplot(111)
-                a.set_ylabel('Groei in CFU/ml')
-                a.set_xlabel('Tijd in uur')
-                a.plot(np.array(x),np.array(y))
-                canvas = FigureCanvasTkAgg(f, self)
-                canvas.draw()
+                 anw= ReadIt.readd(self, self.fileDai)
+                 x, y = anw[0], anw[1]
+                 f = Figure(figsize=(5, 5), dpi=100)
+                 f.patch.set_facecolor("#F4F1DE")
+                 f.suptitle('Growth Curve', fontsize=14, fontweight='bold')
+                 a = f.add_subplot(111)
+                 a.set_ylabel('Groei in CFU/ml')
+                 a.set_xlabel('Tijd in uur')
+                 a.plot(np.array(x),np.array(y))
+                 canvas = FigureCanvasTkAgg(f, self)
+                 canvas.draw()
 
-                canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+                 canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+
              except Exception:
-                messagebox.showwarning("warning", "Je hebt 1 of meerdere inputs verkeerd ingevoerd,\n probeer het opnieuw")
+                 messagebox.showwarning("warning", "Je hebt 1 of meerdere inputs verkeerd ingevoerd,\n probeer het opnieuw")
 
     def file(self):
         """ hierdoor kan de gebruiker een file uploaden"""

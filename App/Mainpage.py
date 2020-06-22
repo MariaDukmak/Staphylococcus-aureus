@@ -12,10 +12,10 @@ class MainPage(tk.Frame):
         frameOnderMainpage = tk.Frame(self, bg="#49A")
         tk.Frame.configure(self, bg="#49A")
 
-        titel=tk.Label(frameBovenMainpage, text="Welcom to Growth Curve model!", fg='black', bg="white",
+        titel=tk.Label(frameBovenMainpage, text="Welcome to Growth Curve Model!", fg='black', bg="white",
                        font='Arial 35 bold')
 
-        startGrafiekTekenen = tk.Button(frameOnderMainpage, text="Teken het grafiek", height=5, width=23, fg="#49A",
+        startGrafiekTekenen = tk.Button(frameOnderMainpage, text="Teken de grafiek", height=5, width=23, fg="#49A",
                              bg="white", font='Arial 14', command=lambda: controller.showFrame("PlotGraph"))
 
         infoBact = tk.Button(frameOnderMainpage, text="Informatie over de bacterie ", height=5, width=23, fg="#49A",
@@ -28,7 +28,7 @@ class MainPage(tk.Frame):
                              bg="white", font='Arial 14',command=lambda :controller.showFrame("ProcesFile"))
 
         statusbar = tk.Label(self, bd=1, relief=tk.SUNKEN, padx=10, pady=20, bg="light blue",
-                             text="Copyright© Marya Dukmak")
+                             text="Copyright© Maria Dukmak")
         statusbar.pack(side=tk.BOTTOM, fill=tk.BOTH)
 
         # hier wordt alles op het schrem aangetoond

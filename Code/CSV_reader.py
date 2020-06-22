@@ -20,7 +20,9 @@ class ReadIt:
     def __init__(self, filepath: str):
         self.filepath = filepath
 
-    def readd(self, filepath: str, time_index: list = [], cellen_index: list = []) -> list:
+        self.lijst = self.readd(self.filepath)
+
+    def readd(self, filepath: str) -> list:
         """
         Will look up the file path and read the values from it and convert the type of the values to float.
 
@@ -29,11 +31,11 @@ class ReadIt:
         filepath: String
             The file name specifies a unique location in the system
 
-        time_index: list
+        cellen_index: list
             The list where the time read values would be temporary stored
 
-        cellen_index:list
-            The list where the growth read values would be temporary stored
+        tijd_index: list
+             The list where the growth read values would be temporary stored
 
         Raises
         ----------
@@ -47,18 +49,22 @@ class ReadIt:
             A list containing two lists, which are the time and the cells growth lists.
 
         """
+        tijd_lijst, cellen_lijst = [], []
+        cellen_index,tijd_index = [],[]
         try:
             with open(str(filepath)) as csv_file:
                 csv_reader = csv.reader(csv_file, delimiter=',')
                 next(csv_reader)  # This skips the first row of the CSV file.
                 for row in csv_reader:
-                    cellen_index.append(row[0])
-                    time_index.append(row[1])
-                tijd_lijst = [float(i) for i in cellen_index]
-                cellen_lijst = [float(i) for i in time_index]
-                return [tijd_lijst, cellen_lijst]
+                    tijd_index.append(row[0])
+                    cellen_index.append(row[1])
+                tijd_lijst = [float(i) for i in tijd_index]
+                cellen_lijst = [float(i) for i in cellen_index]
+
         except FileNotFoundError:
             print("File not found")
+
+        return [tijd_lijst, cellen_lijst]
 
     def bereken_growth_rate(self) -> float:
         """
@@ -80,8 +86,7 @@ class ReadIt:
             The grawth rate would be a float number
 
         """
-        lijst = self.readd(self.filepath)
-        lijst_cellen, lijst_tijd = lijst[1], lijst[0]
+        lijst_cellen, lijst_tijd =  self.lijst[1],  self.lijst[0]
         lnN, lnN0 = lijst_cellen[-1], lijst_cellen[0]
         t, t0 = lijst_tijd[-1], lijst_tijd[0]
         growth_rate = (lnN - lnN0)/(t - t0)
@@ -102,7 +107,7 @@ class ReadIt:
             and the max number of cells made in CFU / ml.
 
         """
-        lijst = self.readd(self.filepath)
-        delta_tijd = max(lijst[0]) - min(lijst[0])
-        delta_cellen = max(lijst[1]) - min(lijst[1])
+
+        delta_tijd = max(self.lijst[0]) - min(self.lijst[0])
+        delta_cellen = max(self.lijst[1]) - min(self.lijst[1])
         return [delta_tijd, delta_cellen]
