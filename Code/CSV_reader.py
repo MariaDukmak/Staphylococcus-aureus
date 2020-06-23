@@ -45,8 +45,8 @@ class ReadIt:
 
         Returns
         -------
-        List
-            A list containing two lists, which are the time and the cells growth lists.
+            List
+                A list containing two lists, which are the time and the cells growth lists.
 
         """
         tijd_lijst, cellen_lijst = [], []
@@ -82,8 +82,8 @@ class ReadIt:
 
         Returns
         -------
-        Float
-            The grawth rate would be a float number
+            Float
+                The grawth rate would be a float number
 
         """
         lijst_cellen, lijst_tijd =  self.lijst[1],  self.lijst[0]

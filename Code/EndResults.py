@@ -66,8 +66,8 @@ class EndResults:
 
         Return
         --------
-        list
-            A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
+            list
+                A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
 
         """
         temp_check = JsonChecker(bact_naam, temp_input, ph_input, "temp", temp_input)
@@ -95,7 +95,6 @@ class EndResults:
         except ValueError as e:
             print("incorrect type of value was entered", e)
 
-
     def new_growth_rate(self, bact_name: str, pH: float, temperature: float) -> list:
         """
         Here the growth factor is calculated at a certain temperature and ph value.
@@ -109,8 +108,8 @@ class EndResults:
 
         Return
         --------
-        Float
-            A float of the new growth rate
+            Float
+                A float of the new growth rate
 
         """
         temp_check = JsonChecker(bact_name, temperature, pH, "temp", temperature)
@@ -173,8 +172,8 @@ class EndResults:
 
         Return
         --------
-        List
-            A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
+            List
+                A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
         """
 
         ant_lijst, lijstDeath  = [], []
@@ -219,8 +218,8 @@ class EndResults:
 
         Return
         --------
-        List
-            A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
+            List
+                 A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
         """
         ant_lijst = []
         groeisFcator = EndResults.new_growth_rate(self, bact_name, pH, temperature)
@@ -242,8 +241,8 @@ class EndResults:
 
         Return
         --------
-        List
-            A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
+            List
+                A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
         """
         list = EndResults.logistic(self, bact_name, time, pH, temperature)
         groeisFcator = EndResults.new_growth_rate(self, bact_name, pH, temperature)
@@ -276,8 +275,8 @@ class EndResults:
 
          Return
          ------
-         list
-            A list with growth factors that were calculated in the algorithm
+            list
+                 A list with growth factors that were calculated in the algorithm
          """
 
         beginRange, eindRange = 0, 0

@@ -11,6 +11,8 @@ class GrowthCurve(tk.Tk):
     def __init__(self, *args, **kwargs):
         # Bouwt het aantal pagina's op als wordt ingegeven.
         tk.Tk.__init__(self, *args, **kwargs)
+
+
         self.title('Growth Curve app')
         screenWidth = self.winfo_screenwidth()
         screenHeight = self.winfo_screenheight()
@@ -40,4 +42,5 @@ class GrowthCurve(tk.Tk):
 if __name__ == '__main__':
     """ runt de GUI door de root te runnen."""
     app = GrowthCurve()
+    app.iconphoto(False, tk.PhotoImage(file="../Extra bestanden/homepageicon.png"))
     app.mainloop()

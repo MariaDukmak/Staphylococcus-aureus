@@ -15,8 +15,8 @@ class TestEndResults(unittest.TestCase):
         # test temp groeifactor
         self.temp_check = JsonChecker(bacteria_name="xx", temperature=10, pH=7, item="temp", inputWaarde=10)
         self.temp_check_terug = self.temp_check.values_check()
-        self.object3 = EndResults.temp_growth_factor(self, bact_name="xx", pH=8, end_time=4, temp_check=
-        self.temp_check_terug)
+        self.object3 = EndResults.temp_growth_rate(self, bact_name="xx", pH=8, end_time=4, temp_check=
+                                                   self.temp_check_terug)
 
         # test logistic curve
         self.object6 = EndResults.logstic_curve(self, bact_name="xx", time=3, pH=6, temperature=37)

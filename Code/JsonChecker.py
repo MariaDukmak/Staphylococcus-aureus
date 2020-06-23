@@ -71,7 +71,7 @@ class JsonChecker:
                     [min, optimum, max] or only [optimum]
         """
         try:
-            with open("../json bestanden/" + self.bacteria_name + ".json", "r") as f:
+            with open("../Extra bestanden/" + self.bacteria_name + ".json", "r") as f:
                 info = json.load(f)
                 optimum_item = info["env-info"][self.item][self.item]
                 max_item = info["env-info"][self.item]["max"]
@@ -103,8 +103,8 @@ class JsonChecker:
 
         Returns
         -------
-        list
-            A list with the required values based on the explanation above
+            list
+                 A list with the required values based on the explanation above
         """
         try:
             values = self.read_value_json()
