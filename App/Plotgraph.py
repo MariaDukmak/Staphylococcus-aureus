@@ -45,7 +45,7 @@ class PlotGraph(tk.Frame):
                                       value=2,  bg="#81B29A", font='Arial 18', fg="#3D405B")
         RadioButton3 = tk.Radiobutton(frameBovenPlotGraph, text=" Log groei met 4 faces, lag, log, \nstationaire en sterffases",
                                       variable=typeGrafiek, value=3,  bg="#81B29A", font='Arial 18', fg="#3D405B")
-        RadioButton4 = tk.Radiobutton(frameBovenPlotGraph, text=" De verandering van de groeifactor\n ten opzichtte van de tempartuur",
+        RadioButton4 = tk.Radiobutton(frameBovenPlotGraph, text=" De verandering van de groeifactor\n ten opzichte van de tempartuur",
                                       variable=typeGrafiek, value=4,  bg="#81B29A",  font='Arial 18', fg="#3D405B")
 
         legeLabel= tk.Label(frameBovenPlotGraph,  bg="#81B29A")
