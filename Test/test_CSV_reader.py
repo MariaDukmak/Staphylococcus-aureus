@@ -5,7 +5,7 @@ from Code.CSV_reader import ReadIt
 
 class Testreadit(TestCase):
     def setUp(self) -> None:
-        self.testIt= ReadIt("C:/Users/marya/OneDrive/Bureaublad/xx-waardes.csv")
+        self.testIt = ReadIt("C:/Users/marya/OneDrive/Bureaublad/xx-waardes.csv")
         self.pathread = self.testIt.readd("C:/Users/marya/OneDrive/Bureaublad/xx-waardes.csv")
         self.growth = self.testIt.bereken_growth_rate()
         self.cellen = self.testIt.bereken_maxcellen()

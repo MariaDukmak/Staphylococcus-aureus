@@ -179,14 +179,11 @@ class EndResults:
         ant_lijst, lijstDeath  = [], []
         beperkendeFactor = JsonChecker(bact_name, temperature, pH, "br", None)
         beperkendeFactor_is = beperkendeFactor.read_value_json()
-        groeisFcator = JsonChecker(bact_name, temperature, pH, "gr", None)
-        groeisFcator_is = groeisFcator.read_value_json()
-
         lnN0_ = JsonChecker(bact_name, temperature, pH, "bw", None)
         lnN0 = lnN0_.read_value_json()
+
         ant_lijst.append(lnN0[0])
-        # beperkendeFactor = lnN0[0]*(np.exp(groeisFcator_is[0]* time))
-        # print(beperkendeFactor)
+
         newgroeiFactor = EndResults.new_growth_rate(self, bact_name, pH, temperature)
 
         for t in range(0, int(time)+1):
@@ -195,18 +192,19 @@ class EndResults:
                 ant_lijst.append(lnN)
             else:
                 ant_lijst.append(beperkendeFactor_is[0])
+        lijstDeath.append(ant_lijst[-1])
 
-        lijstDeath.append(beperkendeFactor_is[0])
-        while lijstDeath[-1] >= lnN0[0]:
-            antwoord= lijstDeath[-1] - (newgroeiFactor*len(lijstDeath))
-            if antwoord >= lnN0[0]:
-                 lijstDeath.append(antwoord)
-            else:
-                lijstDeath.append(lnN0[0])
-                break
+        if ant_lijst[-1] == beperkendeFactor_is[0]:
+            while lijstDeath[-1] >= lnN0[0]:
+                antwoord= lijstDeath[-1] - (newgroeiFactor*len(lijstDeath))
+                if antwoord >= lnN0[0]:
+                     lijstDeath.append(antwoord)
+                else:
+                    lijstDeath.append(lnN0[0])
+                    break
 
-        for item in lijstDeath:
-            ant_lijst.append(item)
+            for item in lijstDeath:
+                ant_lijst.append(item)
         return ant_lijst
 
     def logistic(self, bact_name: str, time: float, pH: float, temperature: float) -> list:
@@ -228,13 +226,13 @@ class EndResults:
         begingValue_is = JsonChecker(bact_name, None, None, "bw", None)
         begingValue = begingValue_is.read_value_json()
 
-        for t in range(0, int(time) + 1):
+        for t in range(0, int(time)):
             ant = (beperkendeFactor_is[0] / (1 + begingValue[0] * np.exp(-groeisFcator * t)))
             if ant <= beperkendeFactor_is[0]:
                 ant_lijst.append(ant)
         return ant_lijst
 
-    def logstic_curve(self, bact_name: str, time: float, pH: float, temperature: float )-> list:
+    def logstic_curve(self, bact_name: str, time: float, pH: float, temperature: float)-> list:
         """
         This formula use the logistic formula to calculate the growth until the limiting factor.
         Then it would calculate the death phase of the bacteria.
@@ -248,19 +246,18 @@ class EndResults:
         groeisFcator = EndResults.new_growth_rate(self, bact_name, pH, temperature)
         beperkendeFactor = JsonChecker(bact_name, temperature, pH, "br", None)
         beperkendeFactor_is = beperkendeFactor.read_value_json()
-        lijstDeath = []
-        lijstDeath.append(beperkendeFactor_is[0])
+        lijstDeath=[]
+        lijstDeath.append(list[-1])
 
-        while lijstDeath[-1] >= list[0]:
-        # zolang de deathwaarde grooter of glijk is aan de beginwaarde van de groei is:
+        while lijstDeath[-1] > list[0]:
+            # zolang de deathwaarde grooter of glijk is aan de beginwaarde van de groei is:
             antwoord = lijstDeath[-1] - (groeisFcator * len(lijstDeath))
-            if antwoord <= beperkendeFactor_is[0]:
+            if beperkendeFactor_is[0] >= antwoord >= list[0]:
                 # als de antwoord niet gelijk of groter aan de beperkende factor is
                 lijstDeath.append(antwoord)
             else:
-                lijstDeath.append(beperkendeFactor_is[0])
+                lijstDeath.append(list[0])
                 break
-
         for item in lijstDeath:
             list.append(item)
         return list
@@ -270,9 +267,7 @@ class EndResults:
         This formula calculates the growth factor per temperature difference. the temperature rises one grade up every
          hour, until the max temperature is reached.
          The temperatures are shown on the x-axis and the growth factors on the y-axis.
-
            Using the function : new_growth_rate
-
          Return
          ------
             list

@@ -32,7 +32,7 @@ class PlotGraph(tk.Frame):
         pHLab= tk.Label(frameBovenPlotGraph, text="Wat is de pH waarde?", font='Arial 18', bg="#81B29A", fg="#3D405B")
         awLab= tk.Label(frameBovenPlotGraph, text="Wat is de water activiteit?", font='Arial 18', bg="#81B29A", fg="#3D405B")
 
-        tim2Lab= tk.Label(frameBovenPlotGraph, text="Wat is de eindtijd in uren?", font='Arial 18', bg="#81B29A", fg="#3D405B")
+        tim2Lab= tk.Label(frameBovenPlotGraph, text="Wat is de eind groeitijd in uren?", font='Arial 18', bg="#81B29A", fg="#3D405B")
         grafiekLab = tk.Label(frameBovenPlotGraph, text="Kies de soort berekening \n", font='Arial 18 bold', fg="#FFEEDD",
                               bg="#81B29A")
 
@@ -41,7 +41,7 @@ class PlotGraph(tk.Frame):
 
         RadioButton1 = tk.Radiobutton(frameBovenPlotGraph, text=" Logistic met de maximum aantal \ncellen als beperkende factor",
                                       variable=typeGrafiek, value=1,  bg="#81B29A",  font='Arial 18', fg="#3D405B")
-        RadioButton2 = tk.Radiobutton(frameBovenPlotGraph, text=" Logistic curve met sterffase", variable=typeGrafiek,
+        RadioButton2 = tk.Radiobutton(frameBovenPlotGraph , text=" Logistic curve met sterffase", variable=typeGrafiek,
                                       value=2,  bg="#81B29A", font='Arial 18', fg="#3D405B")
         RadioButton3 = tk.Radiobutton(frameBovenPlotGraph, text=" Log groei met 4 faces, lag, log, \nstationaire en sterffases",
                                       variable=typeGrafiek, value=3,  bg="#81B29A", font='Arial 18', fg="#3D405B")
@@ -108,7 +108,9 @@ class PlotGraph(tk.Frame):
 
         aw_check = JsonChecker(bact_naam, temperature, pH, "aw", aw)
         aw_check_terug = aw_check.values_check()
-
+        if temp_check_terug is None: x = "tempratuur"
+        if ph_check_terug is None: x = "pH"
+        if aw_check_terug is None: x = "water activiteit"
         if (temp_check_terug and ph_check_terug and aw_check_terug) is not None:
             try:
                 # hier wordt er een nieuwe window gemaakt voor het showen van de grfaiek
@@ -150,9 +152,11 @@ class PlotGraph(tk.Frame):
                 toolbar.update()
                 canvas.tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
             except ValueError:
-                messagebox.showwarning("warning", "Je hebt 1 of meerdere inputs verkeerd ingevoerd,\n "
+                messagebox.showwarning("warning",f"Je hebt {x} of meerdere inputs verkeerd ingevoerd,\n "
                                                   "probeer het opnieuw")
+
         else:
+
             messagebox.showwarning("warning",
-                                   "Je hebt 1 of meerdere inputs verkeerd ingevoerd,\n probeer het opnieuw")
+                                   f"Je hebt {x} of meerdere inputs verkeerd ingevoerd,\n probeer het opnieuw")
 

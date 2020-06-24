@@ -5,6 +5,8 @@ from tkinter import messagebox
 
 from PIL import ImageTk, Image
 
+from Code.JsonChecker import JsonChecker
+
 
 class InfoBact(tk.Frame):
     """In dit klass kunnen er informatie over een bepaalde bactrie geshowed worden, door gebruik van de json bestand
@@ -21,8 +23,9 @@ class InfoBact(tk.Frame):
         frameBovenInfoBact = tk.Frame(self, bg=bg_background)
         frameOnderInfoBact = tk.Frame(self, bg=bg_background)
         frameMideen = tk.Frame(self, bg= bg_background)
+        frameMidenMiden = tk.Frame(self, bg= bg_background)
 
-        titel = tk.Label(frameOnderInfoBact, text="Informatie over de bacterie", fg='black', font='Arial 35 bold',
+        titel = tk.Label(frameOnderInfoBact, text="Informatie over de bacterie", fg="#FFEEDD", font='Arial 30 bold ',
                          bg =bg_background)
         tk.Frame.configure(self, bg=bg_background)
 
@@ -32,8 +35,8 @@ class InfoBact(tk.Frame):
         buttonPlotGraph = tk.Button(frameBovenInfoBact, text="Teken de grafiek",height=5, width=23, fg=fg,
                              bg="white", font='Arial 10', command=lambda: controller.showFrame("PlotGraph"))
 
-        LabelVraag = tk.Label(frameOnderInfoBact,text="Over welke bacterie wil je informatie krijgen?\n "
-                                             "Type de naam van de bacterie hiernaast:", font='Arial 18',bg=bg_background)
+        LabelVraag = tk.Label(frameOnderInfoBact,text="Over welke bacterie wil je informatie krijgen?"
+                                             , font='Arial 18',bg=bg_background) # "Type de naam van de bacterie hiernaast:",
 
         entryBactName = tk.Entry(frameOnderInfoBact, font="Arial 18")
 
@@ -49,22 +52,48 @@ class InfoBact(tk.Frame):
                 with open("../Extra bestanden/"+str(input) + ".json", "r") as f:
                     info = json.load(f)
                     informatieVanJson = info["info"]
-                    infoUitprinten= tk.Label(frameMideen, text="", font='Arial 20 ', bg=bg_background, fg=fg)
+                    infoUitprinten= tk.Label(frameMideen, text="", font='Arial 18 ', bg=bg_background, fg=fg)
+                    fotolabel = tk.Label(frameMideen, text="Foto van de bacterie",  bg=bg_background,fg="#FFEEDD",)
                     naamUitprinten = tk.Label(frameMideen, text =str(input),  font='Arial 20 bold', bg=bg_background,fg=fg)
+                    omstandigheden= tk.Label(frameMidenMiden, text= "\nOmgevingsfactoren", font='Arial 20 bold',
+                                             bg=bg_background,fg=fg )
                     infoUitprinten.config(text=informatieVanJson)
-                    naamUitprinten.pack(side=tk.LEFT, fill=tk.X, padx=5, ancho="n")
+                    omstandigheden.pack(side=tk.LEFT, fill=tk.X, padx=5, ancho="nw")
+
+                    items = ["temp", "ph", "aw"]
+                    for item in items:
+                        maxminInfo= tk.Label(frameMidenMiden, text="", font='Arial 18 ', bg=bg_background, fg=fg)
+                        jsonjsno= JsonChecker(str(input), None, None, item, None)
+                        maxenmin= jsonjsno.read_value_json()
+
+                        if len(maxenmin) == 3:
+                            maxminInfo.config(text=f"De {str(item)} waarde is:\n de maximum gelijk aan {str(maxenmin[2])} garde"
+                                                f" \nde mimium is gelijk aan {str(maxenmin[0])} grade\n en de optimum waarde is"
+                                                f": {str(maxenmin[1])} grade.")
+                            maxminInfo.pack(side=tk.LEFT, fill=tk.X, padx=5, ancho="nw")
+
+                        else:
+                            maxminInfo.config(text= f"De {str(item)} waarde is :\n {str(maxenmin[0])} grade.\n\n")
+                            maxminInfo.pack(side=tk.BOTTOM, fill=tk.X,  padx=5, ancho="nw")
+
+                        print(maxenmin)
+
+                    naamUitprinten.pack(side=tk.LEFT, fill=tk.X, padx=5, ancho="nw")
                     infoUitprinten.pack(side=tk.LEFT, fill=tk.X, padx=5, ancho="nw")
+                    # fotolabel.pack(side=tk.TOP, fill=tk.X, padx=5, ancho="nw")
+
             except FileNotFoundError:
                 messagebox.showwarning("", "We hebben geen informatie over die bacterie kunnen vinden")
 
             img = ImageTk.PhotoImage(Image.open("../Extra bestanden/" + str(input)+".png"))
             panel = tk.Label(frameMideen, image=img)
             panel.image = img
-            panel.pack(side="bottom",  ancho="center")
+            # panel.pack(side="bottom",  ancho="center")
 
         # hier wordt alles op het scherm aangetoond
         frameOnderInfoBact.pack(pady=0, expand=tk.TRUE, fill= tk.X)
-        frameMideen.pack(expand= tk.TRUE, fill = tk.X)
+        frameMideen.pack(pady=0,expand= tk.TRUE, fill = tk.X)
+        frameMidenMiden.pack(expand= tk.TRUE, fill = tk.X)
         frameBovenInfoBact.pack(expand=tk.TRUE)
         titel.pack(side=tk.TOP, fill=tk.X)
         LabelVraag.pack(side=tk.LEFT, fill=tk.X, padx=5)
