@@ -10,7 +10,7 @@ from Code.JsonChecker import JsonChecker
 
 class InfoBact(tk.Frame):
     """In dit klass kunnen er informatie over een bepaalde bactrie geshowed worden, door gebruik van de json bestand
-        te maken"""
+    te maken """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
@@ -26,7 +26,7 @@ class InfoBact(tk.Frame):
         frameMidenMiden = tk.Frame(self, bg= bg_background)
 
         titel = tk.Label(frameOnderInfoBact, text="Informatie over de bacterie", fg="#FFEEDD", font='Arial 30 bold ',
-                         bg =bg_background)
+                         bg=bg_background)
         tk.Frame.configure(self, bg=bg_background)
 
         buttonMainPage = tk.Button(frameBovenInfoBact, text="Terug naar de homepagina",height=5, width=23, fg=fg,
@@ -36,7 +36,7 @@ class InfoBact(tk.Frame):
                              bg="white", font='Arial 10', command=lambda: controller.showFrame("PlotGraph"))
 
         LabelVraag = tk.Label(frameOnderInfoBact,text="Over welke bacterie wil je informatie krijgen?"
-                                             , font='Arial 18',bg=bg_background) # "Type de naam van de bacterie hiernaast:",
+                                             , font='Arial 18',bg=bg_background)
 
         entryBactName = tk.Entry(frameOnderInfoBact, font="Arial 18")
 
@@ -80,15 +80,18 @@ class InfoBact(tk.Frame):
 
                     naamUitprinten.pack(side=tk.LEFT, fill=tk.X, padx=5, ancho="nw")
                     infoUitprinten.pack(side=tk.LEFT, fill=tk.X, padx=5, ancho="nw")
-                    # fotolabel.pack(side=tk.TOP, fill=tk.X, padx=5, ancho="nw")
 
             except FileNotFoundError:
                 messagebox.showwarning("", "We hebben geen informatie over die bacterie kunnen vinden")
 
-            img = ImageTk.PhotoImage(Image.open("../Extra bestanden/" + str(input)+".png"))
-            panel = tk.Label(frameMideen, image=img)
-            panel.image = img
-            # panel.pack(side="bottom",  ancho="center")
+            try:
+                img = ImageTk.PhotoImage(Image.open("../Extra bestanden/" + str(input)+".png"))
+                panel = tk.Label(frameMideen, image=img)
+                panel.image = img
+                fotolabel.pack(side=tk.TOP, fill=tk.X, padx=5, ancho="nw")
+                panel.pack(side="bottom",  ancho="center")
+            except FileNotFoundError:
+                print("file not found")
 
         # hier wordt alles op het scherm aangetoond
         frameOnderInfoBact.pack(pady=0, expand=tk.TRUE, fill= tk.X)

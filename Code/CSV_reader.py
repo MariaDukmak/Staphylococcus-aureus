@@ -49,9 +49,9 @@ class ReadIt:
                 A list containing two lists, which are the time and the cells growth lists.
 
         """
-        tijd_lijst, cellen_lijst = [], []
-        cellen_index,tijd_index = [],[]
+
         try:
+            cellen_index, tijd_index = [], []
             with open(str(filepath)) as csv_file:
                 csv_reader = csv.reader(csv_file, delimiter=',')
                 next(csv_reader)  # This skips the first row of the CSV file.
@@ -60,11 +60,15 @@ class ReadIt:
                     cellen_index.append(row[1])
                 tijd_lijst = [float(i) for i in tijd_index]
                 cellen_lijst = [float(i) for i in cellen_index]
+            return [tijd_lijst, cellen_lijst]
 
-        except FileNotFoundError:
-            print("File not found")
+        except FileNotFoundError as e:
+            print("Unexpected error ", e)
 
-        return [tijd_lijst, cellen_lijst]
+        except UnicodeDecodeError as e:
+            print("Unexpected error ", e)
+
+
 
     def bereken_growth_rate(self) -> float:
         """
@@ -86,10 +90,12 @@ class ReadIt:
                 The grawth rate would be a float number
 
         """
-        lijst_cellen, lijst_tijd =  self.lijst[1],  self.lijst[0]
-        lnN, lnN0 = lijst_cellen[-1], lijst_cellen[0]
-        t, t0 = lijst_tijd[-1], lijst_tijd[0]
-        growth_rate = (lnN - lnN0)/(t - t0)
+        growth_rate = 0
+        if self.lijst is not None:
+            lijst_cellen, lijst_tijd =  self.lijst[1],  self.lijst[0]
+            lnN, lnN0 = lijst_cellen[-1], lijst_cellen[0]
+            t, t0 = lijst_tijd[-1], lijst_tijd[0]
+            growth_rate = (lnN - lnN0)/(t - t0)
 
         # lijst3 = [float(lijst_cellen[item + 1] - lijst_cellen[item]) for item in range(len(lijst_cellen) - 1)]
         # growthrate = max(lijst3)
@@ -107,7 +113,7 @@ class ReadIt:
             and the max number of cells made in CFU / ml.
 
         """
-
-        delta_tijd = max(self.lijst[0]) - min(self.lijst[0])
-        delta_cellen = max(self.lijst[1]) - min(self.lijst[1])
-        return [delta_tijd, delta_cellen]
+        if self.lijst is not None:
+            delta_tijd = max(self.lijst[0]) - min(self.lijst[0])
+            delta_cellen = max(self.lijst[1]) - min(self.lijst[1])
+            return [delta_tijd, delta_cellen]

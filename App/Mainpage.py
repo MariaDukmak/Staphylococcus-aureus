@@ -17,8 +17,7 @@ class MainPage(tk.Frame):
         frameOnderMainpage = tk.Frame(self, bg=bg_background)
         tk.Frame.configure(self, bg=bg_background)
 
-        titel = tk.Label(frameBovenMainpage, text="Welcome to Growth Curve Model!", fg='black', bg="white",
-                        font='Arial 35 bold')
+        titel = tk.Label(frameBovenMainpage, text="Welcome to Growth Curve Model!", fg='black', bg="white",font='Arial 35 bold')
 
         startGrafiekTekenen = tk.Button(frameOnderMainpage, text="Teken de grafiek", height=5, width=23, fg=fg,
                              bg="white", font='Arial 14', command=lambda: controller.showFrame("PlotGraph"))
@@ -32,9 +31,8 @@ class MainPage(tk.Frame):
         procesFileButton = tk.Button(frameOnderMainpage, text="Upload a file",  height=5, width=23, fg=fg,
                              bg="white", font='Arial 14', command=lambda: controller.showFrame("ProcesFile"))
 
-        # statusbar = tk.Label(self, bd=1, relief=tk.SUNKEN, padx=10, pady=20, bg=bg_button,
-        #                      text="Copyright© Maria Dukmak")
-        # statusbar.pack(side=tk.BOTTOM, fill=tk.BOTH)
+        statusbar = tk.Label(self, bd=1, relief=tk.SUNKEN, padx=10, pady=20, bg="white",text="Copyright© Maria Dukmak")
+        statusbar.pack(side=tk.BOTTOM, fill=tk.BOTH)
 
         # hier wordt alles op het schrem aangetoond
         titel.pack(side=tk.TOP, fill=tk.X)

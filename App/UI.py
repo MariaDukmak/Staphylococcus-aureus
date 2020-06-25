@@ -12,7 +12,6 @@ class GrowthCurve(tk.Tk):
         # Bouwt het aantal pagina's op als wordt ingegeven.
         tk.Tk.__init__(self, *args, **kwargs)
 
-
         self.title('Growth Curve app')
         screenWidth = self.winfo_screenwidth()
         screenHeight = self.winfo_screenheight()

@@ -176,7 +176,7 @@ class EndResults:
                 A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
         """
 
-        ant_lijst, lijstDeath  = [], []
+        ant_lijst, lijstDeath= [], []
         beperkendeFactor = JsonChecker(bact_name, temperature, pH, "br", None)
         beperkendeFactor_is = beperkendeFactor.read_value_json()
         lnN0_ = JsonChecker(bact_name, temperature, pH, "bw", None)
@@ -297,7 +297,7 @@ class EndResults:
         beperkingsFactor = beperkingsFactor_is.read_value_json()
         groei_lijst = []
 
-        for time in range(0, int(end_time)+1):
+        for time in range(0, int(100)+1):
             tijd_lijst.append(time)
         for temp in range(int(beginRange), int(eindRange)+1):
             if list:
