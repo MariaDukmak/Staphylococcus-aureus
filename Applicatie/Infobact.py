@@ -44,10 +44,11 @@ class InfoBact(tk.Frame):
                              bg="white", font='Arial 10', command=lambda: findJson(entryBactName.get()))
 
         def findJson(input):
-            """De entry van de gebruiker wordt naar deze functie doorgestuurd om vervolgens de bijhornde info in de json
-                bestand te zoeken.Er wordt ook een foto van de bactie gelaten zien als het bestaat.
-                Voor het gevaal dat de gebruiker een naam invoert die niet tussen de json bestanden
-                staat, gebruik ik een try except"""
+            """
+            De input van de gebruiker wordt naar deze functie doorgestuurd om vervolgens de bijhornde info in de json bestand op te zoeken.
+                Er wordt ook een foto van de bacterie laten zien als het bestaat.
+                Voor het gevaal dat de gebruiker een bacterienaam invoert die niet in de json bestanden bestaat, gebruik ik een try except
+            """
             try:
                 with open("../Extra bestanden/"+str(input) + ".json", "r") as f:
                     info = json.load(f)

@@ -2,8 +2,10 @@ import tkinter as tk
 
 
 class MainPage(tk.Frame):
-    """Dit is de main frame (begin schrem) die de gebruiker meteen ziet als de programma runt,
-      hier zijn er 3 buttons aangamaakt om vervolgens andere klasses aanteroepen"""
+    """
+    Dit is de main frame (begin scherm) die de gebruiker meteen ziet als het programma runt,
+      hier zijn er 3 buttons aangamaakt om vervolgens andere klasses(schermen) aan te roepen
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, bg='white')
         self.controller = controller
