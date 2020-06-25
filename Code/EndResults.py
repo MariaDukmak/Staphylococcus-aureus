@@ -181,19 +181,18 @@ class EndResults:
         beperkendeFactor_is = beperkendeFactor.read_value_json()
         lnN0_ = JsonChecker(bact_name, temperature, pH, "bw", None)
         lnN0 = lnN0_.read_value_json()
-
         ant_lijst.append(lnN0[0])
 
         newgroeiFactor = EndResults.new_growth_rate(self, bact_name, pH, temperature)
 
         for t in range(0, int(time)+1):
-            lnN = (newgroeiFactor * t) + (ant_lijst[-1])
-            if lnN < beperkendeFactor_is[0]:
+            lnN = (newgroeiFactor * t) + lnN0[0]
+            # lnN = lnN0[0] * (np.exp(newgroeiFactor*t))
+            if lnN <  beperkendeFactor_is[0]:
                 ant_lijst.append(lnN)
             else:
                 ant_lijst.append(beperkendeFactor_is[0])
         lijstDeath.append(ant_lijst[-1])
-
         if ant_lijst[-1] == beperkendeFactor_is[0]:
             while lijstDeath[-1] >= lnN0[0]:
                 antwoord= lijstDeath[-1] - (newgroeiFactor*len(lijstDeath))
@@ -202,7 +201,6 @@ class EndResults:
                 else:
                     lijstDeath.append(lnN0[0])
                     break
-
             for item in lijstDeath:
                 ant_lijst.append(item)
         return ant_lijst

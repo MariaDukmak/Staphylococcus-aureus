@@ -15,7 +15,7 @@ class TestEndResults(unittest.TestCase):
         # test temp groeifactor
         self.temp_check = JsonChecker(bacteria_name="xx", temperature=10, pH=7, item="temp", inputWaarde=10)
         self.temp_check_terug = self.temp_check.values_check()
-        self.object3 = EndResults.temp_growth_rate(self, bact_name="xx", pH=8, end_time=4, temp_check=
+        self.object3 = EndResults.temp_growth_rate(self, bact_name="xx", pH=8, end_time=30, temp_check=
                                                    self.temp_check_terug)
 
         # test logistic curve
@@ -81,27 +81,36 @@ class TestEndResults(unittest.TestCase):
     def test_log_growth(self):
         self.assertNotEqual(self.object2, [])
         self.assertNotEqual(self.object2, None)
+        self.assertEqual(self.object2, [14.5, 14.5, 14.50229610235637, 14.50459220471274, 14.50688830706911])
 
         self.assertEqual(self.dingen3, None)
+        self.assertNotEqual(self.dingen3, [])
 
     def test_logistic(self):
         self.assertNotEqual(self.object, [])
         self.assertNotEqual(self.object, None)
+        self.assertEqual(self.object, [1.1524800991306403, 1.1549580646971955, 1.157440989152522])
+        self.assertEqual(len(self.object), 3)
 
         self.assertNotEqual(self.object4, [])
+        self.assertEqual(self.object4, None)
         self.assertEqual(self.dingen1, None)
 
     def test_logstic_curve(self):
         self.assertNotEqual(self.object6, [])
         self.assertNotEqual(self.object6, None)
+        self.assertEqual(len(self.object6), 6)
+        self.assertEqual(self.object6, [1.1524800991306403, 1.5351348473157342, 2.029411964234011, 2.029411964234011,
+                                        1.7195452975673442,1.1524800991306403])
 
         self.assertNotEqual(self.object5, [])
-
+        self.assertEqual(self.object5, None)
         self.assertEqual(self.dingen2, None)
 
     def test_temp_growth_factor(self):
         self.assertNotEqual(self.object3, [])
         self.assertNotEqual(self.object3, None)
+        self.assertEqual(len(self.object3),36)
 
         self.assertNotEqual(self.object8, [])
 
