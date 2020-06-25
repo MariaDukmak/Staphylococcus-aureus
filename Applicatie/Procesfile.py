@@ -10,7 +10,7 @@ from Code.CSV_reader import ReadIt
 
 class ProcesFile(tk.Frame):
     """In dit klasse kan de gebruiker een csv file uploaden en de progranmmma een bepaalde constanten laten uitrekenen
-      die de gebruiker zelf kan kiezen, er kan ook het grafiek van de csv bestand laten aantoenen"""
+      die de gebruiker zelf kan kiezen, er kan ook het grafiek van de csv bestand getekent worden"""
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -50,8 +50,8 @@ class ProcesFile(tk.Frame):
         var = tk.IntVar()
         var2 = tk.IntVar()
         var3 = tk.IntVar()
-        # hier kan de gebruiker de opties kiezen die hij wil laten berekenen
 
+        # hier kan de gebruiker de opties kiezen die hij wil laten berekenen
         checkButtton = tk.Checkbutton(frameBovenPlotGraph, text= "De groeifactor                                     "
                                                                  "", variable = var, font='Arial 18 ',bg=bg_background)
         checkButtton2 = tk.Checkbutton(frameBovenPlotGraph, text="De maximum aantaal gemaakte cellen"
@@ -80,43 +80,46 @@ class ProcesFile(tk.Frame):
         buttonPrintBerekeningen.pack(side = tk.LEFT,  padx=5, ancho="w")
         buttonTerugNaarHome.pack(side = tk.LEFT,  padx=5, ancho="w")
 
-
         def print_uitkomsten():
-            """ hier wordt de classes aangroepen die de growth rate en/de max aantaal cellen kan uitrekenen
-                en vervolgens aangetoond"""
+            """
+            Hier wordt de class(CSV-Reader) aangroepen die de growth rate en/de max aantaal cellen kan uitrekenen
+                en vervolgens worden de antwoorden op hets scherm aangetoond
+            """
 
             answerr= ReadIt(self.fileDai)
             answe_growth_rate= answerr.bereken_growth_rate()
             answer_aantaal_cellen= answerr.bereken_maxcellen()
-            if var.get() == 1: # als de growth rate wordt gekozen
+            if var.get() == 1:
+                # als de growth rate wordt gekozen
                 antwoordShowLabel.config(text="De growth rate is: "+str(answe_growth_rate) + "     ")
-            if var2.get() == 1: # als de max aantaal cellen wordt gekozen
+            if var2.get() == 1:
+                # als de max aantaal cellen wordt gekozen
                 antwoordShowLabel2.config(text="    De max aantaal cellen is: " + str(answer_aantaal_cellen[1]))
-            if var3.get() == 1:# als de tijd woordt gekozen
+            if var3.get() == 1:
+                # als de tijd woordt gekozen
                 antwoordShowLabel3.config(text="De tijd van het experiment is :" + str(answer_aantaal_cellen[0]) + " uur           "
                                                                                                                    " ")
         def plot_file():
-             """ hier kunnnen de data van de file in een grafiek getekend worden """
-             try:
-                 anw= ReadIt.readd(self, self.fileDai)
-                 x, y = anw[0], anw[1]
-                 f = Figure(figsize=(5, 5), dpi=100)
-                 f.patch.set_facecolor("#fff8e8")
-                 f.suptitle('Growth Curve', fontsize=14, fontweight='bold')
-                 a = f.add_subplot(111)
-                 a.set_ylabel('Groei in CFU/ml')
-                 a.set_xlabel('Tijd in uur')
-                 a.plot(np.array(x),np.array(y), "#3D405B")
-                 a.plot(x, np.array(y), "o", color="#E07A5F")
-
-                 canvas = FigureCanvasTkAgg(f, self)
-                 canvas.draw()
-
-                 canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
-
-             except Exception:
-                 messagebox.showwarning("warning", "Je hebt 1 of meerdere inputs verkeerd ingevoerd,\n probeer het opnieuw")
+            """
+              Hier kunnnen de data van de file in een grafiek getekend worden
+            """
+            try:
+                anw = ReadIt.readd(self, self.fileDai)
+                x, y = anw[0], anw[1]
+                f = Figure(figsize=(5, 5), dpi=100)
+                f.patch.set_facecolor("#fff8e8")
+                f.suptitle('Growth Curve', fontsize=14, fontweight='bold')
+                a = f.add_subplot(111)
+                a.set_ylabel('Groei in CFU/ml')
+                a.set_xlabel('Tijd in uur')
+                a.plot(np.array(x),np.array(y), "#3D405B")
+                a.plot(x, np.array(y), "o", color="#E07A5F")
+                canvas = FigureCanvasTkAgg(f, self)
+                canvas.draw()
+                canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+            except Exception:
+                messagebox.showwarning("warning","Je hebt 1 of meerdere inputs verkeerd ingevoerd,\n ----probeer het opnieuw----")
 
     def file(self):
-        """ hierdoor kan de gebruiker een file uploaden"""
-        self.fileDai= filedialog.askopenfilename(initialdir = "/Bureaublad",title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.*")))
+        """ Hierdoor kan de gebruiker een file uploaden"""
+        self.fileDai= filedialog.askopenfilename(initialdir="/Bureaublad",title="Select file",filetypes=(("csv files","*.csv"),("all files","*.*")))
