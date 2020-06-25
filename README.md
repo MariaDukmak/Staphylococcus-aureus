@@ -14,7 +14,7 @@ De documentatie is te vinden onder elke class en functie. De gegenereerde docume
 
 ## Applicatie 
 
-Voor het gebruiken van de applicatie moet de code gerund worden. Hiervoor zijn de`Code/`,`App/` en `Json bestanden/` files nodig. 
+Voor het gebruiken van de applicatie moet de code gerund worden. Hiervoor zijn de`Code/`,`App/` en `Json bestanden/` files nodig. Voor het runnen van de applicatie, moet alleen UI.py gerund worden.
 
 ## Tests 
 
