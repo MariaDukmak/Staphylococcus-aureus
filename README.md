@@ -3,8 +3,8 @@ Curve Growth modeling -IPASS project 2020
 
 ## Repository
 
-De repository bevat de code, documentatie en de applicatie van het IPASS-projec. De library bevindt zich onder `Code/`. De code maakt gebruik 
-van de Json bestanden die zich onder `Json bestanden/`bevinden. De applicatie code bevindt zich onder `App/` voor de runnen van de applicatie,
+De repository bevat de code, documentatie, rapport, poster en de applicatie van het IPASS-project. De library bevindt zich onder `Code/`. De code maakt gebruik 
+van de Json bestanden die zich onder `Extra bestanden/`bevinden. De applicatie code bevindt zich onder `Applicatie/` voor de runnen van de applicatie,
 is de runnen van de library nodig. 
 
 
@@ -14,11 +14,14 @@ De documentatie is te vinden onder elke class en functie. De gegenereerde docume
 
 ## Applicatie 
 
-Voor het gebruiken van de applicatie moet de code gerund worden. Hiervoor zijn de`Code/`,`App/` en `Json bestanden/` files nodig. Voor het runnen van de applicatie, moet alleen UI.py gerund worden.
+Voor het gebruiken van de applicatie moet de code gerund worden. Hiervoor zijn de`Code/`,`Applicatie/` en `Json bestanden/` files nodig. Voor het runnen van de applicatie, moet alleen UI.py gerund worden.
 
 ## Tests 
 
-De tests van de library bevindt zich onder `Tests/`. Alleen de modules/classes in`Code/` zijn getests
+De tests van de library bevindt zich onder `Test/`. Alleen de modules/classes in `Code/` zijn getests.
+
+## Rpport en Poster 
+Het rapportage en de poster van het project bevinden zich in `Rapport en poster/`.
 
 ## Bronnen:
 
