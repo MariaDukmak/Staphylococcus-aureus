@@ -77,9 +77,9 @@ class JsonChecker:
                 max_item = info["env-info"][self.item]["max"]
                 min_item = info["env-info"][self.item]["min"]
                 return [min_item, optimum_item, max_item]
+        # handle exceptions
         except KeyError as e:
             return [optimum_item]
-
         except FileNotFoundError as e:
             return "File not found"
 
@@ -111,7 +111,7 @@ class JsonChecker:
             if len(values) == 3:
                 if values[2] == self.inputWaarde:
                     return [self.inputWaarde]
-                elif values[2]< self.inputWaarde or values[0]> self.inputWaarde:
+                elif values[2] < self.inputWaarde or values[0]> self.inputWaarde:
                     return None
                 elif values[0] == self.inputWaarde or (values[0] <= self.inputWaarde <= values[1] and self.inputWaarde != values[1]):
                     return [self.inputWaarde, values[1], values[2]]

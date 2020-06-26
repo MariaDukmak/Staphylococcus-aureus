@@ -68,8 +68,6 @@ class ReadIt:
         except UnicodeDecodeError as e:
             print("Unexpected error ", e)
 
-
-
     def bereken_growth_rate(self) -> float:
         """
         Here the growth rate is calculated using the following equation:
@@ -97,8 +95,6 @@ class ReadIt:
             t, t0 = lijst_tijd[-1], lijst_tijd[0]
             growth_rate = (lnN - lnN0)/(t - t0)
 
-        # lijst3 = [float(lijst_cellen[item + 1] - lijst_cellen[item]) for item in range(len(lijst_cellen) - 1)]
-        # growthrate = max(lijst3)
         return growth_rate
 
     def bereken_maxcellen(self) -> list:
