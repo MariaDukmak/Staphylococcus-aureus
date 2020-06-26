@@ -185,7 +185,7 @@ class PlotGraph(tk.Frame):
         aw_check = JsonChecker(bact_naam, temperature, pH, "aw", aw)
         aw_check_terug = aw_check.values_check()
 
-        if temp_check_terug is None : waring_ += "tempratuur ,"
+        if temp_check_terug is None: waring_ += "tempratuur ,"
         if ph_check_terug is None: waring_ += "pH , "
         if aw_check_terug is None: waring_ += "water activiteit, "
         return waring_

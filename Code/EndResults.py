@@ -11,7 +11,7 @@ class EndResults:
 
     Parameters
     ----------
-    bact_naam: String
+    bact_name: String
         The name of a bacteria
 
     temp_input: Float
@@ -28,7 +28,7 @@ class EndResults:
 
     Attributes
     ----------
-     bact_naam: String
+     bact_name: String
         Store the name of a bacteria
 
     temp_input: Float
@@ -44,9 +44,9 @@ class EndResults:
         Store the user choice for the equation / formulas
 
     """
-    def __init__(self, bact_naam: str, temp_input: float, ph_input: float, aw:float, end_time: float, type_graph: int):
-        super().__init__(bact_naam, temp_input, ph_input, aw, end_time, type_graph)
-        self.bact_naam = bact_naam
+    def __init__(self, bact_name: str, temp_input: float, ph_input: float, aw:float, end_time: float, type_graph: int):
+        super().__init__(bact_name, temp_input, ph_input, aw, end_time, type_graph)
+        self.bact_naam = bact_name
         self.temp_input = temp_input
         self.ph_input = ph_input
         self.aw = aw
@@ -176,19 +176,19 @@ class EndResults:
                 A list of the intervals of growth of the bacteria, that would be used by the plot of the graph
         """
 
-        ant_lijst, lijstDeath= [], []
+        ant_lijst, lijstDeath = [], []
         beperkendeFactor = JsonChecker(bact_name, temperature, pH, "br", None)
         beperkendeFactor_is = beperkendeFactor.read_value_json()
         lnN0_ = JsonChecker(bact_name, temperature, pH, "bw", None)
         lnN0 = lnN0_.read_value_json()
         ant_lijst.append(lnN0[0])
 
+        # de specfieke groeifactor uitrekenen
         newgroeiFactor = EndResults.new_growth_rate(self, bact_name, pH, temperature)
 
         for t in range(0, int(time)+1):
             lnN = (newgroeiFactor * t) + lnN0[0]
-            # lnN = lnN0[0] * (np.exp(newgroeiFactor*t))
-            if lnN <  beperkendeFactor_is[0]:
+            if lnN < beperkendeFactor_is[0]:
                 ant_lijst.append(lnN)
             else:
                 ant_lijst.append(beperkendeFactor_is[0])
