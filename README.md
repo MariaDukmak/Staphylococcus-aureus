@@ -25,7 +25,7 @@ Het rapportage en de poster van het project bevinden zich in `Rapport en poster/
 
 ## Bronnen:
 
-1. Korstanje, J. (2020, May 28). Modeling Logistic Growth. Towards Data Science. https://towardsdatascience.com/modeling-logistic-growth-1367dc971de2
+1. Korstanje, J. (2020, 28 mei). Modeling Logistic Growth. Towards Data Science. https://towardsdatascience.com/modeling-logistic-growth-1367dc971de2
 
 2. Modeling of the Bacterial Growth Curve (No. 6). (1990, June). Department of Food Science, Agricultural University Wageningen,. https://aem.asm.org/content/aem/56/6/1875.full.pdf
 
@@ -45,4 +45,4 @@ Het rapportage en de poster van het project bevinden zich in `Rapport en poster/
 
 9. Staphylococcus aureus. (2019, January 2). UNL Food. https://food.unl.edu/staphylococcus-aureus
 
-10. Bacterial Growth Curve. (2017). Vitual Amrita Laboratories Univralizing Education. https://vlab.amrita.edu/?sub=3&brch=73&sim=1105&cnt=1
+10. Bacterial Growth Curve. (2017). vitual Amrita Laboratories Univralizing Education. https://vlab.amrita.edu/?sub=3&brch=73&sim=1105&cnt=1
