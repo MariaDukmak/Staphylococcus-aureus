@@ -129,7 +129,7 @@ class PlotGraph(tk.Frame):
             f.suptitle('Growth Curve', fontsize=14, fontweight='bold')
             f.patch.set_facecolor("#F4F1DE")
             a = f.add_subplot(111)
-            a.set_ylabel('Groei in CFU/ml')
+            a.set_ylabel('Groei in CFU/ml (Ln)')
 
             if typeG == 4: # hier is de groeifactor wat op de y-as staat
                 x = np.linspace(int(temperature), 46,len(y))
