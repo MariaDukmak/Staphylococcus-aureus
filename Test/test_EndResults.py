@@ -67,21 +67,22 @@ class TestEndResults(unittest.TestCase):
     def test_new_growth_rate(self):
         self.assertNotEqual(self.ding, [])
         self.assertNotEqual(self.ding, None)
-        self.assertEqual(self.ding, 0.12952267095269068)
+        self.assertEqual(self.ding, 0.7431019561255919)
 
         self.assertNotEqual(self.ding2, [])
         self.assertNotEqual(self.ding2, None)
-        self.assertEqual(self.ding2, 0.08377588690778318)
+        self.assertEqual(self.ding2, 0.4806419214445391)
 
         self.assertEqual(self.ding3, -0.0)
 
-        self.assertEqual(self.ding4, 1.2922544811522854)
+        self.assertEqual(self.ding4, 0.22523995606484337)
         self.assertEqual(self.ding5, 0.0)
 
     def test_log_growth(self):
         self.assertNotEqual(self.object2, [])
         self.assertNotEqual(self.object2, None)
-        self.assertEqual(self.object2, [14.5, 14.5, 14.50229610235637, 14.50459220471274, 14.50688830706911])
+        self.assertEqual(self.object2, [14.53335035111459, 14.53335035111459, 14.546523629120156, 14.559696907125721,
+                                        14.572870185131288])
 
         self.assertEqual(self.dingen3, None)
         self.assertNotEqual(self.dingen3, [])
@@ -89,7 +90,7 @@ class TestEndResults(unittest.TestCase):
     def test_logistic(self):
         self.assertNotEqual(self.object, [])
         self.assertNotEqual(self.object, None)
-        self.assertEqual(self.object, [1.1524800991306403, 1.1549580646971955, 1.157440989152522])
+        self.assertEqual(self.object, [1.1500057059643374, 1.164261373251566, 1.178681293710158])
         self.assertEqual(len(self.object), 3)
 
         self.assertNotEqual(self.object4, [])
@@ -99,9 +100,9 @@ class TestEndResults(unittest.TestCase):
     def test_logstic_curve(self):
         self.assertNotEqual(self.object6, [])
         self.assertNotEqual(self.object6, None)
-        self.assertEqual(len(self.object6), 6)
-        self.assertEqual(self.object6, [1.1524800991306403, 1.5351348473157342, 2.029411964234011, 2.029411964234011,
-                                        1.7195452975673442,1.1524800991306403])
+        self.assertEqual(len(self.object6), 8)
+        self.assertEqual(self.object6,[ 1.1500057059643374, 5.16832679417558,12.622980498085408,12.622980498085408,
+                                        10.845202720307629,7.289647164752074, 1.9563138314187407,1.1500057059643374])
 
         self.assertNotEqual(self.object5, [])
         self.assertEqual(self.object5, None)
@@ -110,7 +111,7 @@ class TestEndResults(unittest.TestCase):
     def test_temp_growth_factor(self):
         self.assertNotEqual(self.object3, [])
         self.assertNotEqual(self.object3, None)
-        self.assertEqual(len(self.object3),36)
+        self.assertEqual(len(self.object3), 36)
 
         self.assertNotEqual(self.object8, [])
 
